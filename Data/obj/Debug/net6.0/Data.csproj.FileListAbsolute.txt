@@ -1,0 +1,5 @@
+C:\Users\Yordan Mandevski\source\repos\AfferoCibi\Data\obj\Debug\net6.0\Data.csproj.AssemblyReference.cache
+C:\Users\Yordan Mandevski\source\repos\AfferoCibi\Data\obj\Debug\net6.0\Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Yordan Mandevski\source\repos\AfferoCibi\Data\obj\Debug\net6.0\Data.AssemblyInfoInputs.cache
+C:\Users\Yordan Mandevski\source\repos\AfferoCibi\Data\obj\Debug\net6.0\Data.AssemblyInfo.cs
+C:\Users\Yordan Mandevski\source\repos\AfferoCibi\Data\obj\Debug\net6.0\Data.csproj.CoreCompileInputs.cache
