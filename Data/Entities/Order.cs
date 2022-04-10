@@ -10,8 +10,7 @@ namespace Data.Entities
     public class Order : BaseEntity
     {
         public string Address { get; set; }
-        public string Warrantor { get; set; }
-        public List<Meal> Meals { get; set; }
+        public virtual List<Meal> Meals { get; set; }
 
         public DateTime DateOfLastModified  { get; set; }
 

@@ -11,10 +11,6 @@ namespace Data.Entities
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Ingredients { get; set; }
-        public string PossibleAllergens { get; set; }
-
-        public Guid ProviderId { get; set; }
-        public Provider Provider { get; set; }
 
     }
 }
