@@ -8,6 +8,8 @@
         Title="CustomerListOfOrdera" Height="450" Width="800">
     <Grid>
         <DataGrid
+            x:Name="Meals"
+            ItemsSource="{Binding Meals, Mode=TwoWay}"
             AutoGenerateColumns="True"
             FontSize="26"
             Margin=" 10"/>

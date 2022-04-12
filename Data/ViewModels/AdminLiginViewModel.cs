@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class AdminLiginViewModel : ViewModelBase
+    public class AdminLiginViewModel : BaseViewModel
     {
         private string userName;
 
@@ -24,6 +25,11 @@ namespace Data.ViewModels
             set { password = value; OnPropertyChaneg(nameof(Password)); }
         }
 
+        public ICommand SubmitCommand { get; }
 
+        public AdminLiginViewModel()
+        {
+
+        }
     }
 }

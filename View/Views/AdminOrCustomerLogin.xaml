@@ -36,6 +36,7 @@
         <Grid Grid.Column="1"
               Grid.Row="1">
             <Button 
+                Command="{Binding CustomerLogIn}"
                 Name="btnLogInCustomer"
                 FontSize="24"                
                 Content="Log in as customer"
@@ -49,6 +50,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <Button 
+                Command="{Binding AdminLogIn}"
                 Name="btnLogInAdmin"
                 FontSize="24"
                 FontFamily="Bold"

@@ -41,7 +41,7 @@
             <TextBox
                 FontSize="26"                
                 Margin="5"
-                Text="{Binding UserName}"/>
+                Text="{Binding UserName, Mode=TwoWay}"/>
         </DockPanel>
         <DockPanel
             LastChildFill="True"
@@ -57,9 +57,10 @@
                 Width="auto"
                 FontSize="26"                
                 Margin="5"
-                />
+                Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         </DockPanel>
         <Button
+            Command="{Binding  SubmitCommand}"
             FontSize="26"
             Name="btnSubmitAdmin"
             Grid.Column="1"

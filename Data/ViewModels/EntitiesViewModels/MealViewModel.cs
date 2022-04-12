@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public class MealViewModel : ViewModelBase
+    public class MealViewModel : BaseViewModel
     {
         private readonly Meal meal;
 

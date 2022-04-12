@@ -16,12 +16,16 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DataGrid
+            ItemsSource="{Binding Orders, Mode=TwoWay}"
+            x:Name="OrderList"
             FontSize="26"
             AutoGenerateColumns="True"
             Grid.Row="0"
             Grid.Column="1"
             Margin="5"/>
         <DataGrid
+            ItemsSource="{Binding Meals}"
+            x:Name="MealList"
             FontSize="26"
             AutoGenerateColumns="True"
             Margin="5"
@@ -34,12 +38,14 @@
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center">
             <Button
+                Command="{Binding SentOrderCommand}"
                 Padding="20 10 20 10"
                 Margin="5"
                 FontSize="26"
                 Content="Send Order"/>
             
             <Button
+                Command="{Binding RejectOrderCommand}"
                 Padding="20 10 20 10"
                 Margin="5"
                 FontSize="26"

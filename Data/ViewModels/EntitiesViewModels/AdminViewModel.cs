@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public class AdminViewModel : ViewModelBase
+    public class AdminViewModel : BaseViewModel
     {
         private readonly Admin admin;
 

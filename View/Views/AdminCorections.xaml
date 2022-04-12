@@ -18,6 +18,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DataGrid
+            x:Name="Meals"
+            ItemsSource="{Binding Meals, Mode=TwoWay}"
             FontSize="26"
             Margin="5"
             Grid.Column="1"
@@ -32,6 +34,7 @@
                 Margin="5"
                 Text="Name :"/>
             <TextBox
+                Text="{Binding BindingGroupName,Mode=TwoWay}"
                 FontSize="20"
                 Margin="5"/>
         </DockPanel>
@@ -45,6 +48,7 @@
                 Margin="5"
                 Text="Price :"/>
             <TextBox
+                Text="{Binding Price, Mode=TwoWay}"
                 FontSize="20"
                 Margin="5"/>
         </DockPanel>
@@ -58,6 +62,7 @@
                 Margin="5"
                 Text="Ingredients:"/>
             <TextBox
+                Text="{Binding Ingredients, Mode=TwoWay}"
                 FontSize="20"
                 Margin="5"/>
         </DockPanel>
@@ -66,14 +71,17 @@
             Grid.Column="0"
             Grid.Row="3">
             <Button
+                Command="{Binding AddMealCommand}"
                 FontSize="22"
                 Margin="5"
                 Content="Add new meal"/>
             <Button
+                Command="{Binding UpdateMealCommand}"
                 FontSize="22"
                 Margin="5"                
                 Content="Update selected meal"/>
             <Button
+                Command="{Binding DeleteMealCommand}"
                 FontSize="22"
                 Margin="5"                
                 Content="Delete selected meal"/>

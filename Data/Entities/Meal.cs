@@ -12,5 +12,11 @@ namespace Data.Entities
         public decimal Price { get; set; }
         public string Ingredients { get; set; }
 
+        public Meal( string name, decimal price, string ingredients)
+        {
+            Name = name;
+            Price = price;  
+            Ingredients = ingredients;  
+        }
     }
 }
