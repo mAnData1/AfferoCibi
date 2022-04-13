@@ -16,6 +16,7 @@ namespace View
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+           
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel()

@@ -41,7 +41,7 @@
             <TextBox
                 FontSize="26"                
                 Margin="5"
-                Text="{Binding UserName, Mode=TwoWay}"/>
+                Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
         <DockPanel
             LastChildFill="True"

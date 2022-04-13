@@ -16,7 +16,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DataGrid
-            ItemsSource="{Binding Orders, Mode=TwoWay}"
+            ItemsSource="{Binding Orders, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             x:Name="OrderList"
             FontSize="26"
             AutoGenerateColumns="True"
@@ -24,7 +24,7 @@
             Grid.Column="1"
             Margin="5"/>
         <DataGrid
-            ItemsSource="{Binding Meals}"
+            ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="MealList"
             FontSize="26"
             AutoGenerateColumns="True"

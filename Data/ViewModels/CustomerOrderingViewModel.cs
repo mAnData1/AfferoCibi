@@ -16,7 +16,7 @@ namespace Data.ViewModels
         public string? Address
         {
             get { return address; }
-            set { address = value; OnPropertyChaneg(nameof(Address)); }
+            set { address = value; OnPropertyChaneg(nameof(address)); }
         }
 
         private ObservableCollection<MealViewModel>? meals;
@@ -26,9 +26,6 @@ namespace Data.ViewModels
         public CustomerOrderingViewModel()
         {
             meals = new ObservableCollection<MealViewModel>();
-            meals.Add(new MealViewModel(new Meal("test",12222,"Itest")));
-            meals.Add(new MealViewModel(new Meal("test3",12222,"Itest")));
-            meals.Add(new MealViewModel(new Meal("test4",1222,"Itest")));
             orderedMeals = new ObservableCollection<MealViewModel>();
         }
 
