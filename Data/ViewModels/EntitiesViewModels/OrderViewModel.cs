@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public class FulfilmentOfAnOrderViewModel
+    public class OrderViewModel : BaseViewModel
     {
+
     }
 }
