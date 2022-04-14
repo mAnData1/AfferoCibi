@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,10 +9,10 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-   public class AdminCorectionsViewModel : BaseViewModel
+   public class AdminCorrectionsViewModel : BaseViewModel
     {
-        private ObservableCollection<MealViewModel> meals = new ObservableCollection<MealViewModel>();
-        public IEnumerable<MealViewModel> Meals => meals;
+        private ObservableCollection<MealViewModel> meals;
+        public ICollection<MealViewModel> Meals => meals;
 
         private string name;
 
@@ -41,9 +42,11 @@ namespace Data.ViewModels
         public ICommand DeleteMealCommand { get; }
         public ICommand UpdateMealCommand { get; }
 
-        public AdminCorectionsViewModel(ObservableCollection<MealViewModel> meals)
+        public AdminCorrectionsViewModel()
         {
             this.meals = new ObservableCollection<MealViewModel>();
+
+            AddMealCommand = new AddMeal(this);
         }
 
     }

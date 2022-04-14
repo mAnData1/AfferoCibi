@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <DataGrid
             x:Name="Meals"
-            ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding Meals, UpdateSourceTrigger=PropertyChanged}"
             FontSize="26"
             Margin="5"
             Grid.Column="1"
@@ -34,7 +34,7 @@
                 Margin="5"
                 Text="Name :"/>
             <TextBox
-                Text="{Binding BindingGroupName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
                 Margin="5"/>
         </DockPanel>

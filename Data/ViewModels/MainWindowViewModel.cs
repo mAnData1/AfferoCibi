@@ -13,7 +13,7 @@ namespace Data.ViewModels
 
         public MainWindowViewModel()
         {
-            CurrentViewModel = new CustomerOrderingViewModel();
+            CurrentViewModel = new AdminCorrectionsViewModel();
         }
     }
 }

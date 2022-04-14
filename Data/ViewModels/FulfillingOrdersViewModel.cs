@@ -12,10 +12,10 @@ namespace Data.ViewModels
     public class FulfillingOrdersViewModel : BaseViewModel
     {
         private ObservableCollection<MealViewModel> meals;
-        public IEnumerable<MealViewModel> Meals => meals;
+        public ICollection<MealViewModel> Meals => meals;
 
         private ObservableCollection<OrderViewModel> orders;
-        public IEnumerable<OrderViewModel> Orders => orders;
+        public ICollection<OrderViewModel> Orders => orders;
 
         public ICommand SendOrderCommand { get; }
         public ICommand RejectOrderCommand { get; }

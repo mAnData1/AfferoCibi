@@ -21,7 +21,7 @@ namespace Data.ViewModels
 
         private ObservableCollection<MealViewModel>? meals;
 
-        public IEnumerable<MealViewModel>? Meals => meals;
+        public ICollection<MealViewModel>? Meals => meals;
 
         public CustomerOrderingViewModel()
         {
@@ -31,7 +31,7 @@ namespace Data.ViewModels
 
         private ObservableCollection<MealViewModel>? orderedMeals;
 
-        public IEnumerable<MealViewModel>? OrderedMeals => orderedMeals;
+        public ICollection<MealViewModel>? OrderedMeals => orderedMeals;
 
         public ICommand? AddCommand { get; }
 

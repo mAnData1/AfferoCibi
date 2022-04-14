@@ -11,7 +11,7 @@ namespace Data.ViewModels
     {
         private ObservableCollection<MealViewModel> meals;
 
-        public IEnumerable<MealViewModel> Meals => meals;
+        public ICollection<MealViewModel> Meals => meals;
 
         public CustomerListOfOrdersViewModel(ObservableCollection<MealViewModel> meals)
         {
