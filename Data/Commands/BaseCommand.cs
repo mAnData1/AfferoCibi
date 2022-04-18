@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,14 @@ namespace Data.Commands
 {
     public abstract class BaseCommand : ICommand
     {
+        protected bool enabled = true;
+
+        public virtual bool Enabled
+        {
+            get { return enabled; }
+            set { enabled = value; OnExecutedChanged(); }
+        }
+
         public event EventHandler? CanExecuteChanged;
 
         public virtual bool CanExecute(object? parameter)
@@ -22,6 +31,6 @@ namespace Data.Commands
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
-      
+
     }
 }

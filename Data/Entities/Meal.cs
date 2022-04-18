@@ -14,6 +14,7 @@ namespace Data.Entities
 
         public Meal( string name, decimal price, string ingredients)
         {
+            Id = Guid.NewGuid();
             Name = name;
             Price = price;  
             Ingredients = ingredients;  

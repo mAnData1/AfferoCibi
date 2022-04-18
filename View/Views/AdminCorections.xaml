@@ -18,8 +18,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DataGrid
+            SelectionMode="Single"
+            SelectedIndex="{Binding IndexOfSelectedMeal, Mode=TwoWay}"
             x:Name="Meals"
             ItemsSource="{Binding Meals, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SelectedMeal, Mode=TwoWay}"
             FontSize="26"
             Margin="5"
             Grid.Column="1"
@@ -48,7 +51,7 @@
                 Margin="5"
                 Text="Price :"/>
             <TextBox
-                Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:f2}}"
                 FontSize="20"
                 Margin="5"/>
         </DockPanel>
@@ -70,6 +73,11 @@
             VerticalAlignment="Center"
             Grid.Column="0"
             Grid.Row="3">
+            <Button 
+                Command="{Binding SaveChangesCommand}"
+                FontSize="22"
+                Margin="5"
+                Content="Save Changes"/>
             <Button
                 Command="{Binding AddMealCommand}"
                 FontSize="22"

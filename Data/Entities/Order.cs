@@ -15,6 +15,14 @@ namespace Data.Entities
         public DateTime DateOfLastModified  { get; set; }
 
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Processing;
+
+        public Order(string address, DateTime modified, OrderStatus orderStatus)
+        {
+            Id = Guid.NewGuid();
+            Address = address;
+            DateOfLastModified = modified;
+            OrderStatus = orderStatus;
+        }
     }
 }
 

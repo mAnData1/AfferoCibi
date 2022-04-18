@@ -11,8 +11,23 @@ namespace Data.ViewModels
 {
    public class AdminCorrectionsViewModel : BaseViewModel
     {
+        private int indexOfSelectedMeal;
+        public int IndexOfSelectedMeal
+        {
+            get { return indexOfSelectedMeal; }
+            set { indexOfSelectedMeal = value; OnPropertyChaneg(nameof(IndexOfSelectedMeal));}
+        }
+
         private ObservableCollection<MealViewModel> meals;
         public ICollection<MealViewModel> Meals => meals;
+
+        private MealViewModel? selectedMeal;
+
+        public MealViewModel? SelectedMeal
+        {
+            get { return selectedMeal; }
+            set { selectedMeal = value; OnPropertyChaneg(nameof(SelectedMeal));}
+        }
 
         private string name;
 
@@ -38,15 +53,19 @@ namespace Data.ViewModels
             set { ingredients = value; OnPropertyChaneg(nameof(Ingredients)); }
         }
 
-        public ICommand AddMealCommand { get; }
-        public ICommand DeleteMealCommand { get; }
-        public ICommand UpdateMealCommand { get; }
+        public BaseCommand AddMealCommand { get ; }
+        public BaseCommand DeleteMealCommand { get; }
+        public BaseCommand UpdateMealCommand { get; }
+        public BaseCommand SaveChangesCommand { get; }
 
         public AdminCorrectionsViewModel()
         {
             this.meals = new ObservableCollection<MealViewModel>();
 
             AddMealCommand = new AddMeal(this);
+            UpdateMealCommand = new UpdateMeal(this);
+            SaveChangesCommand = new SaveChanges(this);
+            DeleteMealCommand = new DeleteMeal(this);
         }
 
     }

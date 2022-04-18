@@ -9,7 +9,7 @@ namespace Data.ViewModels
 {
     public class MealViewModel : BaseViewModel
     {
-        private readonly Meal meal;
+        private Meal meal;
 
         public string Name => meal.Name;
         public decimal Price => meal.Price;
