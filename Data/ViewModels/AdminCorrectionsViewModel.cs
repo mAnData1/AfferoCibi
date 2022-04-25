@@ -1,4 +1,5 @@
 ﻿using Data.Commands;
+using Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,48 +12,41 @@ namespace Data.ViewModels
 {
    public class AdminCorrectionsViewModel : BaseViewModel
     {
-        private int indexOfSelectedMeal;
-        public int IndexOfSelectedMeal
+        public ObservableCollection<MealViewModel> meals { get; set;}
+
+        private byte[] inputImage;
+
+        public byte[] InputImage
         {
-            get { return indexOfSelectedMeal; }
-            set { indexOfSelectedMeal = value; OnPropertyChaneg(nameof(IndexOfSelectedMeal));}
+            get { return inputImage; }
+            set { inputImage = value; }
+        }
+        private string inputName;
+
+        public string InputName
+        {
+            get { return inputName; }
+            set { inputName = value; OnPropertyChaneg(nameof(InputName));}
         }
 
-        private ObservableCollection<MealViewModel> meals;
-        public ICollection<MealViewModel> Meals => meals;
+        private decimal inputPrice;
 
-        private MealViewModel? selectedMeal;
-
-        public MealViewModel? SelectedMeal
+        public decimal InputPrice
         {
-            get { return selectedMeal; }
-            set { selectedMeal = value; OnPropertyChaneg(nameof(SelectedMeal));}
+            get { return inputPrice; }
+            set { inputPrice = value; OnPropertyChaneg(nameof(InputPrice));}
         }
 
-        private string name;
+        private string inputIngredients;
 
-        public string Name
+        public string InputIngredients
         {
-            get { return name; }
-            set { name = value; OnPropertyChaneg(nameof(Name));}
+            get { return inputIngredients; }
+            set { inputIngredients = value; OnPropertyChaneg(nameof(InputIngredients)); }
         }
 
-        private decimal price;
-
-        public decimal Price
-        {
-            get { return price; }
-            set { price = value; OnPropertyChaneg(nameof(Price));}
-        }
-
-        private string ingredients;
-
-        public string Ingredients
-        {
-            get { return ingredients; }
-            set { ingredients = value; OnPropertyChaneg(nameof(Ingredients)); }
-        }
-
+        public BaseCommand ProceedCommand { get; }
+        public BaseCommand UploadImageCommand { get; }
         public BaseCommand AddMealCommand { get ; }
         public BaseCommand DeleteMealCommand { get; }
         public BaseCommand UpdateMealCommand { get; }
@@ -60,8 +54,14 @@ namespace Data.ViewModels
 
         public AdminCorrectionsViewModel()
         {
-            this.meals = new ObservableCollection<MealViewModel>();
-
+            meals = new ObservableCollection<MealViewModel>();
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            //ProceedCommand = new Proceed(this);
             AddMealCommand = new AddMeal(this);
             UpdateMealCommand = new UpdateMeal(this);
             SaveChangesCommand = new SaveChanges(this);

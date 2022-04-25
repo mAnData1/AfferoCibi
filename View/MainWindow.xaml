@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:View.Views" 
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="800">
-    <Grid Margin="10 20" MaxWidth="800" >
-        <views:AdminCorections DataContext = "{Binding CurrentViewModel}"/>
+    <Grid Margin="10 20"  >
+        <views:CustomerOrdering DataContext = "{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

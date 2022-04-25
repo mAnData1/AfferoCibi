@@ -17,12 +17,12 @@ namespace Data.ViewModels
             set { userName = value; OnPropertyChaneg(nameof(UserName)); }
         }
 
-        private int password;
+        private string bindablePassword;
 
-        public int Password
+        public string BindablePassword
         {
-            get { return password; }
-            set { password = value; OnPropertyChaneg(nameof(Password)); }
+            get { return bindablePassword; }
+            set { bindablePassword = value; OnPropertyChaneg(nameof(BindablePassword)); }
         }
 
         public ICommand SubmitCommand { get; }

@@ -3,58 +3,74 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:View.Views"
+             xmlns:components="clr-namespace:View.Views.Components"
+             xmlns:Converter="clr-namespace:View.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="943.55" d:DesignWidth="842.912">        
+                 <UserControl.Resources>
+                        <Converter:ByteArrayToBitmapImageConverter x:Key="imageConverter"/>
+                        <BitmapImage x:Key="DefaultImage" UriSource="Resources/no-image.png"/>
+                 </UserControl.Resources>
+    
+    <Grid
+        Background="Orange">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="0.2*"/>
+
         </Grid.RowDefinitions>
-        <DataGrid
-            SelectionMode="Single"
-            SelectedIndex="{Binding IndexOfSelectedMeal, Mode=TwoWay}"
-            x:Name="Meals"
-            ItemsSource="{Binding Meals, UpdateSourceTrigger=PropertyChanged}"
-            SelectedItem="{Binding SelectedMeal, Mode=TwoWay}"
-            FontSize="26"
-            Margin="5"
-            Grid.Column="1"
-            Grid.RowSpan="4"/>
-        <DockPanel
+        <Image
+            Source="{Binding InputImage, Converter ={StaticResource imageConverter}, Mode=OneWay, TargetNullValue=DefaultImage}"            
+            x:Name="Image"
             Grid.Column="0"
             Grid.Row="0"
-            VerticalAlignment="Center"
-            Margin="5">
-            <TextBlock
-                FontSize="20"
-                Margin="5"
-                Text="Name :"/>
-            <TextBox
-                Text="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                FontSize="20"
-                Margin="5"/>
-        </DockPanel>
+            Stretch="Uniform"
+            Margin="5"
+            />
         <DockPanel
             Grid.Column="0"
             Grid.Row="1"
             VerticalAlignment="Center"
             Margin="5">
-            <TextBlock
-                FontSize="20"
-                Margin="5"
-                Text="Price :"/>
-            <TextBox
-                Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:f2}}"
-                FontSize="20"
-                Margin="5"/>
+            <Button
+            Content="Upload Image"
+            FontSize="20"
+            Click="Button_Click"
+            />
         </DockPanel>
+
+        <ScrollViewer
+                Grid.Column="1"
+                Grid.RowSpan="6">
+            <ItemsControl
+                ItemsSource="{Binding meals}"
+                x:Name="MealList"                       
+                Margin="5">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <components:MealCard
+                            BorderBrush="OrangeRed"
+                            BorderThickness="5px"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Button 
+            Grid.Column="1"
+            Grid.Row="6"
+            Margin="7"
+            Content="Proceed"
+            FontSize="22"
+            Command="{Binding ProceedCommand}"/>
         <DockPanel
             Grid.Column="0"
             Grid.Row="2"
@@ -63,37 +79,77 @@
             <TextBlock
                 FontSize="20"
                 Margin="5"
-                Text="Ingredients:"/>
+                Text="Meal :"/>
             <TextBox
-                Text="{Binding Ingredients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding InputName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
                 Margin="5"/>
         </DockPanel>
-        <StackPanel
-            VerticalAlignment="Center"
+        <DockPanel
             Grid.Column="0"
-            Grid.Row="3">
-            <Button 
+            Grid.Row="3"
+            VerticalAlignment="Center"
+            Margin="5">
+            <TextBlock
+                FontSize="20"
+                Margin="5"
+                Text="Price :"/>
+            <TextBox
+                Text="{Binding InputPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:f2}}"
+                FontSize="20"
+                Margin="5"/>
+        </DockPanel>
+        <DockPanel
+            Grid.Column="0"
+            Grid.Row="4"
+            VerticalAlignment="Center"
+            Margin="5">
+            <TextBlock
+                FontSize="20"
+                Margin="5"
+                Text="Ingredients:"/>
+            <TextBox
+                Text="{Binding InputIngredients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="20"
+                Margin="5" 
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Visible"
+                HorizontalScrollBarVisibility="Visible"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                />
+        </DockPanel>
+        <ScrollViewer
+            Grid.Column="0"
+            Grid.Row="5">
+            <StackPanel
+                VerticalAlignment="Center">
+                <Button 
                 Command="{Binding SaveChangesCommand}"
                 FontSize="22"
                 Margin="5"
                 Content="Save Changes"/>
-            <Button
+                <Button
                 Command="{Binding AddMealCommand}"
                 FontSize="22"
                 Margin="5"
                 Content="Add new meal"/>
-            <Button
+                <Button
                 Command="{Binding UpdateMealCommand}"
                 FontSize="22"
                 Margin="5"                
                 Content="Update selected meal"/>
-            <Button
+                <Button
                 Command="{Binding DeleteMealCommand}"
                 FontSize="22"
                 Margin="5"                
                 Content="Delete selected meal"/>
-        </StackPanel>
-        
+                <Button
+                FontSize="22"
+                Margin="5"                
+                Content="Refresh" Click="Button_Click_1"/>
+            </StackPanel>
+        </ScrollViewer>
+
     </Grid>
 </UserControl>

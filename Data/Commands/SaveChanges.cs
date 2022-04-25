@@ -20,7 +20,6 @@ namespace Data.Commands
             Enabled = false;
             this.adminCorrectionsViewModel = adminCorrectionsViewModel;
             adminCorrectionsViewModel.PropertyChanged += TextBoxesChanged;
-            index = adminCorrectionsViewModel.IndexOfSelectedMeal;
             adminCorrectionsViewModel.AddMealCommand.Enabled = true;
         }
         public override bool CanExecute(object? parameter)
@@ -31,29 +30,28 @@ namespace Data.Commands
         }
         public override void Execute(object? parameter)
         {
-            string Name = adminCorrectionsViewModel.Name;
-            decimal Price = adminCorrectionsViewModel.Price;
-            string Ingredients = adminCorrectionsViewModel.Ingredients;
+            string Name = adminCorrectionsViewModel.InputName;
+            decimal Price = adminCorrectionsViewModel.InputPrice;
+            string Ingredients = adminCorrectionsViewModel.InputIngredients;
 
-            adminCorrectionsViewModel.SelectedMeal.Name = adminCorrectionsViewModel.Name;
+            
 
             ClearTextBoxes();
         }
         private void TextBoxesChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(adminCorrectionsViewModel.Name)
-               || e.PropertyName == nameof(adminCorrectionsViewModel.Price)
-               || e.PropertyName == nameof(adminCorrectionsViewModel.Ingredients))
+           if (e.PropertyName == nameof(adminCorrectionsViewModel.InputName)
+               || e.PropertyName == nameof(adminCorrectionsViewModel.InputPrice)
+               || e.PropertyName == nameof(adminCorrectionsViewModel.InputIngredients))
             {
                 OnExecutedChanged();
             }
         }
         private void ClearTextBoxes()
         {
-            adminCorrectionsViewModel.Name = "";
-            adminCorrectionsViewModel.Price = 0;
-            adminCorrectionsViewModel.Ingredients = "";
-            adminCorrectionsViewModel.SelectedMeal = null;
+            adminCorrectionsViewModel.InputName = "";
+            adminCorrectionsViewModel.InputPrice = 0;
+            adminCorrectionsViewModel.InputIngredients = "";
         }
     }
 }

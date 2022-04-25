@@ -10,6 +10,17 @@
   <ItemGroup>
     <None Remove="Views\Resources\admin.png" />
     <None Remove="Views\Resources\customer.png" />
+    <None Remove="Views\Resources\no-image.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Resources\no-image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

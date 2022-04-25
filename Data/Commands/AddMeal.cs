@@ -16,9 +16,9 @@ namespace Data.Commands
 
         public override bool CanExecute(object? parameter)
         {
-            return !string.IsNullOrEmpty(adminCorrectionsViewModel.Name) 
-                && !string.IsNullOrEmpty(adminCorrectionsViewModel.Price.ToString())
-                && !string.IsNullOrEmpty(adminCorrectionsViewModel.Ingredients)
+            return !string.IsNullOrEmpty(adminCorrectionsViewModel.InputName) 
+                && !string.IsNullOrEmpty(adminCorrectionsViewModel.InputPrice.ToString())
+                && !string.IsNullOrEmpty(adminCorrectionsViewModel.InputIngredients)
                 && Enabled
                 && base.CanExecute(parameter);
         }
@@ -31,24 +31,23 @@ namespace Data.Commands
         }
         private void ClearTextBoxes()
         {
-            adminCorrectionsViewModel.Name = "";
-            adminCorrectionsViewModel.Price = 0;
-            adminCorrectionsViewModel.Ingredients = "";
-            adminCorrectionsViewModel.SelectedMeal = null;
+            adminCorrectionsViewModel.InputName = "";
+            adminCorrectionsViewModel.InputPrice = 0;
+            adminCorrectionsViewModel.InputIngredients = "";
         }
         public override void Execute(object? parameter)
         {
-            Meal meal = new Meal(adminCorrectionsViewModel.Name, adminCorrectionsViewModel.Price, adminCorrectionsViewModel.Ingredients);
+            Meal meal = new Meal(adminCorrectionsViewModel.InputImage, adminCorrectionsViewModel.InputName, adminCorrectionsViewModel.InputPrice, adminCorrectionsViewModel.InputIngredients);
             MealViewModel viewModel = new MealViewModel(meal);
-            adminCorrectionsViewModel.Meals.Add(viewModel);
+            adminCorrectionsViewModel.meals.Add(viewModel);
             ClearTextBoxes();
         }
 
         private void TextBoxesChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(adminCorrectionsViewModel.Name)
-               || e.PropertyName == nameof(adminCorrectionsViewModel.Price)
-               || e.PropertyName == nameof(adminCorrectionsViewModel.Ingredients))
+            if (e.PropertyName == nameof(adminCorrectionsViewModel.InputName)
+               || e.PropertyName == nameof(adminCorrectionsViewModel.InputPrice)
+               || e.PropertyName == nameof(adminCorrectionsViewModel.InputIngredients))
             {
                 OnExecutedChanged();
             }

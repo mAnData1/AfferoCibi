@@ -11,13 +11,35 @@ namespace Data.ViewModels
     {
         private Meal meal;
 
-        public string Name => meal.Name;
-        public decimal Price => meal.Price;
-        public string Ingredients => meal.Ingredients;
-
+        public Guid Id 
+        {
+            get {return meal.Id;}
+            set { meal.Id = value; } 
+        }
+        public byte[] MealImage 
+        {
+            get { return meal.MealImage; }
+            set { meal.MealImage = value; } 
+        }
+        public string Name 
+        {
+            get { return meal.Name; } 
+            set { meal.Name = value; } 
+        }
+        public decimal Price
+        {
+            get { return meal.Price; }
+            set { meal.Price = value; }
+        }
+        public string Ingredients
+        {
+            get { return meal.Ingredients; }
+            set { meal.Ingredients = value; }
+        }
         public MealViewModel(Meal meal)
         {
             this.meal = meal;
         }
+
     }
 }
