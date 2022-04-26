@@ -135,11 +135,6 @@
                 Margin="5"
                 Content="Add new meal"/>
                 <Button
-                Command="{Binding UpdateMealCommand}"
-                FontSize="22"
-                Margin="5"                
-                Content="Update selected meal"/>
-                <Button
                 Command="{Binding DeleteMealCommand}"
                 FontSize="22"
                 Margin="5"                

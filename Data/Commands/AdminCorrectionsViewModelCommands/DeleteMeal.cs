@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Commands
+namespace Data.Commands.AdminCorrectionsViewModelCommands
 {
     public class DeleteMeal : BaseCommand
     {

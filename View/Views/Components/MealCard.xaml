@@ -18,11 +18,11 @@
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
-        <Image
-            ImageFailed="Image_ImageFailed"
-            Source="{Binding MealImage, Converter ={StaticResource imageConverter}, Mode=TwoWay}"
+        <Image            
+            Source="{Binding MealImage, Converter ={StaticResource imageConverter}, Mode=TwoWay, TargetNullValue=DefaultImage}"
             Stretch="Uniform"/>
 
         <DockPanel
@@ -72,6 +72,11 @@
                 VerticalAlignment="Stretch"
                 />
         </DockPanel>
+        <Button
+            Grid.Row="4"
+            Margin="10 5 10 5"
+            Content="Update"
+            FontSize="20"/>
 
     </Grid>
 </UserControl>

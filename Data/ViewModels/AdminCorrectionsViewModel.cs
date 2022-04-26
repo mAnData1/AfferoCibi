@@ -1,5 +1,7 @@
 ﻿using Data.Commands;
+using Data.Commands.AdminCorrectionsViewModelCommands;
 using Data.Entities;
+using Data.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,14 +47,14 @@ namespace Data.ViewModels
             set { inputIngredients = value; OnPropertyChaneg(nameof(InputIngredients)); }
         }
 
-        public BaseCommand ProceedCommand { get; }
+        public NavigateCommand ProceedCommand { get; }
         public BaseCommand UploadImageCommand { get; }
         public BaseCommand AddMealCommand { get ; }
         public BaseCommand DeleteMealCommand { get; }
         public BaseCommand UpdateMealCommand { get; }
         public BaseCommand SaveChangesCommand { get; }
 
-        public AdminCorrectionsViewModel()
+        public AdminCorrectionsViewModel(NavigationStore navigationStore, Func<AdminCorrectionsViewModel> cereateAdminCorrectionsViewModel)
         {
             meals = new ObservableCollection<MealViewModel>();
             meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
@@ -61,7 +63,7 @@ namespace Data.ViewModels
             meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
             meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
             meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            //ProceedCommand = new Proceed(this);
+            ProceedCommand = new NavigateCommand(navigationStore, cereateAdminCorrectionsViewModel);
             AddMealCommand = new AddMeal(this);
             UpdateMealCommand = new UpdateMeal(this);
             SaveChangesCommand = new SaveChanges(this);

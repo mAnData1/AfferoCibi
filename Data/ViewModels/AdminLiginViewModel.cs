@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Commands.AdminLogInCommands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Data.ViewModels
             set { bindablePassword = value; OnPropertyChaneg(nameof(BindablePassword)); }
         }
 
-        public ICommand SubmitCommand { get; }
+        public Submit SubmitCommand { get; }
 
         public AdminLiginViewModel()
         {
