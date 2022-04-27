@@ -1,6 +1,7 @@
 ﻿using Data.Commands;
 using Data.Commands.AdminCorrectionsViewModelCommands;
 using Data.Entities;
+using Data.Services;
 using Data.Stores;
 using System;
 using System.Collections.Generic;
@@ -54,16 +55,10 @@ namespace Data.ViewModels
         public BaseCommand UpdateMealCommand { get; }
         public BaseCommand SaveChangesCommand { get; }
 
-        public AdminCorrectionsViewModel(NavigationStore navigationStore, Func<AdminCorrectionsViewModel> cereateAdminCorrectionsViewModel)
+        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation)
         {
             meals = new ObservableCollection<MealViewModel>();
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            ProceedCommand = new NavigateCommand(navigationStore, cereateAdminCorrectionsViewModel);
+            ProceedCommand = new NavigateCommand(fulfillingOrdersViewNavigation);
             AddMealCommand = new AddMeal(this);
             UpdateMealCommand = new UpdateMeal(this);
             SaveChangesCommand = new SaveChanges(this);

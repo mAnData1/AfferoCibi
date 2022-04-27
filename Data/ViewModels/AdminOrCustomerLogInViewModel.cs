@@ -1,4 +1,5 @@
 ﻿using Data.Commands;
+using Data.Services;
 using Data.Stores;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,11 @@ namespace Data.ViewModels
         public NavigateCommand CustomerLogIn { get; }
 
         public NavigateCommand AdminLogIn { get; }
-        public AdminOrCustomerLogInViewModel(NavigationStore navigationStore, Func<AdminLiginViewModel> cereateAdminLiginViewModel, Func<CustomerOrderingViewModel> cereateCustomerOrderingViewModel)
+        public AdminOrCustomerLogInViewModel(NavigationService customerOrderingViewNavigation, NavigationService adminLogInViewNavigation)
         {
-            CustomerLogIn = new NavigateCommand( navigationStore, cereateCustomerOrderingViewModel);
+            CustomerLogIn = new NavigateCommand(customerOrderingViewNavigation);
 
-            AdminLogIn = new NavigateCommand( navigationStore, cereateAdminLiginViewModel);
+            AdminLogIn = new NavigateCommand(adminLogInViewNavigation);
         }
     }
 }

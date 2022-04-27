@@ -18,7 +18,7 @@
             <DataTemplate DataType="{x:Type vms:AdminCorrectionsViewModel}">
                 <views:AdminCorections/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AdminLiginViewModel}">
+            <DataTemplate DataType="{x:Type vms:AdminLogInViewModel}">
                 <views:AdminLogIn/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:CustomerListOfOrdersViewModel}">

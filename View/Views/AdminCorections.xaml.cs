@@ -50,10 +50,9 @@ namespace View.Views
         {
             foreach (var meal in MealList.Items)
             {
-                MealCard mealCard = new MealCard();
+                MealCardAdmin mealCard = new MealCardAdmin();
                 mealCard.DataContext = meal;
             }
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Data.Services;
 
 namespace View
 {
@@ -22,7 +23,7 @@ namespace View
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            navigationStore.CurrentViewModel = new AdminOrCustomerLogInViewModel(navigationStore, CreateAdminLiginViewModel, CreateCustomerOrderingViewModel);
+            navigationStore.CurrentViewModel = new AdminOrCustomerLogInViewModel(new NavigationService( navigationStore, CreateCustomerOrderingViewModel), new NavigationService(navigationStore, CreateAdminLiginViewModel));
            
             MainWindow = new MainWindow()
             {
@@ -31,9 +32,17 @@ namespace View
             MainWindow.Show();
             base.OnStartup(e);
         }
-        private AdminLiginViewModel CreateAdminLiginViewModel()
+        private FulfillingOrdersViewModel CreateFulfillingOrdersViewModel()
         {
-            return new AdminLiginViewModel(navigationStore,)
+            return new FulfillingOrdersViewModel();
+        }
+        private AdminCorrectionsViewModel CreateAdminCorrectionsViewModel()
+        {
+            return new AdminCorrectionsViewModel(new NavigationService(navigationStore,CreateFulfillingOrdersViewModel));
+        }
+        private AdminLogInViewModel CreateAdminLiginViewModel()
+        {
+            return new AdminLogInViewModel(new NavigationService(navigationStore, CreateAdminCorrectionsViewModel));
         }
         private CustomerOrderingViewModel CreateCustomerOrderingViewModel()
         {

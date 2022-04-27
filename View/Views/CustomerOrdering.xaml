@@ -22,12 +22,12 @@
                 Grid.Column="1"
                 >
             <ItemsControl
-                ItemsSource="{Binding meals}"
+                ItemsSource="{Binding Meals}"
                 x:Name="MealList"                       
                 Margin="5">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <components:MealCard
+                        <components:MealCardCustomer
                             BorderBrush="OrangeRed"
                             BorderThickness="5px"/>
                     </DataTemplate>
@@ -36,7 +36,9 @@
         </ScrollViewer>
         <DataGrid
             x:Name="OrderedMeals"
-            ItemsSource="{Binding OrderedMeals, UpdateSourceTrigger=PropertyChanged}"            
+            SelectionMode="Single"
+            ItemsSource="{Binding OrderedMeals, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"    
+            SelectedIndex="{Binding SelectedOrderedMeal,UpdateSourceTrigger=PropertyChanged}"
             FontSize="26"
             AutoGenerateColumns="True"
             Grid.Column="0"
@@ -46,11 +48,7 @@
             VerticalAlignment="Center"
             Grid.Column="0"
             Grid.Row="1">
-            <Button
-                Command="{Binding AddCommand}"
-                Content="Add"
-                FontSize="26"
-                Margin="10 5 10 5"/>
+
             <Button
                 Command="{Binding RemoveCommand}"
                 Content="Remove"

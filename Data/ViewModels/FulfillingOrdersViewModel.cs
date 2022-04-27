@@ -12,18 +12,26 @@ namespace Data.ViewModels
     public class FulfillingOrdersViewModel : BaseViewModel
     {
         private ObservableCollection<MealViewModel> meals;
-        public ICollection<MealViewModel> Meals => meals;
+        public ObservableCollection<MealViewModel> Meals
+        {
+            get { return meals; }
+            set { meals = value; }
+        }
 
         private ObservableCollection<OrderViewModel> orders;
-        public ICollection<OrderViewModel> Orders => orders;
+        public ObservableCollection<OrderViewModel> Orders
+        {
+            get { return orders; }
+            set { orders = value; }
+        }
 
         public ICommand SendOrderCommand { get; }
         public ICommand RejectOrderCommand { get; }
 
-        public FulfillingOrdersViewModel(ObservableCollection<MealViewModel> meals, ObservableCollection<OrderViewModel> orders)
+        public FulfillingOrdersViewModel()
         {
-            this.meals = new ObservableCollection<MealViewModel>(meals);
-            this.orders = new ObservableCollection<OrderViewModel>(orders);
+            this.meals = new ObservableCollection<MealViewModel>();
+            this.orders = new ObservableCollection<OrderViewModel>();
 
         }
     }

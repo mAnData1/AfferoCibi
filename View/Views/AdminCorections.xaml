@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:components="clr-namespace:View.Views.Components"
-             xmlns:Converter="clr-namespace:View.Converter"
+             xmlns:Components="clr-namespace:View.Views.Components"
+             xmlns:Converter="clr-namespace:View.Converter" 
              mc:Ignorable="d" 
              d:DesignHeight="943.55" d:DesignWidth="842.912">        
                  <UserControl.Resources>
-                        <Converter:ByteArrayToBitmapImageConverter x:Key="imageConverter"/>
-                        <BitmapImage x:Key="DefaultImage" UriSource="Resources/no-image.png"/>
+        <Converter:ByteArrayToBitmapImageConverter x:Key="imageConvertor"/>
+        <BitmapImage x:Key="DefaultImage" UriSource="Resources/no-image.png"/>
                  </UserControl.Resources>
     
     <Grid
@@ -29,7 +29,7 @@
 
         </Grid.RowDefinitions>
         <Image
-            Source="{Binding InputImage, Converter ={StaticResource imageConverter}, Mode=OneWay, TargetNullValue=DefaultImage}"            
+            Source="{Binding InputImage, Converter ={StaticResource imageConvertor}, Mode=OneWay, TargetNullValue=DefaultImage}"            
             x:Name="Image"
             Grid.Column="0"
             Grid.Row="0"
@@ -51,13 +51,13 @@
         <ScrollViewer
                 Grid.Column="1"
                 Grid.RowSpan="6">
-            <ItemsControl
+            <ItemsControl               
                 ItemsSource="{Binding meals}"
                 x:Name="MealList"                       
                 Margin="5">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <components:MealCard
+                        <Components:MealCardAdmin
                             BorderBrush="OrangeRed"
                             BorderThickness="5px"/>
                     </DataTemplate>

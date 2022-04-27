@@ -14,7 +14,7 @@ namespace Data.ViewModels
 
         public ICollection<MealViewModel> Meals => meals;
 
-        public CustomerListOfOrdersViewModel(ObservableCollection<MealViewModel> meals)
+        public CustomerListOfOrdersViewModel()
         {
             meals = new ObservableCollection<MealViewModel>();
             meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));

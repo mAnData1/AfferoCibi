@@ -18,9 +18,9 @@ namespace View.Views.Components
     /// <summary>
     /// Interaction logic for MealCard.xaml
     /// </summary>
-    public partial class MealCard : UserControl
+    public partial class MealCardAdmin : UserControl
     {
-        public MealCard()
+        public MealCardAdmin()
         {
             InitializeComponent();
         }

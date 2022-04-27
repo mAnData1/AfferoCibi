@@ -1,4 +1,5 @@
 ﻿using Data.Commands.AdminLogInCommands;
+using Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class AdminLiginViewModel : BaseViewModel
+    public class AdminLogInViewModel : BaseViewModel
     {
         private string userName;
 
@@ -28,9 +29,9 @@ namespace Data.ViewModels
 
         public Submit SubmitCommand { get; }
 
-        public AdminLiginViewModel()
+        public AdminLogInViewModel(NavigationService adminCorrectionsNavigation)
         {
-
+            SubmitCommand = new Submit(this, adminCorrectionsNavigation);
         }
     }
 }
