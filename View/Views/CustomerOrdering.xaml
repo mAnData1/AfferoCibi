@@ -6,8 +6,7 @@
              xmlns:components="clr-namespace:View.Views.Components"
              xmlns:Converter="clr-namespace:View.Converter"
              xmlns:local="clr-namespace:View.Views" 
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignWidth="800" Height="510">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
@@ -35,6 +34,7 @@
             </ItemsControl>
         </ScrollViewer>
         <DataGrid
+            Background="Orange"
             x:Name="OrderedMeals"
             SelectionMode="Single"
             ItemsSource="{Binding OrderedMeals, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"    
@@ -50,10 +50,26 @@
             Grid.Row="1">
 
             <Button
+                Background="OrangeRed"
                 Command="{Binding RemoveCommand}"
                 Content="Remove"
                 FontSize="26"
                 Margin="10 5 10 5"/>
+
+            <Button
+             Height="50"
+             Width="50"
+                Command="{Binding NavigateHelp}"
+           >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="35"/>
+                    </Style>
+                </Button.Resources>
+
+                <Image Source="Resources/question_mark.png"/>
+            </Button>
+
         </StackPanel>
         <StackPanel
             Grid.Row="1"
@@ -68,12 +84,19 @@
                     Margin="5 0 5 5"                  
                     FontSize="20"/>
                 <Button
+                    Background="OrangeRed"
                     Command="{Binding FinishCommand}"
                     Margin="5 0 5 5"
                     FontSize="26"
                     Content="Finish Order"/>
+                <Button
+                    Background="OrangeRed"
+                    Command="{Binding NavigateToCustomerListOfOtders}"
+                    Margin="5 0 5 5"
+                    FontSize="26"
+                    Content="Check previous orders"/>
             </StackPanel>
-            
+
         </StackPanel>
     </Grid>
 </UserControl>

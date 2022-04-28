@@ -13,26 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace View.Views.Components
+namespace View.Views
 {
     /// <summary>
-    /// Interaction logic for MealCard.xaml
+    /// Interaction logic for CustomerListOfOrders.xaml
     /// </summary>
-    public partial class MealCardAdmin : UserControl
+    public partial class CustomerListOfOrders : UserControl
     {
-        public MealCardAdmin()
+        public CustomerListOfOrders()
         {
             InitializeComponent();
-        }
-
-        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            ((Image)sender).Source = new BitmapImage(new Uri("Resources/no-image.png", UriKind.Relative));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

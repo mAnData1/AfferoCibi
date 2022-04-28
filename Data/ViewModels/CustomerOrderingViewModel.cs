@@ -49,7 +49,11 @@ namespace Data.ViewModels
         public CustomerOrderingViewModel()
         {
             RemoveCommand = new RemoveMeal(this);
-
+            meals = new ObservableCollection<MealViewModel>();
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
             orderedMeals = new ObservableCollection<MealViewModel>();
         }
     }

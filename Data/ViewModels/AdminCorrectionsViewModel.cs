@@ -58,6 +58,10 @@ namespace Data.ViewModels
         public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation)
         {
             meals = new ObservableCollection<MealViewModel>();
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
             ProceedCommand = new NavigateCommand(fulfillingOrdersViewNavigation);
             AddMealCommand = new AddMeal(this);
             UpdateMealCommand = new UpdateMeal(this);

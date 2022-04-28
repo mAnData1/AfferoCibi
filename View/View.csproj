@@ -11,6 +11,7 @@
     <None Remove="Views\Resources\admin.png" />
     <None Remove="Views\Resources\customer.png" />
     <None Remove="Views\Resources\no-image.png" />
+    <None Remove="Views\Resources\question_mark.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Views\Resources\customer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Views\Resources\question_mark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

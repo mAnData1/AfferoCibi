@@ -70,6 +70,7 @@
                 />
         </DockPanel>
         <Button
+            Background="OrangeRed"
             Grid.Row="4"
             Margin="10 5 10 5"
             Content="Add to cart"

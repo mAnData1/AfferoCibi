@@ -62,6 +62,7 @@
                 />
         </DockPanel>
         <Button
+            Background="OrangeRed"
             Command="{Binding  SubmitCommand}"
             FontSize="26"
             Name="btnSubmitAdmin"
@@ -71,6 +72,22 @@
             MaxWidth="350"
             Content="Submit"
             />
+        <Button
+            Grid.Row="6"
+            Grid.Column="0"
+            Margin="10"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Command="{Binding NavigateHelp}"
+           >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="35"/>
+                </Style>
+            </Button.Resources>
+
+            <Image Source="Resources/question_mark.png"/>
+        </Button>
 
     </Grid>
 </UserControl>

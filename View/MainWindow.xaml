@@ -6,6 +6,7 @@
         xmlns:views="clr-namespace:View.Views"
         xmlns:vms="clr-namespace:Data.ViewModels;assembly=Data"
         mc:Ignorable="d"
+        Background="DarkOrange"
         Title="MainWindow" Height="650" Width="800">
     <Grid Margin="10 20">
         <Grid.Resources>
@@ -22,7 +23,7 @@
                 <views:AdminLogIn/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:CustomerListOfOrdersViewModel}">
-                <views:CustomerListOfOrdera/>
+                <views:CustomerListOfOrders/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:CustomerOrderingViewModel}">
                 <views:CustomerOrdering/>
@@ -33,5 +34,6 @@
         </Grid.Resources>
         
         <ContentControl Content="{Binding CurrentViewModel}"/>
+        <views:Help></views:Help>
     </Grid>
 </Window>

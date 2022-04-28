@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,18 +11,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace View.Views
 {
     /// <summary>
-    /// Interaction logic for CustomerListOfOrdera.xaml
+    /// Interaction logic for Help.xaml
     /// </summary>
-    public partial class CustomerListOfOrdera : Window
+    public partial class Help : UserControl
     {
-        public CustomerListOfOrdera()
+        public Help()
         {
             InitializeComponent();
+           
         }
+
     }
 }

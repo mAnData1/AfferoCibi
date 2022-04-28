@@ -12,10 +12,26 @@ namespace Data.ViewModels
     {
         private Order order;
 
-        public Guid Id => order.Id;
-        public DateTime DateOfLastModified => order.DateOfLastModified;
-        public OrderStatus OrderStatus => order.OrderStatus;    
-
+        public Guid Id 
+        {
+            get {return order.Id;}
+            set { order.Id = value; }    
+        }
+        public DateTime DateOfLastModified
+        { 
+            get {return order.DateOfLastModified;}
+            set { order.DateOfLastModified = value;}
+        }
+        public OrderStatus OrderStatus
+        {
+            get {return order.OrderStatus;}
+            set { order.OrderStatus = value;}
+        }
+        public string Address 
+        { 
+            get { return order.Address;} 
+            set { order.Address = value;} 
+        }
         public OrderViewModel(Order order)
         {
                 this.order = order;

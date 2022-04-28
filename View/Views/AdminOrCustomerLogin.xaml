@@ -8,18 +8,20 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            
             <RowDefinition Height="329*"/>
-            <RowDefinition Height="121*"/>
+            <RowDefinition Height="81*"/>
         </Grid.RowDefinitions>
 
         <Image
             Source="Resources/admin.png"
-            Grid.Column="0"
+            Grid.Column="1"
             Grid.Row="0"
             Stretch="Uniform"
             Margin="5 0 5 5"
@@ -27,15 +29,16 @@
 
         <Image
             Source="Resources/customer.png"
-            Grid.Column="1"
+            Grid.Column="2"
             Grid.Row="0"
             Stretch="Uniform"
             Margin="5 0 5 5"
             />
 
-        <Grid Grid.Column="1"
+        <Grid Grid.Column="2"
               Grid.Row="1">
             <Button 
+                Background="OrangeRed"
                 Command="{Binding CustomerLogIn}"
                 Name="btnLogInCustomer"
                 FontSize="24"                
@@ -48,8 +51,10 @@
                Padding=" 10 5 10 5"
             />
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1"
+              Grid.Column="1">
             <Button 
+                Background="OrangeRed"
                 Command="{Binding AdminLogIn}"
                 Name="btnLogInAdmin"
                 FontSize="24"
@@ -63,7 +68,22 @@
                 Padding=" 10 5 10 5"
             />
         </Grid>
+        <Button
+            Grid.Row="6"
+            Grid.Column="0"
+            Margin="10"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Command="{Binding NavigateHelp}"
+           >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="35"/>
+                </Style>
+            </Button.Resources>
 
+            <Image Source="Resources/question_mark.png"/>
+        </Button>
 
     </Grid>
 </UserControl>
