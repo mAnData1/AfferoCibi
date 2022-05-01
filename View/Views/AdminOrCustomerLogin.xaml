@@ -74,7 +74,7 @@
             Margin="10"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
-            Command="{Binding NavigateHelp}"
+            Command="{Binding NavigateToHelp}"
            >
             <Button.Resources>
                 <Style TargetType="Border">

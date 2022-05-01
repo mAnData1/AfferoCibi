@@ -59,7 +59,7 @@
             <Button
              Height="50"
              Width="50"
-                Command="{Binding NavigateHelp}"
+                Command="{Binding NavigateToHelp}"
            >
                 <Button.Resources>
                     <Style TargetType="Border">

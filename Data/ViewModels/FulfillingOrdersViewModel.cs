@@ -1,4 +1,6 @@
-﻿using Data.Entities;
+﻿using Data.Commands;
+using Data.Entities;
+using Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +11,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class FulfillingOrdersViewModel : BaseViewModel
+    public class FulfillingOrdersViewModel : BaseHelpViewModel
     {
         private ObservableCollection<MealViewModel> meals;
         public ObservableCollection<MealViewModel> Meals
@@ -28,11 +30,13 @@ namespace Data.ViewModels
         public ICommand SendOrderCommand { get; }
         public ICommand RejectOrderCommand { get; }
 
-        public FulfillingOrdersViewModel()
+        public NavigateCommand NavigateToAdminCorrectionsCommand { get; }
+        public FulfillingOrdersViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService)
+            : base(helpNavigationService)
         {
             this.meals = new ObservableCollection<MealViewModel>();
             this.orders = new ObservableCollection<OrderViewModel>();
-
+            NavigateToAdminCorrectionsCommand = new NavigateCommand(adminCorrectionsNavigationService);
         }
     }
 }

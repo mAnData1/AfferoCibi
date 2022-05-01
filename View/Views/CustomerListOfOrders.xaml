@@ -16,17 +16,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Button
+            Background="Orange"
             Grid.Column="1"
             Margin=" 100 15"
             Content="Make another order"
-            FontSize="22"/>
+            FontSize="22"
+            Command="{Binding NavigateToCustomerOrdering}"/>
         <Button
             Grid.Row="0"
             Grid.Column="0"            
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             Margin="10"
-            Command="{Binding NavigateHelp}"
+            Command="{Binding NavigateToHelp}"
            >
             <Button.Resources>
                 <Style TargetType="Border">
@@ -41,7 +43,7 @@
             Grid.Row="1"
             Grid.Column="1"
             x:Name="Meals"
-            ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding Orders, UpdateSourceTrigger=PropertyChanged}"
             AutoGenerateColumns="True"
             FontSize="26"
             Margin=" 10"/>

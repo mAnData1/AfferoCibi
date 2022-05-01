@@ -9,8 +9,15 @@ namespace Data.Stores
 {
     public class NavigationStore
     {
-        private BaseViewModel currentViewModel;
+        private BaseViewModel prevViewModel;
 
+        public BaseViewModel PrevViewModel
+        {
+            get { return prevViewModel; }
+            set { prevViewModel = value; OnCurrentViewModelChanged(); }
+        }
+
+        private BaseViewModel currentViewModel;
         public BaseViewModel CurrentViewModel
         {
             get { return currentViewModel; }
