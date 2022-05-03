@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Data.Services;
+using DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace View
 {
@@ -16,6 +18,7 @@ namespace View
     /// </summary>
     public partial class App : Application
     {
+        private const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=LiteraDB";
         private readonly NavigationStore navigationStore;
         public App()
         {
@@ -23,6 +26,13 @@ namespace View
         }
         protected override void OnStartup(StartupEventArgs e)
         {
+            DbContextOptions<AfferoCibiDBContext> options = new DbContextOptionsBuilder<AfferoCibiDBContext>().UseSqlServer(ConnectionString).Options;
+            using (AfferoCibiDBContext afferoCibiDBContext = new AfferoCibiDBContext(options))
+            {
+                afferoCibiDBContext.Database.Migrate();
+            }
+
+
             navigationStore.CurrentViewModel = new AdminOrCustomerLogInViewModel(
                 new NavigationService( navigationStore, CreateCustomerOrderingViewModel, CreateAdminOrCustomerLogInViewModel), 
                 new NavigationService(navigationStore, CreateAdminLiginViewModel, CreateAdminOrCustomerLogInViewModel),

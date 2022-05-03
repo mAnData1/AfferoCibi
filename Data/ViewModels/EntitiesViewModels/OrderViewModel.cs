@@ -12,11 +12,6 @@ namespace Data.ViewModels
     {
         private Order order;
 
-        public Guid Id 
-        {
-            get {return order.Id;}
-            set { order.Id = value; }    
-        }
         public DateTime DateOfLastModified
         { 
             get {return order.DateOfLastModified;}

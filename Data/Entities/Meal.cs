@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    public class Meal : BaseEntity
+    public class Meal
     {
         public byte[] MealImage { get; set; }
         public string Name { get; set; }
@@ -15,7 +15,6 @@ namespace Data.Entities
 
         public Meal(byte[] MealImage, string name, decimal price, string ingredients)
         {
-            Id = Guid.NewGuid();
             this.MealImage = MealImage;
             Name = name;
             Price = price;  

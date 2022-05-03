@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Entities
+namespace Data.Services
 {
-    public class BaseEntity
+    public class MealService
     {
-        public Guid Id { get; set; }
     }
 }
