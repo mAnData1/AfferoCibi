@@ -11,25 +11,16 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
     public class DeleteMeal : BaseCommand
     {
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
-
+        private MealCardAdminViewModel mealCardAdminViewModel;
         public override void Execute(object? parameter)
         {
-            
+            adminCorrectionsViewModel.Meals.Remove(mealCardAdminViewModel);
         }
 
-        //public override bool CanExecute(object? parameter)
-        //{
-        //    if (adminCorrectionsViewModel.SelectedMeal == null)
-        //    {
-        //        return false && Enabled && base.CanExecute(parameter);
-        //    }
-        //    else
-        //        return true && Enabled && base.CanExecute(parameter);
-        //}
-
-        public DeleteMeal(AdminCorrectionsViewModel adminCorrectionsViewModel)
+        public DeleteMeal(AdminCorrectionsViewModel adminCorrectionsViewModel, MealCardAdminViewModel mealCardAdminViewModel)
         {
             this.adminCorrectionsViewModel = adminCorrectionsViewModel;
+            this.mealCardAdminViewModel = mealCardAdminViewModel;
         }
 
     }

@@ -16,11 +16,11 @@ namespace Data.Entities
 
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Processing;
 
-        public Order(string address, DateTime modified, OrderStatus orderStatus)
+        public Order(string address, DateTime modified)
         {
             Address = address;
             DateOfLastModified = modified;
-            OrderStatus = orderStatus;
+
         }
     }
 }

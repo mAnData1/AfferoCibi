@@ -17,6 +17,11 @@ namespace Data.ViewModels
             get {return order.DateOfLastModified;}
             set { order.DateOfLastModified = value;}
         }
+        public virtual List<Meal> Meal
+        {
+            get { return order.Meals; }
+            set { order.Meals = value; }
+        }
         public OrderStatus OrderStatus
         {
             get {return order.OrderStatus;}

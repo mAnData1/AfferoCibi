@@ -85,7 +85,7 @@
                     FontSize="20"/>
                 <Button
                     Background="OrangeRed"
-                    Command="{Binding FinishCommand}"
+                    Command="{Binding FinishOrderCommand}"
                     Margin="5 0 5 5"
                     FontSize="26"
                     Content="Finish Order"/>

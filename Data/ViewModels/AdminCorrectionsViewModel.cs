@@ -15,7 +15,15 @@ namespace Data.ViewModels
 {
    public class AdminCorrectionsViewModel : BaseHelpViewModel
     {
-        public ObservableCollection<MealViewModel> meals { get; set;}
+        public ObservableCollection<MealCardAdminViewModel> Meals { get; set;}
+
+        private MealCardAdminViewModel selectedMeal;
+        public MealCardAdminViewModel SelectedMeal 
+        {
+            get { return selectedMeal; }
+            set { selectedMeal = value; 
+                OnPropertyChaneg(nameof(SelectedMeal));}  
+        }
 
         private byte[] inputImage;
 
@@ -51,23 +59,19 @@ namespace Data.ViewModels
         public NavigateCommand ProceedCommand { get; }
         public BaseCommand UploadImageCommand { get; }
         public BaseCommand AddMealCommand { get ; }
-        public BaseCommand DeleteMealCommand { get; }
-        public BaseCommand UpdateMealCommand { get; }
         public BaseCommand SaveChangesCommand { get; }
 
         public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService)
             :base(helpNavigationService)
         {
-            meals = new ObservableCollection<MealViewModel>();
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            Meals = new ObservableCollection<MealCardAdminViewModel>();
+            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
+            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
+            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
+            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
             ProceedCommand = new NavigateCommand(fulfillingOrdersViewNavigation);
             AddMealCommand = new AddMeal(this);
-            UpdateMealCommand = new UpdateMeal(this);
             SaveChangesCommand = new SaveChanges(this);
-            DeleteMealCommand = new DeleteMeal(this);
         }
 
     }

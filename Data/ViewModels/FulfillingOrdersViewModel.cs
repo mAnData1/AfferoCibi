@@ -1,4 +1,5 @@
 ﻿using Data.Commands;
+using Data.Commands.FulfilingOrderCommands;
 using Data.Entities;
 using Data.Services;
 using System;
@@ -13,6 +14,15 @@ namespace Data.ViewModels
 {
     public class FulfillingOrdersViewModel : BaseHelpViewModel
     {
+        private int selectedOrderIndex = -1;
+
+        public int SelectedOrderIndex
+        {
+            get { return selectedOrderIndex; }
+            set { selectedOrderIndex = value; OnPropertyChaneg(nameof(SelectedOrderIndex)); }
+        }
+
+
         private ObservableCollection<MealViewModel> meals;
         public ObservableCollection<MealViewModel> Meals
         {
@@ -27,15 +37,20 @@ namespace Data.ViewModels
             set { orders = value; }
         }
 
-        public ICommand SendOrderCommand { get; }
-        public ICommand RejectOrderCommand { get; }
-
+        public SendOrder SendOrderCommand { get; }
+        public RejectOrder RejectOrderCommand { get; }
         public NavigateCommand NavigateToAdminCorrectionsCommand { get; }
         public FulfillingOrdersViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService)
             : base(helpNavigationService)
         {
+            Orders =  new ObservableCollection<OrderViewModel>();
+            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
+            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
+            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
+            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
+            SendOrderCommand = new SendOrder(this);
+            RejectOrderCommand = new RejectOrder(this);
             this.meals = new ObservableCollection<MealViewModel>();
-            this.orders = new ObservableCollection<OrderViewModel>();
             NavigateToAdminCorrectionsCommand = new NavigateCommand(adminCorrectionsNavigationService);
         }
     }

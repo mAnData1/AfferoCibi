@@ -38,8 +38,8 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
         public override void Execute(object? parameter)
         {
             Meal meal = new Meal(adminCorrectionsViewModel.InputImage, adminCorrectionsViewModel.InputName, adminCorrectionsViewModel.InputPrice, adminCorrectionsViewModel.InputIngredients);
-            MealViewModel viewModel = new MealViewModel(meal);
-            adminCorrectionsViewModel.meals.Add(viewModel);
+            MealCardAdminViewModel viewModel = new MealCardAdminViewModel(meal, adminCorrectionsViewModel);
+            adminCorrectionsViewModel.Meals.Add(viewModel);
             ClearTextBoxes();
         }
 

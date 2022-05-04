@@ -16,8 +16,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DataGrid
+            SelectedIndex="{Binding SelectedOrderIndex, UpdateSourceTrigger=PropertyChanged}"
+            SelectionMode="Single"
             Background="Orange"
-            ItemsSource="{Binding Orders, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding Orders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="OrderList"
             FontSize="26"
             AutoGenerateColumns="True"
@@ -54,7 +56,7 @@
             </Button>
             <Button
                 Background="OrangeRed"
-                Command="{Binding SentOrderCommand}"
+                Command="{Binding SendOrderCommand}"
                 Padding="20 10 20 10"
                 Margin="5"
                 FontSize="26"

@@ -29,9 +29,9 @@ namespace Data.ViewModels
             set { selectedOrderedMeal = value; OnPropertyChaneg(nameof(SelectedOrderedMeal)); }
         }
 
-        private ObservableCollection<MealViewModel>? meals;
+        private ObservableCollection<MealCardCustomerViewModel>? meals;
 
-        public ObservableCollection<MealViewModel>? Meals
+        public ObservableCollection<MealCardCustomerViewModel>? Meals
         {
             get { return meals; }
             set { meals = value; }
@@ -44,20 +44,21 @@ namespace Data.ViewModels
             set { orderedMeals = value; }
         }
 
-        public RemoveMeal RemoveCommand { get; }
-        public ICommand? FinishCommand { get; }
+        public BaseCommand RemoveCommand { get; }
+        public BaseCommand FinishOrderCommand { get; }
         public NavigateCommand NavigateToCustomerListOfOtders { get; }
 
         public CustomerOrderingViewModel(NavigationService customerListOfOrders, NavigationService helpNavigationService)
             : base(helpNavigationService)
         {
             RemoveCommand = new RemoveMeal(this);
+            FinishOrderCommand = new FinishOrder(this, customerListOfOrders);
             NavigateToCustomerListOfOtders = new NavigateCommand(customerListOfOrders);
-            meals = new ObservableCollection<MealViewModel>();
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
-            meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
+            meals = new ObservableCollection<MealCardCustomerViewModel>();
+            meals.Add(new MealCardCustomerViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
+            meals.Add(new MealCardCustomerViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
+            meals.Add(new MealCardCustomerViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
+            meals.Add(new MealCardCustomerViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
             orderedMeals = new ObservableCollection<MealViewModel>();
         }
     }

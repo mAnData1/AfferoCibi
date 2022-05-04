@@ -12,15 +12,14 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
     public class SaveChanges : BaseCommand
     {
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
-        private int index = 0;
-        private MealViewModel updatedMeal;
-        private Meal meal;
+        private MealCardAdminViewModel mealCardAdminViewModel;
         public SaveChanges(AdminCorrectionsViewModel adminCorrectionsViewModel)
         {
             Enabled = false;
             this.adminCorrectionsViewModel = adminCorrectionsViewModel;
-            adminCorrectionsViewModel.PropertyChanged += TextBoxesChanged;
+            adminCorrectionsViewModel.PropertyChanged += UpdatedMealChanged;
             adminCorrectionsViewModel.AddMealCommand.Enabled = true;
+            this.mealCardAdminViewModel = adminCorrectionsViewModel.SelectedMeal;           
         }
         public override bool CanExecute(object? parameter)
         {
@@ -30,28 +29,35 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
         }
         public override void Execute(object? parameter)
         {
-            string Name = adminCorrectionsViewModel.InputName;
-            decimal Price = adminCorrectionsViewModel.InputPrice;
-            string Ingredients = adminCorrectionsViewModel.InputIngredients;
+            MealCardAdminViewModel updatedMeal = adminCorrectionsViewModel.Meals.First(m => m == mealCardAdminViewModel);
+            int index = adminCorrectionsViewModel.Meals.IndexOf(mealCardAdminViewModel);
+            updatedMeal.Name = adminCorrectionsViewModel.InputName;
+            updatedMeal.Price = adminCorrectionsViewModel.InputPrice;
+            updatedMeal.Ingredients = adminCorrectionsViewModel.InputIngredients;
 
-            
-
+            adminCorrectionsViewModel.Meals.Insert(index, updatedMeal);
+            adminCorrectionsViewModel.Meals.RemoveAt(index+1);
+            Enabled = false;
+            adminCorrectionsViewModel.AddMealCommand.Enabled = true;
             ClearTextBoxes();
         }
-        private void TextBoxesChanged(object? sender, PropertyChangedEventArgs e)
+        private void UpdatedMealChanged(object? sender, PropertyChangedEventArgs e)
         {
-           if (e.PropertyName == nameof(adminCorrectionsViewModel.InputName)
-               || e.PropertyName == nameof(adminCorrectionsViewModel.InputPrice)
-               || e.PropertyName == nameof(adminCorrectionsViewModel.InputIngredients))
-            {
-                OnExecutedChanged();
-            }
+           if (e.PropertyName == nameof(adminCorrectionsViewModel.SelectedMeal))
+           {
+                OnUpdatedMealChanged();
+           }
         }
         private void ClearTextBoxes()
         {
             adminCorrectionsViewModel.InputName = "";
             adminCorrectionsViewModel.InputPrice = 0;
             adminCorrectionsViewModel.InputIngredients = "";
+        }
+
+        private void OnUpdatedMealChanged()
+        {
+            mealCardAdminViewModel = adminCorrectionsViewModel.SelectedMeal;
         }
     }
 }

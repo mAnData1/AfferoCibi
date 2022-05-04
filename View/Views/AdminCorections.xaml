@@ -55,7 +55,7 @@
                 Grid.Column="1"
                 Grid.RowSpan="6">
             <ItemsControl               
-                ItemsSource="{Binding meals}"
+                ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 x:Name="MealList"                       
                 Margin="5">
                 <ItemsControl.ItemTemplate>

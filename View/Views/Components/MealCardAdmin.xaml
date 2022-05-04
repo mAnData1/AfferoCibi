@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" Width="360">
     <UserControl.Resources>
-
+        <BitmapImage x:Key="DefaultImage" UriSource="C:\Users\Yordan Mandevski\source\repos\AfferoCibi\View\Views\Resources\no-image.png"/>
         <Converter:ByteArrayToBitmapImageConverter x:Key="imageConverter"/>
     </UserControl.Resources>
     
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <Image            
-            Source="{Binding MealImage, Converter ={StaticResource imageConverter}, Mode=TwoWay, TargetNullValue=DefaultImage}"
+            Source="{Binding MealImage, Converter ={StaticResource imageConverter}, Mode=TwoWay, TargetNullValue={StaticResource DefaultImage}}"
             Stretch="Uniform"/>
 
         <DockPanel
@@ -73,20 +73,21 @@
                 />
         </DockPanel>
         <Button
-            Click="Button_Click"
-            Command="{Binding Update}"
+            Command="{Binding UpdateCommand}"
+            x:Name="UpdateButton"
             Background="OrangeRed"
             Grid.Row="4"
             Margin="10 5 10 5"
             Content="Update"
-            FontSize="20"/>
+            FontSize="22"/>
         <Button
+            Command="{Binding DeleteCommand}"
+            x:Name="DeleteButton"
             Background="OrangeRed"
             Grid.Row="5"
-                Command="{Binding DeleteMealCommand}"
-                FontSize="22"
-                Margin="10 5 10 5"                
-                Content="Delete selected meal"/>
+            FontSize="22"
+            Margin="10 5 10 5"                
+            Content="Delete selected meal"/>
 
     </Grid>
 </UserControl>

@@ -1,4 +1,4 @@
-﻿using Data.Entities.enums;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +16,7 @@ namespace DataAccess.DTOs
         [Required]
         public DateTime DateOfLastModified { get; set; }
         [Required]
-        public OrderStatus OrderStatus { get; set; } = OrderStatus.Processing;
+        public string OrderStatus { get; set; } = "Processing";
 
         public virtual List<MealDTO> Meals { get; set; }
     }
