@@ -2,6 +2,7 @@
 using Data.Commands.AdminCorrectionsViewModelCommands;
 using Data.Entities;
 using Data.Services;
+using Data.Services.Interfaces;
 using Data.Stores;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,33 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-   public class AdminCorrectionsViewModel : BaseHelpViewModel
+   public class AdminCorrectionsViewModel : BaseViewModelWithMealServices
     {
         public ObservableCollection<MealCardAdminViewModel> Meals { get; set;}
 
-        private MealCardAdminViewModel selectedMeal;
-        public MealCardAdminViewModel SelectedMeal 
+        private Guid updatedMealID;
+        public Guid UpdatedMealID
         {
-            get { return selectedMeal; }
-            set { selectedMeal = value; 
-                OnPropertyChaneg(nameof(SelectedMeal));}  
+            get { return updatedMealID; }
+            set
+            {
+                updatedMealID = value;
+                OnPropertyChanged(nameof(UpdatedMealID));
+            }
         }
+
+        private MealCardAdminViewModel updatedMeal;
+
+        public MealCardAdminViewModel UpdatedMeal
+        {
+            get { return updatedMeal; }
+            set 
+            { 
+                updatedMeal = value;
+                OnPropertyChanged(nameof(UpdatedMeal));
+            }
+        }
+
 
         private byte[] inputImage;
 
@@ -37,7 +54,7 @@ namespace Data.ViewModels
         public string InputName
         {
             get { return inputName; }
-            set { inputName = value; OnPropertyChaneg(nameof(InputName));}
+            set { inputName = value; OnPropertyChanged(nameof(InputName));}
         }
 
         private decimal inputPrice;
@@ -45,7 +62,7 @@ namespace Data.ViewModels
         public decimal InputPrice
         {
             get { return inputPrice; }
-            set { inputPrice = value; OnPropertyChaneg(nameof(InputPrice));}
+            set { inputPrice = value; OnPropertyChanged(nameof(InputPrice));}
         }
 
         private string inputIngredients;
@@ -53,25 +70,43 @@ namespace Data.ViewModels
         public string InputIngredients
         {
             get { return inputIngredients; }
-            set { inputIngredients = value; OnPropertyChaneg(nameof(InputIngredients)); }
+            set { inputIngredients = value; OnPropertyChanged(nameof(InputIngredients)); }
         }
 
         public NavigateCommand ProceedCommand { get; }
         public BaseCommand UploadImageCommand { get; }
         public BaseCommand AddMealCommand { get ; }
         public BaseCommand SaveChangesCommand { get; }
+        public BaseCommand LoadMealsCommand { get; }
 
-        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService)
-            :base(helpNavigationService)
+        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, IMealService mealService)
+            : base(helpNavigationService, mealService)
         {
             Meals = new ObservableCollection<MealCardAdminViewModel>();
-            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
-            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
-            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
-            Meals.Add(new MealCardAdminViewModel(new Meal(null, "test", 12.34m, "tomates"), this));
+            LoadMealsCommand = new LoadMeals<AdminCorrectionsViewModel>(this);           
             ProceedCommand = new NavigateCommand(fulfillingOrdersViewNavigation);
             AddMealCommand = new AddMeal(this);
-            SaveChangesCommand = new SaveChanges(this);
+            SaveChangesCommand = new SaveChanges(this);          
+        }
+
+        public static AdminCorrectionsViewModel LoadViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, IMealService mealService)
+        {
+            AdminCorrectionsViewModel viewModel = new AdminCorrectionsViewModel(fulfillingOrdersViewNavigation, helpNavigationService, mealService);
+            viewModel.LoadMealsCommand.Execute(null);
+            return viewModel;
+        }
+
+        public override void LoadMealsList(List<Meal> meals)
+        {
+            Meals.Clear();
+            foreach (var meal in meals)
+            {
+                Meals.Add(new MealCardAdminViewModel(meal,this));
+            }
+        }
+        public void RefreshMealsList()
+        {
+            LoadMealsCommand?.Execute(null);
         }
 
     }

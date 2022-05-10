@@ -1,8 +1,10 @@
 ﻿using Data.Entities;
 using Data.Services;
+using Data.Services.Interfaces;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -10,22 +12,29 @@ using System.Threading.Tasks;
 
 namespace Data.Commands.CustomerOrderingCommands
 {
-    public class FinishOrder : BaseCommand
+    public class FinishOrder : BaseAsyncCommand
     {
         private CustomerOrderingViewModel customerOrderingViewModel;
         private readonly NavigationService customerListOfOrdersNavigate;
+        private readonly IOrderService orderService;
 
-        public FinishOrder(CustomerOrderingViewModel customerOrderingViewModel, NavigationService customerListOfOrdersNavigate)
+        public FinishOrder(CustomerOrderingViewModel customerOrderingViewModel, NavigationService customerListOfOrdersNavigate, IOrderService orderService)
         {
             this.customerOrderingViewModel = customerOrderingViewModel;
             this.customerListOfOrdersNavigate = customerListOfOrdersNavigate;
-            customerOrderingViewModel.PropertyChanged += MealsAndAdressChanged;
+            customerOrderingViewModel.PropertyChanged += AdressChanged;
+            customerOrderingViewModel.OrderedMeals.CollectionChanged += MealsChanged;
+            this.orderService = orderService;
         }
 
-        private void MealsAndAdressChanged(object? sender, PropertyChangedEventArgs e)
+        private void MealsChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(customerOrderingViewModel.Address) 
-                || e.PropertyName == nameof(customerOrderingViewModel.OrderedMeals))
+            OnExecutedChanged();
+        }
+
+        private void AdressChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(customerOrderingViewModel.Address))
             {
                 OnExecutedChanged();
             }
@@ -33,8 +42,10 @@ namespace Data.Commands.CustomerOrderingCommands
 
         public override bool CanExecute(object? parameter)
         {
-            if (customerOrderingViewModel.OrderedMeals != null && customerOrderingViewModel.OrderedMeals.Count != 0
-                && customerOrderingViewModel.Address != "")
+            if (customerOrderingViewModel.OrderedMeals != null 
+                && customerOrderingViewModel.OrderedMeals.Count != 0
+                && customerOrderingViewModel.Address != ""
+                && customerOrderingViewModel.Address != null)
             {
                 return true
                     && base.CanExecute(parameter);
@@ -42,9 +53,9 @@ namespace Data.Commands.CustomerOrderingCommands
             return false;
         }
 
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
-            OrderViewModel orderViewModel = new OrderViewModel(CreateOrder());
+            await orderService.Create(CreateOrder());   
             customerListOfOrdersNavigate.Navigate();
         }
 

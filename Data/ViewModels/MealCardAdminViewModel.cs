@@ -17,7 +17,6 @@ namespace Data.ViewModels
             UpdateCommand = new UpdateMeal(adminCorrectionsViewModel,this);
             DeleteCommand = new DeleteMeal(adminCorrectionsViewModel, this);
         }
-
         public BaseCommand UpdateCommand { get; }
         public BaseCommand DeleteCommand { get; }
     }

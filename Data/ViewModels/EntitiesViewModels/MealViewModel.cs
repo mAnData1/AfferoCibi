@@ -35,5 +35,9 @@ namespace Data.ViewModels
             this.meal = meal;
         }
 
+        public Meal ViewModelToModel(MealViewModel mealViewModel)
+        {
+            return new Meal(mealViewModel.MealImage, mealViewModel.Name, mealViewModel.Price, mealViewModel.Ingredients);
+        }
     }
 }

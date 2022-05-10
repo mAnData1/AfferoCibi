@@ -18,7 +18,6 @@ namespace Data.ViewModels
         {
             get { return orders; }
         }
-
         public NavigateCommand NavigateToCustomerOrdering { get; }
         public CustomerListOfOrdersViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService)
             : base(helpNavigationService)

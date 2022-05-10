@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public class BaseHelpViewModel: BaseViewModel
+    public abstract class BaseHelpViewModel: BaseViewModel
     {
         public NavigateCommand NavigateToHelp { get; }
         public BaseHelpViewModel(NavigationService helpNavigationService)

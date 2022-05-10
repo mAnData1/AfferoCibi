@@ -14,18 +14,20 @@ namespace DataAccess
         {
         }
 
-        public DbSet<MealDTO> meals { get; set; }
+        public DbSet<MealDTO> Meals { get; set; }
 
         public DbSet<AdminDTO> Admins { get; set; }
 
         public DbSet<OrderDTO> Orders { get; set; }
 
+        public DbSet<MealsOrdersDTO> MealsOrders { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MealDTO>().
-                HasOne(m => m.Order).
-                WithMany(o => o.Meals).
-                HasForeignKey(m => m.OrderId);
+                Property(m => m.Price).
+                HasColumnType("decimal(10,2)");
+              
             modelBuilder.Entity<MealDTO>().
                 HasIndex(m => m.Name);
         }

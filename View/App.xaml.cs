@@ -10,6 +10,8 @@ using System.Windows;
 using Data.Services;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Data.Services.Interfaces;
+using DataAccess.Repositories;
 
 namespace View
 {
@@ -18,22 +20,27 @@ namespace View
     /// </summary>
     public partial class App : Application
     {
-        private const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=LiteraDB";
+        private const string ConnectionString = "Server=DESKTOP-QNFMT3E;Database=AfferoCibiDb;Trusted_Connection=True;";
         private readonly NavigationStore navigationStore;
+        private readonly IMealService mealService;
+        private readonly IOrderService orderService;
+        private readonly AfferoCibiDBContextFactory DbFactory;
+
         public App()
         {
+            DbFactory = new AfferoCibiDBContextFactory(ConnectionString);
             navigationStore = new NavigationStore();
+            mealService = new MealService(new MealRepository(DbFactory.CreateDbContext()));
+            orderService = new OrderService(new OrderRepository(DbFactory.CreateDbContext()), new MealRepository(DbFactory.CreateDbContext()));
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            DbContextOptions<AfferoCibiDBContext> options = new DbContextOptionsBuilder<AfferoCibiDBContext>().UseSqlServer(ConnectionString).Options;
-            using (AfferoCibiDBContext afferoCibiDBContext = new AfferoCibiDBContext(options))
+            using (AfferoCibiDBContext afferoCibiDBContext = DbFactory.CreateDbContext())
             {
                 afferoCibiDBContext.Database.Migrate();
             }
 
-
-            navigationStore.CurrentViewModel = new AdminOrCustomerLogInViewModel(
+            navigationStore.CurrentViewModel = new AdminOrCustomerLogInViewModel( 
                 new NavigationService( navigationStore, CreateCustomerOrderingViewModel, CreateAdminOrCustomerLogInViewModel), 
                 new NavigationService(navigationStore, CreateAdminLiginViewModel, CreateAdminOrCustomerLogInViewModel),
                 new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminOrCustomerLogInViewModel));
@@ -62,8 +69,8 @@ namespace View
         }
         private AdminCorrectionsViewModel CreateAdminCorrectionsViewModel()
         {
-            return new AdminCorrectionsViewModel(new NavigationService(navigationStore,CreateFulfillingOrdersViewModel, CreateAdminCorrectionsViewModel),
-                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminCorrectionsViewModel));
+            return AdminCorrectionsViewModel.LoadViewModel(new NavigationService(navigationStore,CreateFulfillingOrdersViewModel, CreateAdminCorrectionsViewModel),
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminCorrectionsViewModel), mealService);
         }
         private AdminLogInViewModel CreateAdminLiginViewModel()
         {
@@ -77,8 +84,8 @@ namespace View
         }
         private CustomerOrderingViewModel CreateCustomerOrderingViewModel()
         {
-            return new CustomerOrderingViewModel(new NavigationService(navigationStore, CreateCustomerListOfOrdersViewModel, CreateCustomerOrderingViewModel),
-                new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerOrderingViewModel));
+            return CustomerOrderingViewModel.LoadViewModel(new NavigationService(navigationStore, CreateCustomerListOfOrdersViewModel, CreateCustomerOrderingViewModel),
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerOrderingViewModel), mealService, orderService);
         }
     }
 }

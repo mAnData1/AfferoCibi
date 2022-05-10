@@ -24,5 +24,11 @@ namespace View.Views
         {
             InitializeComponent();
         }
+
+        private void Refresh(object sender, RoutedEventArgs e)
+        {
+            OrderedMeals.Items.Refresh();
+        }
+
     }
 }

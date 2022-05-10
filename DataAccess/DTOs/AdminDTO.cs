@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DTOs
 {
-    public class AdminDTO :BaseModel
+    public class AdminDTO :BaseDTO
     {
         [Required]
         public string UserName { get; set; }

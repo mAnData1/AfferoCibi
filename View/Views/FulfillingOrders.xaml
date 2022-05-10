@@ -31,10 +31,14 @@
             ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="MealList"
             FontSize="26"
-            AutoGenerateColumns="True"
+            AutoGenerateColumns="False"
             Margin="5"
             Grid.Row="0"
-            Grid.Column="0"/>
+            Grid.Column="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <DockPanel
             Margin="0 5 0 5"
@@ -44,8 +48,7 @@
             <Button
             Width="50"
             Height="50"
-            Command="{Binding NavigateToHelp}"
-           >
+            Command="{Binding NavigateToHelp}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="35"/>

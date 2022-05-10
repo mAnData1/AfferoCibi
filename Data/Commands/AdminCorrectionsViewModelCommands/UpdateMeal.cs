@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Data.Commands.AdminCorrectionsViewModelCommands
 {
-    public class UpdateMeal : BaseCommand
+    public class UpdateMeal : BaseAsyncCommand
     {
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
         private MealCardAdminViewModel mealCardAdminViewModel;
 
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
             adminCorrectionsViewModel.AddMealCommand.Enabled = false;
             adminCorrectionsViewModel.SaveChangesCommand.Enabled = true;
@@ -22,7 +22,9 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
             adminCorrectionsViewModel.InputPrice = mealCardAdminViewModel.Price;
             adminCorrectionsViewModel.InputIngredients = mealCardAdminViewModel.Ingredients;
 
-            adminCorrectionsViewModel.SelectedMeal = mealCardAdminViewModel;
+
+            adminCorrectionsViewModel.UpdatedMeal = mealCardAdminViewModel;
+            adminCorrectionsViewModel.UpdatedMealID = await adminCorrectionsViewModel.mealService.GetID(mealCardAdminViewModel.ViewModelToModel(mealCardAdminViewModel));
         }
         public UpdateMeal(AdminCorrectionsViewModel adminCorrectionsViewModel, MealCardAdminViewModel mealCardAdminViewModel)
         {

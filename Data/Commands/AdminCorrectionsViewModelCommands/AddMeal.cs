@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.Services;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Data.Commands.AdminCorrectionsViewModelCommands
 {
-    public class AddMeal : BaseCommand
+    public class AddMeal : BaseAsyncCommand
     {
 
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
@@ -35,12 +36,15 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
             adminCorrectionsViewModel.InputPrice = 0;
             adminCorrectionsViewModel.InputIngredients = "";
         }
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
-            Meal meal = new Meal(adminCorrectionsViewModel.InputImage, adminCorrectionsViewModel.InputName, adminCorrectionsViewModel.InputPrice, adminCorrectionsViewModel.InputIngredients);
-            MealCardAdminViewModel viewModel = new MealCardAdminViewModel(meal, adminCorrectionsViewModel);
-            adminCorrectionsViewModel.Meals.Add(viewModel);
+            Meal meal = new Meal(adminCorrectionsViewModel.InputImage, adminCorrectionsViewModel.InputName,
+                adminCorrectionsViewModel.InputPrice, adminCorrectionsViewModel.InputIngredients);
+
+            await adminCorrectionsViewModel.mealService.Create(meal);
+
             ClearTextBoxes();
+            adminCorrectionsViewModel.RefreshMealsList();
         }
 
         private void TextBoxesChanged(object? sender, PropertyChangedEventArgs e)

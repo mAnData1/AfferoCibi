@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" Width="360">
     <UserControl.Resources>
-        <BitmapImage x:Key="DefaultImage" UriSource="C:\Users\Yordan Mandevski\source\repos\AfferoCibi\View\Views\Resources\no-image.png"/>
-        <Converter:ByteArrayToBitmapImageConverter x:Key="imageConverter"/>
+        <BitmapImage x:Key="DefaultImage" UriSource="..\Resources\no-image.png"/>
+
     </UserControl.Resources>
     
     <Grid>
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <Image            
-            Source="{Binding MealImage, Converter ={StaticResource imageConverter}, Mode=TwoWay, TargetNullValue={StaticResource DefaultImage}}"
+            Source="{Binding MealImage,  Mode=TwoWay, TargetNullValue={StaticResource DefaultImage}}"
             Stretch="Uniform"/>
 
         <DockPanel

@@ -1,5 +1,6 @@
 ﻿using DataAccess.DTOs;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
+    public class BaseRepository<DTO> : IBaseRepository<DTO> where DTO : BaseDTO
     {
         protected readonly AfferoCibiDBContext context;
 
@@ -17,52 +18,68 @@ namespace DataAccess.Repositories
         {
             this.context = context;
         }
-        public void Create(T entity)
+
+        public virtual async Task<ICollection<DTO>> GetAllAsync(Expression<Func<DTO, bool>>? filter = null)
         {
+            var set = context.Set<DTO>().AsQueryable();
 
-            context.Set<T>().Add(entity);
-            context.SaveChanges();
-
-        }
-
-        public void Delete(Guid id)
-        {
-
-
-            var entity = GetById(id);
-            if (entity == null)
-            {
-                throw new ArgumentException("");
-            }
-            context.Set<T>().Remove(entity);
-            context.SaveChanges();
-
-
-        }
-
-        public ICollection<T> GetAll(Expression<Func<T, bool>>? filter = null)
-        {
-
-            var set = context.Set<T>().AsQueryable();
             if (filter != null)
             {
                 set = set.Where(filter);
             }
-            return set.ToList();
 
+            return await set.ToListAsync();
+        }
+
+        public virtual async ValueTask<DTO?> GetByIdAsync(Guid id)
+        {
+            return await context.Set<DTO>().FindAsync(id);
+        }
+
+        public virtual async Task CreateAsync(DTO entity)
+        {
+            context.Set<DTO>().Add(entity);
+            await context.SaveChangesAsync();
+        }
+
+        public virtual async Task UpdateAsync(DTO entity)
+        {
+            var dbEntity = await GetByIdAsync(entity.Id);
+
+            if (dbEntity == null)
+            {
+                throw new ArgumentException($"No such {typeof(DTO)} with id: {entity.Id}");
+            }
+
+            context.Entry(dbEntity).CurrentValues.SetValues(entity);
+
+            await context.SaveChangesAsync();
+        }
+
+        public virtual async Task DeleteAsync(Guid id)
+        {
+            var entity = await GetByIdAsync(id);
+
+            if (entity == null)
+            {
+                throw new ArgumentException($"There is no such {typeof(DTO)} with id: {id}");
+            }
+
+            context.Set<DTO>().Remove(entity);
+
+            await context.SaveChangesAsync();
+        }
+
+        public DTO? GetById(Guid id)
+        {
+
+            return context.Set<DTO>().Find(id);
 
         }
 
-        public T? GetById(Guid id)
+        public void Update(DTO entity)
         {
-
-            return context.Set<T>().Find(id);
-
-        }
-
-        public void Update(T entity)
-        {
-            context.Set<T>().Update(entity);
+            context.Set<DTO>().Update(entity);
             context.SaveChanges();
         }
     }

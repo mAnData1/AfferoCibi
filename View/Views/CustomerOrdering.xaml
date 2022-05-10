@@ -6,7 +6,7 @@
              xmlns:components="clr-namespace:View.Views.Components"
              xmlns:Converter="clr-namespace:View.Converter"
              xmlns:local="clr-namespace:View.Views" 
-             mc:Ignorable="d" d:DesignWidth="800" Height="510">
+             mc:Ignorable="d" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
@@ -18,8 +18,8 @@
         </Grid.RowDefinitions>
         <ScrollViewer
             Grid.Row="0"
-                Grid.Column="1"
-                >
+            Grid.Column="1"
+            VerticalScrollBarVisibility="Auto">
             <ItemsControl
                 ItemsSource="{Binding Meals}"
                 x:Name="MealList"                       
@@ -33,22 +33,41 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <DataGrid
-            Background="Orange"
-            x:Name="OrderedMeals"
-            SelectionMode="Single"
-            ItemsSource="{Binding OrderedMeals, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"    
-            SelectedIndex="{Binding SelectedOrderedMeal,UpdateSourceTrigger=PropertyChanged}"
-            FontSize="26"
-            AutoGenerateColumns="True"
+        <ScrollViewer
             Grid.Column="0"
             Grid.Row="0"
-            Margin="5"/>
+            HorizontalScrollBarVisibility="Visible"
+            VerticalScrollBarVisibility="Disabled">
+            <DataGrid
+                Height="320"
+                Width="500"
+                HorizontalAlignment="Stretch"
+                IsReadOnly="True"            
+                Background="Orange"
+                x:Name="OrderedMeals"
+                SelectionMode="Single"
+                ItemsSource="{Binding OrderedMeals, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"    
+                SelectedIndex="{Binding SelectedOrderedMeal, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                FontSize="26"
+                Margin="5"
+                AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="Name" />
+                    <DataGridTextColumn Binding= "{Binding Price, Mode=OneWay}" Header="Price" />
+                    <DataGridTextColumn Binding="{Binding Ingredients, Mode=OneWay}" Header="Ingredients" />
+                </DataGrid.Columns>
+        </DataGrid>
+        </ScrollViewer>
         <StackPanel
             VerticalAlignment="Center"
             Grid.Column="0"
             Grid.Row="1">
-
+            <Button
+                Background="OrangeRed"
+                Click="Refresh"
+                Content="Refresh"
+                FontSize="26"
+                Margin="10 5 10 5"/>
             <Button
                 Background="OrangeRed"
                 Command="{Binding RemoveCommand}"

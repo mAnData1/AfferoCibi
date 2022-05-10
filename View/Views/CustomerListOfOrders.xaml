@@ -46,6 +46,7 @@
             ItemsSource="{Binding Orders, UpdateSourceTrigger=PropertyChanged}"
             AutoGenerateColumns="True"
             FontSize="26"
-            Margin=" 10"/>
+            Margin=" 10">
+        </DataGrid>
     </Grid>
 </UserControl>

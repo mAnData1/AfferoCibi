@@ -53,7 +53,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<byte[]>("MealImage")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
@@ -61,19 +60,35 @@ namespace DataAccess.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
 
-                    b.HasIndex("OrderId");
+                    b.ToTable("Meals");
+                });
 
-                    b.ToTable("meals");
+            modelBuilder.Entity("DataAccess.DTOs.MealsOrdersDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MealID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MealID");
+
+                    b.HasIndex("OrderID");
+
+                    b.ToTable("MealsOrders");
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.OrderDTO", b =>
@@ -99,20 +114,49 @@ namespace DataAccess.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("DataAccess.DTOs.MealDTO", b =>
+            modelBuilder.Entity("MealDTOOrderDTO", b =>
                 {
+                    b.Property<Guid>("MealsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrdersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MealsId", "OrdersId");
+
+                    b.HasIndex("OrdersId");
+
+                    b.ToTable("MealDTOOrderDTO");
+                });
+
+            modelBuilder.Entity("DataAccess.DTOs.MealsOrdersDTO", b =>
+                {
+                    b.HasOne("DataAccess.DTOs.MealDTO", "Meal")
+                        .WithMany()
+                        .HasForeignKey("MealID");
+
                     b.HasOne("DataAccess.DTOs.OrderDTO", "Order")
-                        .WithMany("Meals")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("OrderID");
+
+                    b.Navigation("Meal");
 
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("DataAccess.DTOs.OrderDTO", b =>
+            modelBuilder.Entity("MealDTOOrderDTO", b =>
                 {
-                    b.Navigation("Meals");
+                    b.HasOne("DataAccess.DTOs.MealDTO", null)
+                        .WithMany()
+                        .HasForeignKey("MealsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.DTOs.OrderDTO", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

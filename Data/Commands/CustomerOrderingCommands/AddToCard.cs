@@ -1,4 +1,5 @@
-﻿using Data.ViewModels;
+﻿using Data.Entities;
+using Data.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

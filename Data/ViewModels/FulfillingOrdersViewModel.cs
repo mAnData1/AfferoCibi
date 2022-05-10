@@ -19,7 +19,7 @@ namespace Data.ViewModels
         public int SelectedOrderIndex
         {
             get { return selectedOrderIndex; }
-            set { selectedOrderIndex = value; OnPropertyChaneg(nameof(SelectedOrderIndex)); }
+            set { selectedOrderIndex = value; OnPropertyChanged(nameof(SelectedOrderIndex)); }
         }
 
 

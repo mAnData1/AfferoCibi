@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Interfaces
 {
-    public interface IBaseRepository<T> where T : BaseModel
+    public interface IBaseRepository<T> where T : BaseDTO
     {
-        void Create(T entity);
-        void Delete(Guid id);
-        ICollection<T> GetAll(Expression<Func<T, bool>>? filter = null);
-        T? GetById(Guid id);
-        void Update(T entity);
+        Task CreateAsync(T entity);
+        Task DeleteAsync(Guid id);
+        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null);
+        ValueTask<T?> GetByIdAsync(Guid id);
+        Task UpdateAsync(T entity);
     }
 }

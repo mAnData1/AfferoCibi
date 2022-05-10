@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 
 namespace Data.Commands.AdminCorrectionsViewModelCommands
 {
-    public class SaveChanges : BaseCommand
+    public class SaveChanges : BaseAsyncCommand
     {
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
-        private MealCardAdminViewModel mealCardAdminViewModel;
+        private Guid id;
+        private MealCardAdminViewModel updatedMeal;
         public SaveChanges(AdminCorrectionsViewModel adminCorrectionsViewModel)
         {
             Enabled = false;
             this.adminCorrectionsViewModel = adminCorrectionsViewModel;
             adminCorrectionsViewModel.PropertyChanged += UpdatedMealChanged;
             adminCorrectionsViewModel.AddMealCommand.Enabled = true;
-            this.mealCardAdminViewModel = adminCorrectionsViewModel.SelectedMeal;           
+            id = adminCorrectionsViewModel.UpdatedMealID;           
         }
         public override bool CanExecute(object? parameter)
         {
@@ -27,23 +28,28 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
                 Enabled
                 && base.CanExecute(parameter);
         }
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
-            MealCardAdminViewModel updatedMeal = adminCorrectionsViewModel.Meals.First(m => m == mealCardAdminViewModel);
-            int index = adminCorrectionsViewModel.Meals.IndexOf(mealCardAdminViewModel);
+            
             updatedMeal.Name = adminCorrectionsViewModel.InputName;
             updatedMeal.Price = adminCorrectionsViewModel.InputPrice;
             updatedMeal.Ingredients = adminCorrectionsViewModel.InputIngredients;
 
-            adminCorrectionsViewModel.Meals.Insert(index, updatedMeal);
-            adminCorrectionsViewModel.Meals.RemoveAt(index+1);
+            Meal meal = updatedMeal.ViewModelToModel(updatedMeal);
+
+            await adminCorrectionsViewModel.mealService.UpdateNameIncuded(id, meal);
+
+            adminCorrectionsViewModel.RefreshMealsList();
+            ClearTextBoxes();
+
             Enabled = false;
             adminCorrectionsViewModel.AddMealCommand.Enabled = true;
-            ClearTextBoxes();
+            
         }
         private void UpdatedMealChanged(object? sender, PropertyChangedEventArgs e)
         {
-           if (e.PropertyName == nameof(adminCorrectionsViewModel.SelectedMeal))
+           if (e.PropertyName == nameof(adminCorrectionsViewModel.UpdatedMeal)
+                || e.PropertyName == nameof(adminCorrectionsViewModel.UpdatedMealID))
            {
                 OnUpdatedMealChanged();
            }
@@ -57,7 +63,8 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
 
         private void OnUpdatedMealChanged()
         {
-            mealCardAdminViewModel = adminCorrectionsViewModel.SelectedMeal;
+            id = adminCorrectionsViewModel.UpdatedMealID;
+            updatedMeal = adminCorrectionsViewModel.UpdatedMeal;
         }
     }
 }

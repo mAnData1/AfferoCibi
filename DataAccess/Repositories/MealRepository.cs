@@ -1,5 +1,6 @@
 ﻿using DataAccess.DTOs;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,12 @@ namespace DataAccess.Repositories
         public MealRepository(AfferoCibiDBContext context) 
             : base(context)
         {
+        }
+        public async Task<Guid> GetIdThroughNameAsync(string name)
+        {
+            MealDTO mealDTO = await context.Set<MealDTO>().FirstAsync(x => x.Name == name);
+
+            return mealDTO.Id;
         }
     }
 }

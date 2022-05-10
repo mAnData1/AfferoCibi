@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DTOs
 {
-    public class OrderDTO : BaseModel
+    public class OrderDTO : BaseDTO
     {
         [Required]
         [StringLength(70, MinimumLength = 6, ErrorMessage = "{0} length must be between {2} and {1} symbols.")]

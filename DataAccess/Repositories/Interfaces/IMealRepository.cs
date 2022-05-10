@@ -9,5 +9,6 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IMealRepository : IBaseRepository<MealDTO>
     {
+        Task<Guid> GetIdThroughNameAsync(string name);
     }
 }
