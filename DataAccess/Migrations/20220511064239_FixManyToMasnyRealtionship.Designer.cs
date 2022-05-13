@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AfferoCibiDBContext))]
-    [Migration("20220510113029_AddMantToManyRelationship")]
-    partial class AddMantToManyRelationship
+    [Migration("20220511064239_FixManyToMasnyRealtionship")]
+    partial class FixManyToMasnyRealtionship
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,27 +72,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Meals");
                 });
 
-            modelBuilder.Entity("DataAccess.DTOs.MealsOrdersDTO", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("MealID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("OrderID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MealID");
-
-                    b.HasIndex("OrderID");
-
-                    b.ToTable("MealsOrders");
-                });
-
             modelBuilder.Entity("DataAccess.DTOs.OrderDTO", b =>
                 {
                     b.Property<Guid>("Id")
@@ -129,21 +108,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("OrdersId");
 
                     b.ToTable("MealDTOOrderDTO");
-                });
-
-            modelBuilder.Entity("DataAccess.DTOs.MealsOrdersDTO", b =>
-                {
-                    b.HasOne("DataAccess.DTOs.MealDTO", "Meal")
-                        .WithMany()
-                        .HasForeignKey("MealID");
-
-                    b.HasOne("DataAccess.DTOs.OrderDTO", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderID");
-
-                    b.Navigation("Meal");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("MealDTOOrderDTO", b =>

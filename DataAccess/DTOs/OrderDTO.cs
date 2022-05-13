@@ -18,6 +18,6 @@ namespace DataAccess.DTOs
         [Required]
         public string OrderStatus { get; set; } = "Processing";
 
-        public virtual List<MealDTO> Meals { get; set; }
+        public virtual ICollection<MealDTO> Meals { get; set; }
     }
 }

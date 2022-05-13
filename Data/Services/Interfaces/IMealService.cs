@@ -10,10 +10,10 @@ namespace Data.Services.Interfaces
 {
     public interface IMealService : IBaseService<MealDTO,Meal>
     {
-        Task<Guid> GetID(Meal model);
+        Task<Guid> GetIDAsync(Meal model);
 
-        Task<List<Meal>> ToMeals();
+        List<Meal> ToMeals(ICollection<MealDTO> mealsDTO);
 
-        Task UpdateNameIncuded(Guid id, Meal meal);
+        Task UpdateNameIncudedAsync(Guid id, Meal meal);
     }
 }

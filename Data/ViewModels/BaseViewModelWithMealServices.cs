@@ -1,5 +1,4 @@
-﻿using Data.Commands;
-using Data.Entities;
+﻿using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
 using System;
@@ -18,6 +17,6 @@ namespace Data.ViewModels
         {
             this.mealService = mealService;
         }
-        public abstract void LoadMealsList(List<Meal> meals);
+        public abstract void LoadMealsList(ICollection<Meal> meals);
     }
 }

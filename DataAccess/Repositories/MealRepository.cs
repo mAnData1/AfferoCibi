@@ -17,7 +17,7 @@ namespace DataAccess.Repositories
         }
         public async Task<Guid> GetIdThroughNameAsync(string name)
         {
-            MealDTO mealDTO = await context.Set<MealDTO>().FirstAsync(x => x.Name == name);
+            MealDTO mealDTO = await dbSet.FirstAsync(x => x.Name == name);
 
             return mealDTO.Id;
         }

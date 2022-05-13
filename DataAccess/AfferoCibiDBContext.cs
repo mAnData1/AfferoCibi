@@ -20,8 +20,6 @@ namespace DataAccess
 
         public DbSet<OrderDTO> Orders { get; set; }
 
-        public DbSet<MealsOrdersDTO> MealsOrders { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MealDTO>().

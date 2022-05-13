@@ -3,6 +3,7 @@ using Data.Commands.CustomerOrderingCommands;
 using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
+using DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public  class CustomerOrderingViewModel : BaseViewModelWithMealServices
+    public class CustomerOrderingViewModel : BaseViewModelWithMealServices
     {
         private IOrderService orderService;
         private string? address;
@@ -77,12 +78,12 @@ namespace Data.ViewModels
             return viewModel;
         }
 
-        public override void LoadMealsList(List<Meal> meals)
+        public override void LoadMealsList(ICollection<Meal> meals)
         {
             Meals.Clear();
             foreach (var meal in meals)
             {
-                Meals.Add(new MealCardCustomerViewModel(meal,this));
+                Meals.Add(new MealCardCustomerViewModel(meal, this));
             }
         }
     }

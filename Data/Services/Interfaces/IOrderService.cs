@@ -10,5 +10,6 @@ namespace Data.Services.Interfaces
 {
     public interface IOrderService : IBaseService<OrderDTO,Order>
     {
+        Task<ICollection<MealDTO>> GetMeals(ICollection<Meal> meals);
     }
 }

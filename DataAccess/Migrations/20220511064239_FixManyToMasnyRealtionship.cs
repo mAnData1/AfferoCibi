@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class AddMantToManyRelationship : Migration
+    public partial class FixManyToMasnyRealtionship : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,29 +75,6 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "MealsOrders",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MealID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MealsOrders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MealsOrders_Meals_MealID",
-                        column: x => x.MealID,
-                        principalTable: "Meals",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_MealsOrders_Orders_OrderID",
-                        column: x => x.OrderID,
-                        principalTable: "Orders",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_MealDTOOrderDTO_OrdersId",
                 table: "MealDTOOrderDTO",
@@ -107,16 +84,6 @@ namespace DataAccess.Migrations
                 name: "IX_Meals_Name",
                 table: "Meals",
                 column: "Name");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MealsOrders_MealID",
-                table: "MealsOrders",
-                column: "MealID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MealsOrders_OrderID",
-                table: "MealsOrders",
-                column: "OrderID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -126,9 +93,6 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "MealDTOOrderDTO");
-
-            migrationBuilder.DropTable(
-                name: "MealsOrders");
 
             migrationBuilder.DropTable(
                 name: "Meals");

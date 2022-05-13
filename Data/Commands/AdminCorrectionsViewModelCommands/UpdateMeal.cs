@@ -24,7 +24,7 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
 
 
             adminCorrectionsViewModel.UpdatedMeal = mealCardAdminViewModel;
-            adminCorrectionsViewModel.UpdatedMealID = await adminCorrectionsViewModel.mealService.GetID(mealCardAdminViewModel.ViewModelToModel(mealCardAdminViewModel));
+            adminCorrectionsViewModel.UpdatedMealID = await adminCorrectionsViewModel.mealService.GetIDAsync(mealCardAdminViewModel.ViewModelToModel(mealCardAdminViewModel));
         }
         public UpdateMeal(AdminCorrectionsViewModel adminCorrectionsViewModel, MealCardAdminViewModel mealCardAdminViewModel)
         {

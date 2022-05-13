@@ -41,7 +41,7 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
             Meal meal = new Meal(adminCorrectionsViewModel.InputImage, adminCorrectionsViewModel.InputName,
                 adminCorrectionsViewModel.InputPrice, adminCorrectionsViewModel.InputIngredients);
 
-            await adminCorrectionsViewModel.mealService.Create(meal);
+            await adminCorrectionsViewModel.mealService.CreateAsync(meal);
 
             ClearTextBoxes();
             adminCorrectionsViewModel.RefreshMealsList();

@@ -2,25 +2,43 @@
 using Data.Services.Interfaces;
 using DataAccess.DTOs;
 using DataAccess.Repositories;
+using DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Services
 {
-    public class OrderService : BaseService<OrderDTO, Order, OrderRepository>, IOrderService
+    public class OrderService : IOrderService
     {
-        private readonly MealRepository mealRepository;
-        public OrderService(OrderRepository repository, MealRepository mealRepository) : base(repository)
+        private readonly IUnitOfWork unitOfWork;
+
+        public OrderService(IUnitOfWork unitOfWork)
         {
-            this.mealRepository = mealRepository;
+            this.unitOfWork = unitOfWork;
+        }
+        public async Task CreateAsync(Order model)
+        {
+            await unitOfWork.OrderRepository.CreateAsync(await OnBeforeCreateAsync(model));
+            await unitOfWork.SaveAsync();
         }
 
-        public override async Task<OrderDTO> OnBeforeCreate(Order model)
+        public Task DeleteAsync(Order model)
         {
+            throw new NotImplementedException();
+        }
 
+        public async Task<ICollection<Order>> GetAllAsync(Expression<Func<Order, bool>>? filter = null)
+        {
+           return (ICollection<Order>)await unitOfWork.OrderRepository.GetAllAsync();
+
+        }
+
+        public async Task<OrderDTO> OnBeforeCreateAsync(Order model)
+        {
             return new OrderDTO
             {
                 Id = new Guid(),
@@ -29,14 +47,25 @@ namespace Data.Services
                 Meals = await GetMeals(model.Meals)
             };
         }
- 
-        private async Task<List<MealDTO>> GetMeals(List<Meal> meals)
+
+        public Task<OrderDTO> OnBeforeUpdateAsync(Order model)
         {
-            List<MealDTO> result = new List<MealDTO>();
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateAsync(Order model)
+        {
+            await unitOfWork.OrderRepository.UpdateAsync(await OnBeforeUpdateAsync(model));
+            await unitOfWork.SaveAsync();
+        }
+
+        public async Task<ICollection<MealDTO>> GetMeals(ICollection<Meal> meals)
+        {
+            ICollection<MealDTO> result = new List<MealDTO>();
 
             foreach (var meal in meals)
             {
-                result.Add(mealRepository.GetById(await mealRepository.GetIdThroughNameAsync(meal.Name)));
+                result.Add(await unitOfWork.MealRepository.GetByIdAsync(await unitOfWork.MealRepository.GetIdThroughNameAsync(meal.Name)));
             }
 
             return result;

@@ -23,8 +23,7 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
         public override async Task ExecuteAsync(object? parameter)
         {
             Meal meal = mealCardAdminViewModel.ViewModelToModel(mealCardAdminViewModel);
-            Guid id = await adminCorrectionsViewModel.mealService.GetID(meal);
-            await adminCorrectionsViewModel.mealService.Delete(id);
+            await adminCorrectionsViewModel.mealService.DeleteAsync(meal);
 
             adminCorrectionsViewModel.RefreshMealsList();
         }

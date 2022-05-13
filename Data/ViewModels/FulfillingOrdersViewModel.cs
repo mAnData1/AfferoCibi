@@ -2,6 +2,8 @@
 using Data.Commands.FulfilingOrderCommands;
 using Data.Entities;
 using Data.Services;
+using Data.Services.Interfaces;
+using DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +14,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class FulfillingOrdersViewModel : BaseHelpViewModel
+    public class FulfillingOrdersViewModel : BaseViewModelWithOrderService
     {
         private int selectedOrderIndex = -1;
 
@@ -34,24 +36,38 @@ namespace Data.ViewModels
         public ObservableCollection<OrderViewModel> Orders
         {
             get { return orders; }
-            set { orders = value; }
+            set { orders = value; OnPropertyChanged(nameof(Orders)); }
         }
 
+        public BaseCommand LoadOrdersCommand { get; }
         public SendOrder SendOrderCommand { get; }
         public RejectOrder RejectOrderCommand { get; }
         public NavigateCommand NavigateToAdminCorrectionsCommand { get; }
-        public FulfillingOrdersViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService)
-            : base(helpNavigationService)
+        public FulfillingOrdersViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, IOrderService orderService)
+            : base(helpNavigationService, orderService)
         {
-            Orders =  new ObservableCollection<OrderViewModel>();
-            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
-            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
-            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
-            Orders.Add(new OrderViewModel(new Order("something,someting", DateTime.Now)));
+            Meals = new ObservableCollection<MealViewModel>();
+            Orders = new ObservableCollection<OrderViewModel>();
             SendOrderCommand = new SendOrder(this);
             RejectOrderCommand = new RejectOrder(this);
-            this.meals = new ObservableCollection<MealViewModel>();
             NavigateToAdminCorrectionsCommand = new NavigateCommand(adminCorrectionsNavigationService);
+            LoadOrdersCommand = new LoadOrders<FulfillingOrdersViewModel>(this);
+        }
+
+        public static FulfillingOrdersViewModel LoadViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, IOrderService orderService)
+        {
+            FulfillingOrdersViewModel viewModel = new FulfillingOrdersViewModel(helpNavigationService, adminCorrectionsNavigationService, orderService);
+            viewModel.LoadOrdersCommand.Execute(null);
+
+            return viewModel;
+        }
+
+        public override void LoadOrders(ICollection<Order> orders)
+        {
+            foreach (var order in  orders)
+            {
+                Orders.Add(new OrderViewModel(order)); 
+            }
         }
     }
 }

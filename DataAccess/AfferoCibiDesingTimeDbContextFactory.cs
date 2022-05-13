@@ -12,7 +12,8 @@ namespace DataAccess
     {
         public AfferoCibiDBContext CreateDbContext(string[] args)
         {
-           DbContextOptions<AfferoCibiDBContext> options = new DbContextOptionsBuilder<AfferoCibiDBContext>().UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = LiteraDB").Options;
+           DbContextOptions<AfferoCibiDBContext> options = new DbContextOptionsBuilder<AfferoCibiDBContext>()
+                .UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = LiteraDB").Options;
 
             return new AfferoCibiDBContext(options);
         }

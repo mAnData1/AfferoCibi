@@ -2,6 +2,7 @@
 using Data.Services.Interfaces;
 using DataAccess.DTOs;
 using DataAccess.Repositories;
+using DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,15 @@ using System.Threading.Tasks;
 
 namespace Data.Services
 {
-    public class MealService : BaseService<MealDTO, Meal, MealRepository>, IMealService
+    public class MealService : IMealService
     {
-        public MealService(MealRepository repository) : base(repository)
+        private readonly IUnitOfWork unitOfWork;
+        public MealService(IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
         }
 
-        public override async Task<MealDTO> OnBeforeCreate(Meal model)
+        public async Task<MealDTO> OnBeforeCreateAsync(Meal model)
         {
             return new MealDTO
             {
@@ -27,35 +30,35 @@ namespace Data.Services
                 Price = model.Price
             };
         }
-        public override async Task<MealDTO> OnBeforeUpdate(Meal model)
+        public async Task<MealDTO> OnBeforeUpdateAsync(Meal model)
         {
             return new MealDTO
             {
-                Id = await GetID(model),
+                Id = await GetIDAsync(model),
                 Name = model.Name,
                 Ingredients = model.Ingredients,
                 Price = model.Price
             };
         }
 
-        public override async Task<List<Meal>> GetAllAsync(Expression<Func<Meal, bool>>? filter = null)
+        public async Task<ICollection<Meal>> GetAllAsync(Expression<Func<Meal, bool>>? filter = null)
         {
-            return await ToMeals();
+            ICollection<MealDTO> mealDTOs = await unitOfWork.MealRepository.GetAllAsync();
+            return ToMeals(mealDTOs);
         }
 
 
-        public async Task<Guid> GetID(Meal model)
+        public async Task<Guid> GetIDAsync(Meal model)
         {
-            return await repository.GetIdThroughNameAsync(model.Name);
+            return await unitOfWork.MealRepository.GetIdThroughNameAsync(model.Name);
         }
 
-        public async Task<List<Meal>> ToMeals()
+        public List<Meal> ToMeals(ICollection<MealDTO> mealDTOs)
         {
-            ICollection<MealDTO> mealDTOs = await repository.GetAllAsync();
             return mealDTOs.Select(mDTO => new Meal(mDTO.MealImage, mDTO.Name, mDTO.Price, mDTO.Ingredients)).ToList();
         }
 
-        public async Task UpdateNameIncuded(Guid id, Meal meal)
+        public async Task UpdateNameIncudedAsync(Guid id, Meal meal)
         {
             MealDTO dTO = new MealDTO
             {
@@ -64,7 +67,27 @@ namespace Data.Services
                 Price = meal.Price,
                 Ingredients = meal.Ingredients,
             };
-            await repository.UpdateAsync(dTO);
+            await unitOfWork.MealRepository.UpdateAsync(dTO);
+            await unitOfWork.SaveAsync();
+        }
+
+        public async Task CreateAsync(Meal model)
+        {
+            await unitOfWork.MealRepository.CreateAsync(await OnBeforeCreateAsync(model));
+            await unitOfWork.SaveAsync();
+        }
+
+        public async Task DeleteAsync(Meal model)
+        {
+            Guid id = await unitOfWork.MealRepository.GetIdThroughNameAsync(model.Name);
+            await unitOfWork.MealRepository.DeleteAsync(id);
+            await unitOfWork.SaveAsync();
+        }
+
+        public async Task UpdateAsync(Meal model)
+        {
+            await unitOfWork.MealRepository.UpdateAsync(await OnBeforeUpdateAsync(model));
+            await unitOfWork.SaveAsync();
         }
     }
 }

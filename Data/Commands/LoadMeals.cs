@@ -20,7 +20,7 @@ namespace Data.Commands
         
         public override async Task ExecuteAsync(object? parameter)
         {
-           List<Meal> meals = await ViewModel.mealService.GetAllAsync();
+            ICollection<Meal> meals = await ViewModel.mealService.GetAllAsync();
 
             ViewModel.LoadMealsList(meals);
         }

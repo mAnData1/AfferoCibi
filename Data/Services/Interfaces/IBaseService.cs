@@ -12,12 +12,11 @@ namespace Data.Services.Interfaces
          where TDTO : BaseDTO
          where TModel : class
     {
-        Task Create(TModel model);
-        Task Delete(Guid id);
-        ValueTask<TModel> GetByIdAsync(Guid id);
-        Task<TDTO> OnBeforeCreate(TModel model);
-        Task<TDTO> OnBeforeUpdate(TModel model);
-        Task Update(TModel model);
-        Task<List<TModel>> GetAllAsync(Expression<Func<TModel, bool>>? filter = null);
+        Task CreateAsync(TModel model);
+        Task DeleteAsync(TModel model);
+        Task<TDTO> OnBeforeCreateAsync(TModel model);
+        Task<TDTO> OnBeforeUpdateAsync(TModel model);
+        Task UpdateAsync(TModel model);
+        Task<ICollection<TModel>> GetAllAsync(Expression<Func<TModel, bool>>? filter = null);
     }
 }

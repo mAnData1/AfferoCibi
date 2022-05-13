@@ -37,7 +37,7 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
 
             Meal meal = updatedMeal.ViewModelToModel(updatedMeal);
 
-            await adminCorrectionsViewModel.mealService.UpdateNameIncuded(id, meal);
+            await adminCorrectionsViewModel.mealService.UpdateNameIncudedAsync(id, meal);
 
             adminCorrectionsViewModel.RefreshMealsList();
             ClearTextBoxes();

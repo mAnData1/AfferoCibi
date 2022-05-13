@@ -4,6 +4,7 @@ using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
 using Data.Stores;
+using DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,9 +15,9 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-   public class AdminCorrectionsViewModel : BaseViewModelWithMealServices
+    public class AdminCorrectionsViewModel : BaseViewModelWithMealServices
     {
-        public ObservableCollection<MealCardAdminViewModel> Meals { get; set;}
+        public ObservableCollection<MealCardAdminViewModel> Meals { get; set; }
 
         private Guid updatedMealID;
         public Guid UpdatedMealID
@@ -34,8 +35,8 @@ namespace Data.ViewModels
         public MealCardAdminViewModel UpdatedMeal
         {
             get { return updatedMeal; }
-            set 
-            { 
+            set
+            {
                 updatedMeal = value;
                 OnPropertyChanged(nameof(UpdatedMeal));
             }
@@ -54,7 +55,7 @@ namespace Data.ViewModels
         public string InputName
         {
             get { return inputName; }
-            set { inputName = value; OnPropertyChanged(nameof(InputName));}
+            set { inputName = value; OnPropertyChanged(nameof(InputName)); }
         }
 
         private decimal inputPrice;
@@ -62,7 +63,7 @@ namespace Data.ViewModels
         public decimal InputPrice
         {
             get { return inputPrice; }
-            set { inputPrice = value; OnPropertyChanged(nameof(InputPrice));}
+            set { inputPrice = value; OnPropertyChanged(nameof(InputPrice)); }
         }
 
         private string inputIngredients;
@@ -75,7 +76,7 @@ namespace Data.ViewModels
 
         public NavigateCommand ProceedCommand { get; }
         public BaseCommand UploadImageCommand { get; }
-        public BaseCommand AddMealCommand { get ; }
+        public BaseCommand AddMealCommand { get; }
         public BaseCommand SaveChangesCommand { get; }
         public BaseCommand LoadMealsCommand { get; }
 
@@ -83,10 +84,10 @@ namespace Data.ViewModels
             : base(helpNavigationService, mealService)
         {
             Meals = new ObservableCollection<MealCardAdminViewModel>();
-            LoadMealsCommand = new LoadMeals<AdminCorrectionsViewModel>(this);           
+            LoadMealsCommand = new LoadMeals<AdminCorrectionsViewModel>(this);
             ProceedCommand = new NavigateCommand(fulfillingOrdersViewNavigation);
             AddMealCommand = new AddMeal(this);
-            SaveChangesCommand = new SaveChanges(this);          
+            SaveChangesCommand = new SaveChanges(this);
         }
 
         public static AdminCorrectionsViewModel LoadViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, IMealService mealService)
@@ -96,12 +97,12 @@ namespace Data.ViewModels
             return viewModel;
         }
 
-        public override void LoadMealsList(List<Meal> meals)
+        public override void LoadMealsList(ICollection<Meal> meals)
         {
             Meals.Clear();
             foreach (var meal in meals)
             {
-                Meals.Add(new MealCardAdminViewModel(meal,this));
+                Meals.Add(new MealCardAdminViewModel(meal, this));
             }
         }
         public void RefreshMealsList()
@@ -111,3 +112,4 @@ namespace Data.ViewModels
 
     }
 }
+

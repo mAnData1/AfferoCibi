@@ -55,7 +55,7 @@ namespace Data.Commands.CustomerOrderingCommands
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            await orderService.Create(CreateOrder());   
+            await orderService.CreateAsync(CreateOrder());   
             customerListOfOrdersNavigate.Navigate();
         }
 

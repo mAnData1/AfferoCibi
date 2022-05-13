@@ -13,15 +13,16 @@ namespace DataAccess.Repositories
     public class BaseRepository<DTO> : IBaseRepository<DTO> where DTO : BaseDTO
     {
         protected readonly AfferoCibiDBContext context;
-
+        protected readonly DbSet<DTO> dbSet;
         public BaseRepository(AfferoCibiDBContext context)
         {
             this.context = context;
+            dbSet = context.Set<DTO>();
         }
 
         public virtual async Task<ICollection<DTO>> GetAllAsync(Expression<Func<DTO, bool>>? filter = null)
         {
-            var set = context.Set<DTO>().AsQueryable();
+            var set = dbSet.AsQueryable();
 
             if (filter != null)
             {
@@ -33,13 +34,12 @@ namespace DataAccess.Repositories
 
         public virtual async ValueTask<DTO?> GetByIdAsync(Guid id)
         {
-            return await context.Set<DTO>().FindAsync(id);
+            return await dbSet.FindAsync(id);
         }
 
         public virtual async Task CreateAsync(DTO entity)
         {
-            context.Set<DTO>().Add(entity);
-            await context.SaveChangesAsync();
+            dbSet.Add(entity);
         }
 
         public virtual async Task UpdateAsync(DTO entity)
@@ -53,7 +53,6 @@ namespace DataAccess.Repositories
 
             context.Entry(dbEntity).CurrentValues.SetValues(entity);
 
-            await context.SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync(Guid id)
@@ -65,22 +64,19 @@ namespace DataAccess.Repositories
                 throw new ArgumentException($"There is no such {typeof(DTO)} with id: {id}");
             }
 
-            context.Set<DTO>().Remove(entity);
-
-            await context.SaveChangesAsync();
+            dbSet.Remove(entity);
         }
 
         public DTO? GetById(Guid id)
         {
 
-            return context.Set<DTO>().Find(id);
+            return dbSet.Find(id);
 
         }
 
         public void Update(DTO entity)
         {
-            context.Set<DTO>().Update(entity);
-            context.SaveChanges();
+            dbSet.Update(entity);
         }
     }
 }
