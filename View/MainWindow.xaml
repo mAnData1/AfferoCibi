@@ -3,10 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:views="clr-namespace:View.Views" 
+        xmlns:views="clr-namespace:View.Views"
+        xmlns:vms="clr-namespace:Data.ViewModels;assembly=Data"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="10 20" MaxWidth="800">
-        <views:CustomerOrdering DataContext = "{Binding CurrentViewModel}"/>
+        Background="DarkOrange"
+        Title="MainWindow" Height="650" Width="800">
+    <Grid Margin="10 20">
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:MainWindowViewModel}">
+                
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AdminOrCustomerLogInViewModel}">
+                <views:AdminOrCustomerLogin/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AdminCorrectionsViewModel}">
+                <views:AdminCorections/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AdminLogInViewModel}">
+                <views:AdminLogIn/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CustomerListOfOrdersViewModel}">
+                <views:CustomerListOfOrders/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CustomerOrderingViewModel}">
+                <views:CustomerOrdering/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:FulfillingOrdersViewModel}">
+                <views:FulfillingOrders/>
+            </DataTemplate>
+        </Grid.Resources>
+        
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <views:Help></views:Help>
     </Grid>
 </Window>

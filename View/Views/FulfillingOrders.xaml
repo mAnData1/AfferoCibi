@@ -16,6 +16,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DataGrid
+            Background="Orange"
             ItemsSource="{Binding Orders, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             x:Name="OrderList"
             FontSize="26"
@@ -24,6 +25,7 @@
             Grid.Column="1"
             Margin="5"/>
         <DataGrid
+            Background="Orange"
             ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="MealList"
             FontSize="26"
@@ -38,6 +40,20 @@
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center">
             <Button
+            Width="50"
+            Height="50"
+            Command="{Binding NavigateHelp}"
+           >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="35"/>
+                    </Style>
+                </Button.Resources>
+
+                <Image Source="Resources/question_mark.png"/>
+            </Button>
+            <Button
+                Background="OrangeRed"
                 Command="{Binding SentOrderCommand}"
                 Padding="20 10 20 10"
                 Margin="5"
@@ -45,11 +61,19 @@
                 Content="Send Order"/>
             
             <Button
+                Background="OrangeRed"
                 Command="{Binding RejectOrderCommand}"
                 Padding="20 10 20 10"
                 Margin="5"
                 FontSize="26"
                 Content="Reject Order"/>
+            <Button
+                Background="OrangeRed"
+                Command="{Binding NavigateAdminCorrections}"
+                Padding="20 10 20 10"
+                Margin="5"
+                FontSize="26"
+                Content="Rreturn to menu"/>
 
         </DockPanel>
 

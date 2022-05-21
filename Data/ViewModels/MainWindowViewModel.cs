@@ -1,4 +1,5 @@
-﻿using Data.ViewModels.EntitiesViewModels;
+﻿using Data.Stores;
+using Data.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,20 @@ namespace Data.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        public BaseViewModel CurrentViewModel { get; }
+        private readonly NavigationStore navigationStore;
 
-        public MainWindowViewModel()
+        public BaseViewModel CurrentViewModel => navigationStore.CurrentViewModel;
+
+        public MainWindowViewModel(NavigationStore navigationStore)
         {
-            CurrentViewModel = new CustomerOrderingViewModel();
+            this.navigationStore = navigationStore;
+
+            navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChaneg(nameof(CurrentViewModel));
         }
     }
 }

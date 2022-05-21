@@ -30,7 +30,8 @@ namespace View.Views.Components
 
         // Using a DependencyProperty as the backing store for PasswordBox.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register("MyProperty", typeof(string), typeof(BindablePasswordBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("Password", typeof(string), typeof(BindablePasswordBox),
+                new PropertyMetadata(string.Empty));
 
 
         public BindablePasswordBox()

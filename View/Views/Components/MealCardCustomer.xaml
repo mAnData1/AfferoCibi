@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="View.Views.Components.MealCardCustomer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:View.Views.Components" xmlns:Converter="clr-namespace:View.Converter"
+             mc:Ignorable="d" 
+              d:DesignHeight="450" Width="360">
+    <UserControl.Resources>
+        <Converter:ByteArrayToBitmapImageConverter x:Key="imageConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+
+        <Image            
+            Source="{Binding MealImage, Converter ={StaticResource imageConverter}, Mode=TwoWay, TargetNullValue=DefaultImage}"
+            Stretch="Uniform"/>
+
+        <DockPanel
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            Margin="5">
+            <TextBlock
+                FontSize="20"
+                Margin="5"
+                Text="Name :"/>
+            <TextBox
+                Text="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="20"
+                Margin="5"/>
+        </DockPanel>
+
+        <DockPanel
+            Grid.Row="2"
+            VerticalAlignment="Center"
+            Margin="5">
+            <TextBlock
+                FontSize="20"
+                Margin="5"
+                Text="Price :"/>
+            <TextBox
+                Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:f2}}"
+                FontSize="20"
+                Margin="5"/>
+        </DockPanel>
+
+        <DockPanel
+            Grid.Row="3"
+            VerticalAlignment="Center"
+            Margin="5">
+            <TextBlock
+                FontSize="20"
+                Margin="5"
+                Text="Ingredients:"/>
+            <TextBox
+                Text="{Binding Ingredients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="20"
+                Margin="5" 
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Visible"
+                HorizontalScrollBarVisibility="Visible"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                />
+        </DockPanel>
+        <Button
+            Background="OrangeRed"
+            Grid.Row="4"
+            Margin="10 5 10 5"
+            Content="Add to cart"
+            FontSize="20"/>
+
+    </Grid>
+</UserControl>

@@ -9,7 +9,7 @@ namespace Data.ViewModels
 {
     public class AdminViewModel : BaseViewModel
     {
-        private readonly Admin admin;
+        private Admin admin;
 
         public string UserName => admin.UserName;
         public string Password => admin.Password;

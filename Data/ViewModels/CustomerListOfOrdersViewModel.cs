@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,11 +12,17 @@ namespace Data.ViewModels
     {
         private ObservableCollection<MealViewModel> meals;
 
-        public IEnumerable<MealViewModel> Meals => meals;
+        public ICollection<MealViewModel> Meals => meals;
 
-        public CustomerListOfOrdersViewModel(ObservableCollection<MealViewModel> meals)
+        public CustomerListOfOrdersViewModel()
         {
-            this.meals = new ObservableCollection<MealViewModel>();
+            meals = new ObservableCollection<MealViewModel>();
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
         }
     }
 }
