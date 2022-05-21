@@ -11,7 +11,6 @@
     <Grid Margin="10 20">
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:MainWindowViewModel}">
-                
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:AdminOrCustomerLogInViewModel}">
                 <views:AdminOrCustomerLogin/>
@@ -31,9 +30,12 @@
             <DataTemplate DataType="{x:Type vms:FulfillingOrdersViewModel}">
                 <views:FulfillingOrders/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:HelpViewModel}">
+                <views:Help/>
+            </DataTemplate>
         </Grid.Resources>
         
         <ContentControl Content="{Binding CurrentViewModel}"/>
-        <views:Help></views:Help>
+
     </Grid>
 </Window>

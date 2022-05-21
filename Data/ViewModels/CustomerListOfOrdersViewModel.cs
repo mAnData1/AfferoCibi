@@ -1,4 +1,6 @@
-﻿using Data.Entities;
+﻿using Data.Commands;
+using Data.Entities;
+using Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,21 +10,20 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public class CustomerListOfOrdersViewModel : BaseViewModel
+    public class CustomerListOfOrdersViewModel : BaseHelpViewModel
     {
-        private ObservableCollection<MealViewModel> meals;
+        private ObservableCollection<OrderViewModel> orders;
 
-        public ICollection<MealViewModel> Meals => meals;
-
-        public CustomerListOfOrdersViewModel()
+        public ObservableCollection<OrderViewModel> Orders
         {
-            meals = new ObservableCollection<MealViewModel>();
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
-            meals.Add(new MealViewModel(new Meal(null, "Chicken", 12.33m, "chicken")));
+            get { return orders; }
+        }
+
+        public NavigateCommand NavigateToCustomerOrdering { get; }
+        public CustomerListOfOrdersViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService)
+            : base(helpNavigationService)
+        {
+            NavigateToCustomerOrdering = new NavigateCommand(customerOrderingNavigationService);
         }
     }
 }

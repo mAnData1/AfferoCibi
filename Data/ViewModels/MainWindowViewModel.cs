@@ -1,4 +1,5 @@
-﻿using Data.Stores;
+﻿using Data.Services;
+using Data.Stores;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,10 @@ namespace Data.ViewModels
 
             navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
-
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChaneg(nameof(CurrentViewModel));
         }
+
     }
 }

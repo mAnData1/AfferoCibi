@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Commands;
+using Data.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,8 +11,7 @@ namespace Data.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {        
-        public event PropertyChangedEventHandler? PropertyChanged;
-
+        public event PropertyChangedEventHandler? PropertyChanged;        
         protected void OnPropertyChaneg(string? propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

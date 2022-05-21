@@ -23,7 +23,10 @@ namespace View
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            navigationStore.CurrentViewModel = new AdminOrCustomerLogInViewModel(new NavigationService( navigationStore, CreateCustomerOrderingViewModel), new NavigationService(navigationStore, CreateAdminLiginViewModel));
+            navigationStore.CurrentViewModel = new AdminOrCustomerLogInViewModel(
+                new NavigationService( navigationStore, CreateCustomerOrderingViewModel, CreateAdminOrCustomerLogInViewModel), 
+                new NavigationService(navigationStore, CreateAdminLiginViewModel, CreateAdminOrCustomerLogInViewModel),
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminOrCustomerLogInViewModel));
            
             MainWindow = new MainWindow()
             {
@@ -32,21 +35,40 @@ namespace View
             MainWindow.Show();
             base.OnStartup(e);
         }
+        private AdminOrCustomerLogInViewModel CreateAdminOrCustomerLogInViewModel()
+        {
+            return new AdminOrCustomerLogInViewModel(new NavigationService(navigationStore, CreateCustomerOrderingViewModel, CreateAdminOrCustomerLogInViewModel),
+                new NavigationService(navigationStore, CreateAdminLiginViewModel, CreateAdminOrCustomerLogInViewModel),
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminOrCustomerLogInViewModel));
+        }
+        private HelpViewModel CreateHelpViewModel()
+        {
+           return new HelpViewModel(new NavigationBackService(navigationStore));
+        }
         private FulfillingOrdersViewModel CreateFulfillingOrdersViewModel()
         {
-            return new FulfillingOrdersViewModel();
+            return new FulfillingOrdersViewModel(new NavigationService(navigationStore, CreateHelpViewModel, CreateFulfillingOrdersViewModel),
+                new NavigationService(navigationStore, CreateAdminCorrectionsViewModel, CreateFulfillingOrdersViewModel));
         }
         private AdminCorrectionsViewModel CreateAdminCorrectionsViewModel()
         {
-            return new AdminCorrectionsViewModel(new NavigationService(navigationStore,CreateFulfillingOrdersViewModel));
+            return new AdminCorrectionsViewModel(new NavigationService(navigationStore,CreateFulfillingOrdersViewModel, CreateAdminCorrectionsViewModel),
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminCorrectionsViewModel));
         }
         private AdminLogInViewModel CreateAdminLiginViewModel()
         {
-            return new AdminLogInViewModel(new NavigationService(navigationStore, CreateAdminCorrectionsViewModel));
+            return new AdminLogInViewModel(new NavigationService(navigationStore, CreateAdminCorrectionsViewModel, CreateAdminLiginViewModel), 
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminLiginViewModel));
+        }
+        private CustomerListOfOrdersViewModel CreateCustomerListOfOrdersViewModel()
+        {
+            return new CustomerListOfOrdersViewModel(new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerListOfOrdersViewModel),
+                new NavigationService(navigationStore,CreateCustomerOrderingViewModel,CreateFulfillingOrdersViewModel));
         }
         private CustomerOrderingViewModel CreateCustomerOrderingViewModel()
         {
-            return new CustomerOrderingViewModel();
+            return new CustomerOrderingViewModel(new NavigationService(navigationStore, CreateCustomerListOfOrdersViewModel, CreateCustomerOrderingViewModel),
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerOrderingViewModel));
         }
     }
 }

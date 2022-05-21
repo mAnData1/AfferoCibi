@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class AdminLogInViewModel : BaseViewModel
+    public class AdminLogInViewModel : BaseHelpViewModel
     {
         private string userName;
 
@@ -29,7 +29,8 @@ namespace Data.ViewModels
 
         public Submit SubmitCommand { get; }
 
-        public AdminLogInViewModel(NavigationService adminCorrectionsNavigation)
+        public AdminLogInViewModel(NavigationService adminCorrectionsNavigation, NavigationService helpNavigationService)
+            : base(helpNavigationService)
         {
             SubmitCommand = new Submit(this, adminCorrectionsNavigation);
         }

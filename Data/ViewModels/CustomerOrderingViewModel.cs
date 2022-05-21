@@ -1,5 +1,7 @@
-﻿using Data.Commands.CustomerOrderingCommands;
+﻿using Data.Commands;
+using Data.Commands.CustomerOrderingCommands;
 using Data.Entities;
+using Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +12,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public  class CustomerOrderingViewModel : BaseViewModel
+    public  class CustomerOrderingViewModel : BaseHelpViewModel
     {
         private string? address;
 
@@ -43,12 +45,14 @@ namespace Data.ViewModels
         }
 
         public RemoveMeal RemoveCommand { get; }
-
         public ICommand? FinishCommand { get; }
+        public NavigateCommand NavigateToCustomerListOfOtders { get; }
 
-        public CustomerOrderingViewModel()
+        public CustomerOrderingViewModel(NavigationService customerListOfOrders, NavigationService helpNavigationService)
+            : base(helpNavigationService)
         {
             RemoveCommand = new RemoveMeal(this);
+            NavigateToCustomerListOfOtders = new NavigateCommand(customerListOfOrders);
             meals = new ObservableCollection<MealViewModel>();
             meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
             meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));

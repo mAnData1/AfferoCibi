@@ -42,7 +42,7 @@
             <Button
             Width="50"
             Height="50"
-            Command="{Binding NavigateHelp}"
+            Command="{Binding NavigateToHelp}"
            >
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -69,7 +69,7 @@
                 Content="Reject Order"/>
             <Button
                 Background="OrangeRed"
-                Command="{Binding NavigateAdminCorrections}"
+                Command="{Binding NavigateToAdminCorrectionsCommand}"
                 Padding="20 10 20 10"
                 Margin="5"
                 FontSize="26"

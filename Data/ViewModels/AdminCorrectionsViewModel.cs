@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-   public class AdminCorrectionsViewModel : BaseViewModel
+   public class AdminCorrectionsViewModel : BaseHelpViewModel
     {
         public ObservableCollection<MealViewModel> meals { get; set;}
 
@@ -55,7 +55,8 @@ namespace Data.ViewModels
         public BaseCommand UpdateMealCommand { get; }
         public BaseCommand SaveChangesCommand { get; }
 
-        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation)
+        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService)
+            :base(helpNavigationService)
         {
             meals = new ObservableCollection<MealViewModel>();
             meals.Add(new MealViewModel(new Meal(null, "test", 12.34m, "tomates")));
