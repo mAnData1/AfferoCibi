@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Data.Services;
+using Data.Stores;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,8 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
 {
     public class AddMeal : BaseAsyncCommand
     {
-
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
-
+        private readonly MealsStore mealsStore;
         public override bool CanExecute(object? parameter)
         {
             return !string.IsNullOrEmpty(adminCorrectionsViewModel.InputName) 
@@ -24,11 +24,12 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
                 && base.CanExecute(parameter);
         }
 
-        public AddMeal(AdminCorrectionsViewModel adminCorrectionsViewModel)
+        public AddMeal(AdminCorrectionsViewModel adminCorrectionsViewModel, MealsStore mealsStore)
         {
             this.adminCorrectionsViewModel = adminCorrectionsViewModel;
             adminCorrectionsViewModel.PropertyChanged += TextBoxesChanged;
             
+            this.mealsStore = mealsStore;
         }
         private void ClearTextBoxes()
         {
@@ -41,7 +42,7 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
             Meal meal = new Meal(adminCorrectionsViewModel.InputImage, adminCorrectionsViewModel.InputName,
                 adminCorrectionsViewModel.InputPrice, adminCorrectionsViewModel.InputIngredients);
 
-            await adminCorrectionsViewModel.mealService.CreateAsync(meal);
+            await mealsStore.AddMeal(meal);
 
             ClearTextBoxes();
             adminCorrectionsViewModel.RefreshMealsList();

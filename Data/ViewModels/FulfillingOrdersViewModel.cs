@@ -3,6 +3,7 @@ using Data.Commands.FulfilingOrderCommands;
 using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
+using Data.Stores;
 using DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,8 @@ namespace Data.ViewModels
 {
     public class FulfillingOrdersViewModel : BaseViewModelWithOrderService
     {
+        private OrdersStore ordersStore;
         private int selectedOrderIndex = -1;
-
         public int SelectedOrderIndex
         {
             get { return selectedOrderIndex; }
@@ -43,26 +44,39 @@ namespace Data.ViewModels
         public SendOrder SendOrderCommand { get; }
         public RejectOrder RejectOrderCommand { get; }
         public NavigateCommand NavigateToAdminCorrectionsCommand { get; }
-        public FulfillingOrdersViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, IOrderService orderService)
-            : base(helpNavigationService, orderService)
+        public FulfillingOrdersViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, OrdersStore ordersStore)
+            : base(helpNavigationService, ordersStore)
         {
             Meals = new ObservableCollection<MealViewModel>();
             Orders = new ObservableCollection<OrderViewModel>();
-            SendOrderCommand = new SendOrder(this);
-            RejectOrderCommand = new RejectOrder(this);
+
+            this.ordersStore = ordersStore;
+
+            SendOrderCommand = new SendOrder(this, ordersStore);
+            RejectOrderCommand = new RejectOrder(this, ordersStore);
             NavigateToAdminCorrectionsCommand = new NavigateCommand(adminCorrectionsNavigationService);
+
             LoadOrdersCommand = new LoadOrders<FulfillingOrdersViewModel>(this);
         }
 
-        public static FulfillingOrdersViewModel LoadViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, IOrderService orderService)
+        public static FulfillingOrdersViewModel LoadViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, OrdersStore ordersStore)
         {
-            FulfillingOrdersViewModel viewModel = new FulfillingOrdersViewModel(helpNavigationService, adminCorrectionsNavigationService, orderService);
+            FulfillingOrdersViewModel viewModel = new FulfillingOrdersViewModel(helpNavigationService, adminCorrectionsNavigationService, ordersStore);
             viewModel.LoadOrdersCommand.Execute(null);
 
             return viewModel;
         }
 
-        public override void LoadOrders(ICollection<Order> orders)
+        public void ShowMeals(OrderViewModel order)
+        {
+            meals.Clear();
+            foreach (var meal in order.Meals)
+            {
+                meals.Add(meal);
+            }
+        }
+
+        public override void LoadOrders(IEnumerable<Order> orders)
         {
             foreach (var order in  orders)
             {

@@ -43,7 +43,7 @@ namespace Data.Services
 
         public async Task<ICollection<Meal>> GetAllAsync(Expression<Func<Meal, bool>>? filter = null)
         {
-            ICollection<MealDTO> mealDTOs = await unitOfWork.MealRepository.GetAllAsync();
+            var mealDTOs = await unitOfWork.MealRepository.GetAllAsync();
             return ToMeals(mealDTOs);
         }
 

@@ -1,4 +1,5 @@
-﻿using Data.ViewModels;
+﻿using Data.Stores;
+using Data.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,16 +11,16 @@ namespace Data.Commands.FulfilingOrderCommands
 {
     public class BaseFulfilOrdersCommand : BaseCommand
     {
-
+        protected OrdersStore ordersStore;
         protected FulfillingOrdersViewModel fulfillingOrdersViewModel;
-
         protected OrderViewModel selcetedOrder;
 
-        public BaseFulfilOrdersCommand(FulfillingOrdersViewModel fulfillingOrdersViewModel)
+        public BaseFulfilOrdersCommand(FulfillingOrdersViewModel fulfillingOrdersViewModel, OrdersStore ordersStore)
         {
             enabled = false;
             this.fulfillingOrdersViewModel = fulfillingOrdersViewModel;
             fulfillingOrdersViewModel.PropertyChanged += SelectedOrderChanged;
+            this.ordersStore = ordersStore;
         }
 
         private void SelectedOrderChanged(object? sender, PropertyChangedEventArgs e)
@@ -33,6 +34,7 @@ namespace Data.Commands.FulfilingOrderCommands
                 }
             }
 
+            fulfillingOrdersViewModel.ShowMeals(selcetedOrder);
         }
         public override void Execute(object? parameter)
         {

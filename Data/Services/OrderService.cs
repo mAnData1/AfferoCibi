@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.Entities.enums;
 using Data.Services.Interfaces;
 using DataAccess.DTOs;
 using DataAccess.Repositories;
@@ -33,8 +34,9 @@ namespace Data.Services
 
         public async Task<ICollection<Order>> GetAllAsync(Expression<Func<Order, bool>>? filter = null)
         {
-           return (ICollection<Order>)await unitOfWork.OrderRepository.GetAllAsync();
+            var DTOs = await unitOfWork.OrderRepository.GetAllAsync();
 
+            return ToOrders(DTOs);
         }
 
         public async Task<OrderDTO> OnBeforeCreateAsync(Order model)
@@ -44,18 +46,27 @@ namespace Data.Services
                 Id = new Guid(),
                 DateOfLastModified = DateTime.Now,
                 Address = model.Address,
+                OrderStatus = model.OrderStatus.ToString(),
                 Meals = await GetMeals(model.Meals)
             };
         }
 
-        public Task<OrderDTO> OnBeforeUpdateAsync(Order model)
+        public async Task<OrderDTO> OnBeforeUpdateAsync(Order model)
         {
-            throw new NotImplementedException();
+            return new OrderDTO
+            {
+                Id = await unitOfWork.OrderRepository.GetIdThroughAddress(model.Address),
+                DateOfLastModified = model.DateOfLastModified,
+                Address = model.Address,
+                Meals = await GetMeals(model.Meals),
+                OrderStatus = model.OrderStatus.ToString()
+            };
         }
 
         public async Task UpdateAsync(Order model)
         {
             await unitOfWork.OrderRepository.UpdateAsync(await OnBeforeUpdateAsync(model));
+
             await unitOfWork.SaveAsync();
         }
 
@@ -68,6 +79,48 @@ namespace Data.Services
                 result.Add(await unitOfWork.MealRepository.GetByIdAsync(await unitOfWork.MealRepository.GetIdThroughNameAsync(meal.Name)));
             }
 
+            return result;
+        }
+
+        private List<Meal> ToMeals(List<MealDTO> mealDTOs)
+        {
+            List<Meal> result = new List<Meal>();
+            foreach (var meal in mealDTOs)
+            {
+                result.Add(new Meal(meal.MealImage, meal.Name, meal.Price, meal.Ingredients));
+            }
+            return result;
+        }
+
+        private OrderStatus SetOrderStatus(string status)
+        {
+            if (status == "Processing")
+            {
+                return OrderStatus.Processing;
+            }
+            else if (status == "Sent")
+            {
+                return OrderStatus.Sent;
+            }
+            else if (status == "Rejected")
+            {
+                return OrderStatus.Rejected;
+            }
+            else
+                throw new Exception("Invalid status");
+        }
+
+        public List<Order> ToOrders(ICollection<OrderDTO> orders)
+        {
+            List<Order> result = new List<Order>();
+            foreach (var order in orders)
+            {
+                result.Add(new Order(order.Address, order.DateOfLastModified)
+                {
+                    OrderStatus = SetOrderStatus(order.OrderStatus),
+                    Meals = ToMeals(order.Meals.ToList())
+                });
+            }
             return result;
         }
     }

@@ -29,5 +29,11 @@ namespace DataAccess
             modelBuilder.Entity<MealDTO>().
                 HasIndex(m => m.Name);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.
+                 UseLazyLoadingProxies();
+        }
     }
 }

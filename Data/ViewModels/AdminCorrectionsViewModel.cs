@@ -80,34 +80,34 @@ namespace Data.ViewModels
         public BaseCommand SaveChangesCommand { get; }
         public BaseCommand LoadMealsCommand { get; }
 
-        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, IMealService mealService)
-            : base(helpNavigationService, mealService)
+        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, MealsStore mealsStore)
+            : base(helpNavigationService, mealsStore)
         {
             Meals = new ObservableCollection<MealCardAdminViewModel>();
             LoadMealsCommand = new LoadMeals<AdminCorrectionsViewModel>(this);
             ProceedCommand = new NavigateCommand(fulfillingOrdersViewNavigation);
-            AddMealCommand = new AddMeal(this);
-            SaveChangesCommand = new SaveChanges(this);
+            AddMealCommand = new AddMeal(this, mealsStore);
+            SaveChangesCommand = new SaveChanges(this,mealsStore);
         }
 
-        public static AdminCorrectionsViewModel LoadViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, IMealService mealService)
+        public static AdminCorrectionsViewModel LoadViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, MealsStore mealsStore)
         {
-            AdminCorrectionsViewModel viewModel = new AdminCorrectionsViewModel(fulfillingOrdersViewNavigation, helpNavigationService, mealService);
+            AdminCorrectionsViewModel viewModel = new AdminCorrectionsViewModel(fulfillingOrdersViewNavigation, helpNavigationService, mealsStore);
             viewModel.LoadMealsCommand.Execute(null);
             return viewModel;
         }
 
-        public override void LoadMealsList(ICollection<Meal> meals)
+        public override void LoadMealsList(IEnumerable<Meal> meals)
         {
             Meals.Clear();
             foreach (var meal in meals)
             {
-                Meals.Add(new MealCardAdminViewModel(meal, this));
+                Meals.Add(new MealCardAdminViewModel(meal, this, mealsStore));
             }
         }
         public void RefreshMealsList()
         {
-            LoadMealsCommand?.Execute(null);
+            LoadMealsCommand.Execute(null);
         }
 
     }

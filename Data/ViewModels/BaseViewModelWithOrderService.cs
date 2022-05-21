@@ -1,6 +1,7 @@
 ﻿using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
+using Data.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,12 @@ namespace Data.ViewModels
 {
     public abstract class  BaseViewModelWithOrderService : BaseHelpViewModel
     {
-        public readonly IOrderService orderService;
-        public BaseViewModelWithOrderService(NavigationService helpNavigationService, IOrderService orderService)
+        public readonly OrdersStore ordersStore;
+        public BaseViewModelWithOrderService(NavigationService helpNavigationService, OrdersStore ordersStore)
             : base(helpNavigationService)
         {
-            this.orderService = orderService;
+            this.ordersStore = ordersStore;
         }
-
-        public abstract void LoadOrders(ICollection<Order> orders);
+        public abstract void LoadOrders(IEnumerable<Order> orders);
     }
 }

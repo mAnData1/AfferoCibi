@@ -19,8 +19,14 @@ namespace Data.Commands
         public override async void Execute(object? parameter)
         {
             IsExecuting = true;
-            await ExecuteAsync(parameter);
-            IsExecuting = false;
+            try
+            {
+                await ExecuteAsync(parameter);
+            }
+            finally
+            {
+                IsExecuting = false;       
+            }
         }
 
         public override bool CanExecute(object? parameter)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AfferoCibiDBContext))]
-    [Migration("20220511064239_FixManyToMasnyRealtionship")]
-    partial class FixManyToMasnyRealtionship
+    [Migration("20220514150652_LazyLoading")]
+    partial class LazyLoading
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

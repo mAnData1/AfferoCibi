@@ -22,10 +22,17 @@
             ItemsSource="{Binding Orders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="OrderList"
             FontSize="26"
-            AutoGenerateColumns="True"
+            AutoGenerateColumns="False"
             Grid.Row="0"
             Grid.Column="1"
-            Margin="5"/>
+            Margin="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Address" Binding = "{Binding Address}"/>
+                <DataGridTextColumn Header="Last Modified" Binding = "{Binding DateOfLastModified}"/>
+                <DataGridTextColumn Header="Status" Binding = "{Binding OrderStatus}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
         <DataGrid
             Background="Orange"
             ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

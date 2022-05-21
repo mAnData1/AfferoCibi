@@ -17,7 +17,8 @@ namespace Data.Commands
         }
         public override async Task ExecuteAsync(object? parameter)
         {
-            ICollection<Order> orders = await viewModel.orderService.GetAllAsync();
+            await viewModel.ordersStore.LoadOrders();
+            IEnumerable<Order> orders = viewModel.ordersStore.Orders;
 
             viewModel.LoadOrders(orders);
         }

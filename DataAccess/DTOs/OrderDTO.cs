@@ -16,7 +16,7 @@ namespace DataAccess.DTOs
         [Required]
         public DateTime DateOfLastModified { get; set; }
         [Required]
-        public string OrderStatus { get; set; } = "Processing";
+        public string OrderStatus { get; set; }
 
         public virtual ICollection<MealDTO> Meals { get; set; }
     }

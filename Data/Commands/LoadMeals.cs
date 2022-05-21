@@ -1,6 +1,7 @@
 ﻿using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
+using Data.Stores;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace Data.Commands
 {
     public class LoadMeals<TViewModel> : BaseAsyncCommand where TViewModel : BaseViewModelWithMealServices
     {
-        private TViewModel ViewModel;
+        private readonly TViewModel ViewModel;
+
         public LoadMeals(TViewModel ViewModel)
         {
             this.ViewModel = ViewModel;
@@ -20,7 +22,8 @@ namespace Data.Commands
         
         public override async Task ExecuteAsync(object? parameter)
         {
-            ICollection<Meal> meals = await ViewModel.mealService.GetAllAsync();
+            await ViewModel.mealsStore.LoadMeals();
+            IEnumerable<Meal> meals = ViewModel.mealsStore.Meals;
 
             ViewModel.LoadMealsList(meals);
         }

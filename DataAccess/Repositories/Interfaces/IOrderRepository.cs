@@ -9,5 +9,6 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IOrderRepository : IBaseRepository<OrderDTO>
     {
+        public Task<Guid> GetIdThroughAddress(string address);
     }
 }

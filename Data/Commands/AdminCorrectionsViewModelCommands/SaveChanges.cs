@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.Stores;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,20 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
 {
     public class SaveChanges : BaseAsyncCommand
     {
-        private AdminCorrectionsViewModel adminCorrectionsViewModel;
+        private readonly AdminCorrectionsViewModel adminCorrectionsViewModel;
         private Guid id;
         private MealCardAdminViewModel updatedMeal;
-        public SaveChanges(AdminCorrectionsViewModel adminCorrectionsViewModel)
+
+        private readonly MealsStore mealsStore;
+        public SaveChanges(AdminCorrectionsViewModel adminCorrectionsViewModel, MealsStore mealsStore)
         {
             Enabled = false;
             this.adminCorrectionsViewModel = adminCorrectionsViewModel;
             adminCorrectionsViewModel.PropertyChanged += UpdatedMealChanged;
             adminCorrectionsViewModel.AddMealCommand.Enabled = true;
             id = adminCorrectionsViewModel.UpdatedMealID;           
+
+            this.mealsStore = mealsStore;
         }
         public override bool CanExecute(object? parameter)
         {
@@ -37,7 +42,7 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
 
             Meal meal = updatedMeal.ViewModelToModel(updatedMeal);
 
-            await adminCorrectionsViewModel.mealService.UpdateNameIncudedAsync(id, meal);
+            await mealsStore.Update(id, meal);
 
             adminCorrectionsViewModel.RefreshMealsList();
             ClearTextBoxes();

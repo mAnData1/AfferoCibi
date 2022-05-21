@@ -1,4 +1,6 @@
-﻿using Data.Entities.enums;
+﻿using Data.Entities;
+using Data.Entities.enums;
+using Data.Stores;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,8 +12,8 @@ namespace Data.Commands.FulfilingOrderCommands
 {
     public class SendOrder : BaseFulfilOrdersCommand
     {
-        public SendOrder(FulfillingOrdersViewModel fulfillingOrdersViewModel) 
-            : base(fulfillingOrdersViewModel)
+        public SendOrder(FulfillingOrdersViewModel fulfillingOrdersViewModel, OrdersStore ordersStore) 
+            : base(fulfillingOrdersViewModel, ordersStore)
         {
         }
         public override void Execute(object? parameter)
@@ -19,9 +21,12 @@ namespace Data.Commands.FulfilingOrderCommands
             selcetedOrder.OrderStatus = OrderStatus.Sent;
             selcetedOrder.DateOfLastModified = DateTime.Now;
 
+            ordersStore.Update(selcetedOrder.ViewModelToModel(selcetedOrder));
+
             fulfillingOrdersViewModel.Orders.Insert(fulfillingOrdersViewModel.SelectedOrderIndex, selcetedOrder);
             fulfillingOrdersViewModel.Orders.RemoveAt(fulfillingOrdersViewModel.SelectedOrderIndex);
 
         }
+
     }
 }

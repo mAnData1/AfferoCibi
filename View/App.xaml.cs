@@ -24,19 +24,26 @@ namespace View
         private const string ConnectionString = "Server=DESKTOP-QNFMT3E;Database=AfferoCibiDb;Trusted_Connection=True;";
         
         private readonly AfferoCibiDBContextFactory DbFactory;
-        private readonly NavigationStore navigationStore;
 
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMealService mealService;
         private readonly IOrderService orderService;
-        private readonly IUnitOfWork unitOfWork;
+
+        private readonly NavigationStore navigationStore;
+        private readonly MealsStore mealsStore;
+        private readonly OrdersStore ordersStore;
 
         public App()
         {           
             DbFactory = new AfferoCibiDBContextFactory(ConnectionString);
+
             unitOfWork = new UnitOfWork(DbFactory.CreateDbContext());
-            navigationStore = new NavigationStore();
             mealService = new MealService(unitOfWork);
             orderService = new OrderService(unitOfWork);
+
+            navigationStore = new NavigationStore();
+            mealsStore = new MealsStore(mealService);
+            ordersStore = new OrdersStore(orderService);
         }
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -70,27 +77,27 @@ namespace View
         private FulfillingOrdersViewModel CreateFulfillingOrdersViewModel()
         {
             return FulfillingOrdersViewModel.LoadViewModel(new NavigationService(navigationStore, CreateHelpViewModel, CreateFulfillingOrdersViewModel),
-                new NavigationService(navigationStore, CreateAdminCorrectionsViewModel, CreateFulfillingOrdersViewModel), orderService);
+                new NavigationService(navigationStore, CreateAdminCorrectionsViewModel, CreateFulfillingOrdersViewModel), ordersStore);
         }
         private AdminCorrectionsViewModel CreateAdminCorrectionsViewModel()
         {
             return AdminCorrectionsViewModel.LoadViewModel(new NavigationService(navigationStore, CreateFulfillingOrdersViewModel, CreateAdminCorrectionsViewModel),
-                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminCorrectionsViewModel), mealService);
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminCorrectionsViewModel), mealsStore);
         }
         private AdminLogInViewModel CreateAdminLiginViewModel()
         {
             return new AdminLogInViewModel(new NavigationService(navigationStore, CreateAdminCorrectionsViewModel, CreateAdminLiginViewModel),
                 new NavigationService(navigationStore, CreateHelpViewModel, CreateAdminLiginViewModel));
         }
-        private CustomerListOfOrdersViewModel CreateCustomerListOfOrdersViewModel()
-        {
-            return CustomerListOfOrdersViewModel.LoadViewModel(new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerListOfOrdersViewModel),
-                new NavigationService(navigationStore, CreateCustomerOrderingViewModel, CreateFulfillingOrdersViewModel), orderService);
-        }
         private CustomerOrderingViewModel CreateCustomerOrderingViewModel()
         {
             return CustomerOrderingViewModel.LoadViewModel(new NavigationService(navigationStore, CreateCustomerListOfOrdersViewModel, CreateCustomerOrderingViewModel),
-                new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerOrderingViewModel), mealService, orderService);
+                new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerOrderingViewModel), mealsStore, ordersStore);
+        }
+        private CustomerListOfOrdersViewModel CreateCustomerListOfOrdersViewModel()
+        {
+            return CustomerListOfOrdersViewModel.LoadViewModel(new NavigationService(navigationStore, CreateHelpViewModel, CreateCustomerListOfOrdersViewModel), 
+                new NavigationService(navigationStore, CreateCustomerOrderingViewModel, CreateCustomerListOfOrdersViewModel), ordersStore);
         }
     }
 }

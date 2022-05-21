@@ -2,6 +2,7 @@
 using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
+using Data.Stores;
 using DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ namespace Data.ViewModels
     public class CustomerListOfOrdersViewModel : BaseViewModelWithOrderService
     {
         private ObservableCollection<OrderViewModel> orders;
-
         public ObservableCollection<OrderViewModel> Orders
         {
             get { return orders; }
@@ -24,24 +24,24 @@ namespace Data.ViewModels
 
         public BaseCommand LoadOrdersCommand { get; }
         public NavigateCommand NavigateToCustomerOrdering { get; }
-        public CustomerListOfOrdersViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService, 
-            IOrderService orderService)
-            : base(helpNavigationService, orderService)
+        public CustomerListOfOrdersViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService, OrdersStore ordersStore)
+            : base(helpNavigationService, ordersStore)
         {
+            orders = new ObservableCollection<OrderViewModel>();
             NavigateToCustomerOrdering = new NavigateCommand(customerOrderingNavigationService);
             LoadOrdersCommand = new LoadOrders<CustomerListOfOrdersViewModel>(this); 
         }
 
-        public static CustomerListOfOrdersViewModel LoadViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService, 
-            IOrderService orderService)
+        public static CustomerListOfOrdersViewModel LoadViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService,
+           OrdersStore ordersStore)
         {
-            CustomerListOfOrdersViewModel viewModel = new CustomerListOfOrdersViewModel(helpNavigationService, customerOrderingNavigationService, orderService);
+            CustomerListOfOrdersViewModel viewModel = new CustomerListOfOrdersViewModel(helpNavigationService, customerOrderingNavigationService, ordersStore);
             viewModel.LoadOrdersCommand.Execute(null);
 
             return viewModel;
         }
 
-        public override void LoadOrders(ICollection<Order> orders)
+        public override void LoadOrders(IEnumerable<Order> orders)
         {
             foreach (var order in orders)
             {

@@ -1,4 +1,5 @@
 ﻿using Data.Entities.enums;
+using Data.Stores;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace Data.Commands.FulfilingOrderCommands
 {
     public class RejectOrder : BaseFulfilOrdersCommand
     {
-        public RejectOrder(FulfillingOrdersViewModel fulfillingOrdersViewModel) 
-            : base(fulfillingOrdersViewModel)
+        public RejectOrder(FulfillingOrdersViewModel fulfillingOrdersViewModel, OrdersStore ordersStore) 
+            : base(fulfillingOrdersViewModel, ordersStore)
         {
         }
         public override void Execute(object? parameter)
@@ -20,9 +21,12 @@ namespace Data.Commands.FulfilingOrderCommands
             selcetedOrder.OrderStatus = OrderStatus.Rejected;
             selcetedOrder.DateOfLastModified = DateTime.Now;
 
+            ordersStore.Update(selcetedOrder.ViewModelToModel(selcetedOrder));
+
             fulfillingOrdersViewModel.Orders.Insert(fulfillingOrdersViewModel.SelectedOrderIndex, selcetedOrder);
             fulfillingOrdersViewModel.Orders.RemoveAt(fulfillingOrdersViewModel.SelectedOrderIndex);
                   
+
         }
     }
 }

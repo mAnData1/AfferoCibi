@@ -1,6 +1,7 @@
 ﻿using Data.Entities;
 using Data.Services;
 using Data.Services.Interfaces;
+using Data.Stores;
 using Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,14 @@ namespace Data.Commands.CustomerOrderingCommands
     {
         private CustomerOrderingViewModel customerOrderingViewModel;
         private readonly NavigationService customerListOfOrdersNavigate;
-        private readonly IOrderService orderService;
-
-        public FinishOrder(CustomerOrderingViewModel customerOrderingViewModel, NavigationService customerListOfOrdersNavigate, IOrderService orderService)
+        private readonly OrdersStore ordersStore;
+        public FinishOrder(CustomerOrderingViewModel customerOrderingViewModel, NavigationService customerListOfOrdersNavigate, OrdersStore ordersStore)
         {
             this.customerOrderingViewModel = customerOrderingViewModel;
             this.customerListOfOrdersNavigate = customerListOfOrdersNavigate;
             customerOrderingViewModel.PropertyChanged += AdressChanged;
             customerOrderingViewModel.OrderedMeals.CollectionChanged += MealsChanged;
-            this.orderService = orderService;
+            this.ordersStore = ordersStore;
         }
 
         private void MealsChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -55,7 +55,7 @@ namespace Data.Commands.CustomerOrderingCommands
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            await orderService.CreateAsync(CreateOrder());   
+            await ordersStore.AddOrder(CreateOrder());   
             customerListOfOrdersNavigate.Navigate();
         }
 
@@ -64,7 +64,7 @@ namespace Data.Commands.CustomerOrderingCommands
             Order order = new Order(customerOrderingViewModel.Address, DateTime.Now);
             List<Meal> meals = new List<Meal>();
 
-            foreach (var ViewModel in customerOrderingViewModel.Meals)
+            foreach (var ViewModel in customerOrderingViewModel.OrderedMeals)
             {
                 meals.Add(new Meal(ViewModel.MealImage, ViewModel.Name, ViewModel.Price, ViewModel.Ingredients));
             }

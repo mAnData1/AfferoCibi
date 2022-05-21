@@ -1,6 +1,7 @@
 ﻿using Data.Commands;
 using Data.Commands.AdminCorrectionsViewModelCommands;
 using Data.Entities;
+using Data.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,14 @@ namespace Data.ViewModels
 {
     public class MealCardAdminViewModel : MealViewModel
     {
-        public MealCardAdminViewModel(Meal meal, AdminCorrectionsViewModel adminCorrectionsViewModel) 
+        private readonly MealsStore mealsStore;
+        public MealCardAdminViewModel(Meal meal, AdminCorrectionsViewModel adminCorrectionsViewModel, MealsStore mealsStore) 
             : base(meal)
         {
-            UpdateCommand = new UpdateMeal(adminCorrectionsViewModel,this);
-            DeleteCommand = new DeleteMeal(adminCorrectionsViewModel, this);
+            this.mealsStore = mealsStore;
+
+            UpdateCommand = new UpdateMeal(adminCorrectionsViewModel, this, mealsStore);
+            DeleteCommand = new DeleteMeal(adminCorrectionsViewModel, this, mealsStore);
         }
         public BaseCommand UpdateCommand { get; }
         public BaseCommand DeleteCommand { get; }

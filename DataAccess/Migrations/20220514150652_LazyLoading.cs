@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class FixManyToMasnyRealtionship : Migration
+    public partial class LazyLoading : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,4 +1,5 @@
-﻿using Data.ViewModels;
+﻿using Data.Stores;
+using Data.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,15 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
     {
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
         private MealCardAdminViewModel mealCardAdminViewModel;
+        private MealsStore mealsStore;
+
+        public UpdateMeal(AdminCorrectionsViewModel adminCorrectionsViewModel, MealCardAdminViewModel mealCardAdminViewModel, MealsStore mealsStore)
+        {
+            this.adminCorrectionsViewModel = adminCorrectionsViewModel;
+            this.mealCardAdminViewModel = mealCardAdminViewModel;
+            
+            this.mealsStore = mealsStore;
+        }
 
         public override async Task ExecuteAsync(object? parameter)
         {
@@ -22,14 +32,8 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
             adminCorrectionsViewModel.InputPrice = mealCardAdminViewModel.Price;
             adminCorrectionsViewModel.InputIngredients = mealCardAdminViewModel.Ingredients;
 
-
             adminCorrectionsViewModel.UpdatedMeal = mealCardAdminViewModel;
-            adminCorrectionsViewModel.UpdatedMealID = await adminCorrectionsViewModel.mealService.GetIDAsync(mealCardAdminViewModel.ViewModelToModel(mealCardAdminViewModel));
-        }
-        public UpdateMeal(AdminCorrectionsViewModel adminCorrectionsViewModel, MealCardAdminViewModel mealCardAdminViewModel)
-        {
-            this.adminCorrectionsViewModel = adminCorrectionsViewModel;
-            this.mealCardAdminViewModel = mealCardAdminViewModel;
+            adminCorrectionsViewModel.UpdatedMealID = await mealsStore.GetIDAsync(mealCardAdminViewModel.ViewModelToModel(mealCardAdminViewModel));
         }
     }
 }
