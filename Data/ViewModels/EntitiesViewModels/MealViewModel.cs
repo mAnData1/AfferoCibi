@@ -10,12 +10,6 @@ namespace Data.ViewModels
     public class MealViewModel : BaseViewModel
     {
         private Meal meal;
-
-        public Guid Id 
-        {
-            get {return meal.Id;}
-            set { meal.Id = value; } 
-        }
         public byte[] MealImage 
         {
             get { return meal.MealImage; }
@@ -41,5 +35,9 @@ namespace Data.ViewModels
             this.meal = meal;
         }
 
+        public Meal ViewModelToModel(MealViewModel mealViewModel)
+        {
+            return new Meal(mealViewModel.MealImage, mealViewModel.Name, mealViewModel.Price, mealViewModel.Ingredients);
+        }
     }
 }

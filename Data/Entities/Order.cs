@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    public class Order : BaseEntity
+    public class Order
     {
         public string Address { get; set; }
         public virtual List<Meal> Meals { get; set; }
@@ -16,12 +16,11 @@ namespace Data.Entities
 
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Processing;
 
-        public Order(string address, DateTime modified, OrderStatus orderStatus)
+        public Order(string address, DateTime modified)
         {
-            Id = Guid.NewGuid();
             Address = address;
             DateOfLastModified = modified;
-            OrderStatus = orderStatus;
+
         }
     }
 }

@@ -16,23 +16,36 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DataGrid
+            SelectedIndex="{Binding SelectedOrderIndex, UpdateSourceTrigger=PropertyChanged}"
+            SelectionMode="Single"
             Background="Orange"
-            ItemsSource="{Binding Orders, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding Orders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="OrderList"
             FontSize="26"
-            AutoGenerateColumns="True"
+            AutoGenerateColumns="False"
             Grid.Row="0"
             Grid.Column="1"
-            Margin="5"/>
+            Margin="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Address" Binding = "{Binding Address}"/>
+                <DataGridTextColumn Header="Last Modified" Binding = "{Binding DateOfLastModified}"/>
+                <DataGridTextColumn Header="Status" Binding = "{Binding OrderStatus}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
         <DataGrid
             Background="Orange"
             ItemsSource="{Binding Meals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="MealList"
             FontSize="26"
-            AutoGenerateColumns="True"
+            AutoGenerateColumns="False"
             Margin="5"
             Grid.Row="0"
-            Grid.Column="0"/>
+            Grid.Column="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <DockPanel
             Margin="0 5 0 5"
@@ -42,8 +55,7 @@
             <Button
             Width="50"
             Height="50"
-            Command="{Binding NavigateToHelp}"
-           >
+            Command="{Binding NavigateToHelp}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="35"/>
@@ -54,7 +66,7 @@
             </Button>
             <Button
                 Background="OrangeRed"
-                Command="{Binding SentOrderCommand}"
+                Command="{Binding SendOrderCommand}"
                 Padding="20 10 20 10"
                 Margin="5"
                 FontSize="26"

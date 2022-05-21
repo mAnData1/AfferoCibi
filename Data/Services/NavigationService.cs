@@ -11,21 +11,21 @@ namespace Data.Services
     public class NavigationService
     {
         private readonly NavigationStore navigationStore;
-        private readonly Func<BaseViewModel> createViewModel;
-        private readonly Func<BaseViewModel> prevViewModel;
+        private readonly Func<BaseViewModel> nextViewModel;
+        private readonly Func<BaseViewModel> currentViewModel;
 
-        public NavigationService(NavigationStore navigationStore, Func<BaseViewModel> createViewModel, Func<BaseViewModel> prevViewModel)
+        public NavigationService(NavigationStore navigationStore, Func<BaseViewModel> nextViewModel, Func<BaseViewModel> currentViewModel)
         {
             this.navigationStore = navigationStore;
-            this.createViewModel = createViewModel;
-            this.prevViewModel = prevViewModel;
+            this.nextViewModel = nextViewModel;
+            this.currentViewModel = currentViewModel;
         }
 
 
         public void Navigate()
         {
-            navigationStore.CurrentViewModel = createViewModel();
-            navigationStore.PrevViewModel = prevViewModel();
+            navigationStore.CurrentViewModel = nextViewModel();
+            navigationStore.PrevViewModel = currentViewModel();
         }
 
     }

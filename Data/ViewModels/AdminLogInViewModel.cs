@@ -16,7 +16,7 @@ namespace Data.ViewModels
         public string UserName
         {
             get { return userName; }
-            set { userName = value; OnPropertyChaneg(nameof(UserName)); }
+            set { userName = value; OnPropertyChanged(nameof(UserName)); }
         }
 
         private string bindablePassword;
@@ -24,7 +24,7 @@ namespace Data.ViewModels
         public string BindablePassword
         {
             get { return bindablePassword; }
-            set { bindablePassword = value; OnPropertyChaneg(nameof(BindablePassword)); }
+            set { bindablePassword = value; OnPropertyChanged(nameof(BindablePassword)); }
         }
 
         public Submit SubmitCommand { get; }

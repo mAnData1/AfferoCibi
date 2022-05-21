@@ -11,7 +11,6 @@ namespace Data.ViewModels
 {
     public class HelpViewModel : BaseViewModel
     {
-
         public HelpViewModel(NavigationBackService navigationBack)
         {
             NavigateBackCommand = new NavigateBackCommand(navigationBack);

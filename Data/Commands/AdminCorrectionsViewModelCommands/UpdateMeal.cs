@@ -1,4 +1,5 @@
-﻿using Data.ViewModels;
+﻿using Data.Stores;
+using Data.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,32 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Commands
+namespace Data.Commands.AdminCorrectionsViewModelCommands
 {
-    public class UpdateMeal : BaseCommand
+    public class UpdateMeal : BaseAsyncCommand
     {
         private AdminCorrectionsViewModel adminCorrectionsViewModel;
+        private MealCardAdminViewModel mealCardAdminViewModel;
+        private MealsStore mealsStore;
 
-        //public override bool CanExecute(object? parameter)
-        //{
-            
-        //    {
-        //        return false && base.CanExecute(parameter);
-        //    }
-        //    else
-        //    return true && base.CanExecute(parameter);
-        //}
-        public override void Execute(object? parameter)
-        {
-           ;
-            adminCorrectionsViewModel.AddMealCommand.Enabled = false;
-            adminCorrectionsViewModel.SaveChangesCommand.Enabled = true;
-            
-        }
-        public UpdateMeal(AdminCorrectionsViewModel adminCorrectionsViewModel)
+        public UpdateMeal(AdminCorrectionsViewModel adminCorrectionsViewModel, MealCardAdminViewModel mealCardAdminViewModel, MealsStore mealsStore)
         {
             this.adminCorrectionsViewModel = adminCorrectionsViewModel;
+            this.mealCardAdminViewModel = mealCardAdminViewModel;
             
+            this.mealsStore = mealsStore;
+        }
+
+        public override async Task ExecuteAsync(object? parameter)
+        {
+            adminCorrectionsViewModel.AddMealCommand.Enabled = false;
+            adminCorrectionsViewModel.SaveChangesCommand.Enabled = true;
+
+            adminCorrectionsViewModel.InputName = mealCardAdminViewModel.Name;
+            adminCorrectionsViewModel.InputPrice = mealCardAdminViewModel.Price;
+            adminCorrectionsViewModel.InputIngredients = mealCardAdminViewModel.Ingredients;
+
+            adminCorrectionsViewModel.UpdatedMeal = mealCardAdminViewModel;
+            adminCorrectionsViewModel.UpdatedMealID = await mealsStore.GetIDAsync(mealCardAdminViewModel.ViewModelToModel(mealCardAdminViewModel));
         }
     }
 }

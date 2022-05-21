@@ -24,15 +24,5 @@ namespace View.Views.Components
         {
             InitializeComponent();
         }
-
-        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            ((Image)sender).Source = new BitmapImage(new Uri("Resources/no-image.png", UriKind.Relative));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

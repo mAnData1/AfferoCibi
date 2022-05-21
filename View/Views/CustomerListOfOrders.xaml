@@ -44,8 +44,14 @@
             Grid.Column="1"
             x:Name="Meals"
             ItemsSource="{Binding Orders, UpdateSourceTrigger=PropertyChanged}"
-            AutoGenerateColumns="True"
             FontSize="26"
-            Margin=" 10"/>
+            Margin=" 10"
+            AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Last time modified" Binding="{Binding DateOfLastModified}"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding OrderStatus}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Address}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

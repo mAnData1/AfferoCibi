@@ -35,6 +35,10 @@ namespace View.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+            {
+                return null;
+            }
             byte[] bytes = imageToByteArray (value as Image);
             return bytes;
         }

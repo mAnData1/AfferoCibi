@@ -23,7 +23,7 @@ namespace Data.ViewModels
         }
         private void OnCurrentViewModelChanged()
         {
-            OnPropertyChaneg(nameof(CurrentViewModel));
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
 
     }

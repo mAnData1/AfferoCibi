@@ -12,15 +12,15 @@ namespace Data.ViewModels
     {
         private Order order;
 
-        public Guid Id 
-        {
-            get {return order.Id;}
-            set { order.Id = value; }    
-        }
         public DateTime DateOfLastModified
         { 
             get {return order.DateOfLastModified;}
             set { order.DateOfLastModified = value;}
+        }
+        public virtual List<MealViewModel> Meals
+        {
+            get { return ToMealViewModels(order.Meals); }
+            set { order.Meals = ToMeals(value); }
         }
         public OrderStatus OrderStatus
         {
@@ -35,6 +35,33 @@ namespace Data.ViewModels
         public OrderViewModel(Order order)
         {
                 this.order = order;
+        }
+        public Order ViewModelToModel(OrderViewModel viewModel)
+        {
+            Order order = new Order(viewModel.Address, viewModel.DateOfLastModified);
+            order.OrderStatus = viewModel.OrderStatus;
+            order.Meals = ToMeals(viewModel.Meals);
+
+            return order;
+        }
+        private List<MealViewModel> ToMealViewModels(List<Meal> meals)
+        {
+            List<MealViewModel> result = new List<MealViewModel>();
+            foreach (Meal meal in meals)
+            {
+                result.Add(new MealViewModel(meal));
+            }
+
+            return result;
+        }
+        private List<Meal> ToMeals(List<MealViewModel> viewModels)
+        {
+            List<Meal> result = new List<Meal>();
+            foreach (var viewModel in viewModels)
+            {
+                result.Add(viewModel.ViewModelToModel(viewModel));
+            }
+            return result;
         }
     }
 }
