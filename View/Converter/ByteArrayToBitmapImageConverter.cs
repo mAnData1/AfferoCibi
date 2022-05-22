@@ -12,25 +12,12 @@ namespace View.Converter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            BitmapImage img = new BitmapImage();
-            if (value != null)
+            if (value == null)
             {
-                img = ConvertByteArrayToBitMapImage(value as byte[]);
+                return null;
             }
-            return img;
-        }
-        public BitmapImage ConvertByteArrayToBitMapImage(byte[]? imageByteArray)
-        {
-            BitmapImage img = new BitmapImage();
-            using (MemoryStream memStream = new MemoryStream(imageByteArray))
-            {
-                img.BeginInit();
-                img.CacheOption = BitmapCacheOption.OnLoad;
-                img.StreamSource = memStream;
-                img.EndInit();
-                img.Freeze();
-            }
-            return img;
+            else
+                return  ToImage(value as byte[]);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -39,22 +26,35 @@ namespace View.Converter
             {
                 return null;
             }
-            byte[] bytes = imageToByteArray (value as Image);
-            return bytes;
+            else
+                return ToBinary(value as Image);
+
         }
 
-        public byte[] imageToByteArray(Image imageIn)
+        public static Image ToImage(Byte[] binary)
         {
-            using (var ms = new MemoryStream())
+            Image image = null;
+            if (binary == null || binary.Length < 100) 
+                return image;
+
+            using (MemoryStream ms = new MemoryStream(binary))
             {
-                if (imageIn == null)
-                {
-                    return null;
-                }
-                imageIn.Save(ms, imageIn.RawFormat);
-                return ms.ToArray();
+                image = Image.FromStream(ms);
+            }
+            return image;
+        }
+
+        public static Byte[] ToBinary(Image image)
+        {
+            if (image == null) 
+                return null;
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                image.Save(memoryStream, ImageFormat.Png);
+                return memoryStream.ToArray();
             }
         }
+
     }
     
 }

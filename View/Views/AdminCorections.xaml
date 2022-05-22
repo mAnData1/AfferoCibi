@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="943.55" d:DesignWidth="842.912">        
                  <UserControl.Resources>
-        <Converter:ByteArrayToBitmapImageConverter x:Key="imageConvertor"/>
-        <BitmapImage x:Key="DefaultImage" UriSource="Resources/no-image.png"/>
+                    <Converter:ByteArrayToBitmapImageConverter x:Key="imageConvertor"/>
+                    <BitmapImage x:Key="DefaultImage" UriSource="Resources/no-image.png"/>
                  </UserControl.Resources>
     
     <Grid
@@ -30,7 +30,15 @@
         </Grid.RowDefinitions>
         <!-- Binding InputImage, Converter ={StaticResource imageConvertor}, Mode=OneWay, TargetNullValue= -->
         <Image
-            
+            Source="{ Binding InputImage, Converter ={StaticResource imageConvertor}, Mode=OneWay}" 
+            Panel.ZIndex="1"
+            x:Name="UploadImage"
+            Grid.Column="0"
+            Grid.Row="0"
+            Stretch="Uniform"
+            Margin="5"
+            />
+        <Image
             Source="{StaticResource DefaultImage}"            
             x:Name="Image"
             Grid.Column="0"

@@ -27,16 +27,15 @@ namespace Data.Stores
 
         public async Task AddMeal(Meal meal)
         {
-            await mealService.CreateAsync(meal);
-
             meals.Add(meal);
+            await mealService.CreateAsync(meal);
         }
 
         public async Task RemoveMeal(Meal meal)
         {
+            Meal removedMeal = meals.FirstOrDefault(m => m.Name == meal.Name);
+            meals.Remove(removedMeal);
             await mealService.DeleteAsync(meal);
-
-            meals.Remove(meal);
         }
 
         public async Task<Guid> GetIDAsync(Meal meal)

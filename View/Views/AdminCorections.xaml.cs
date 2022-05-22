@@ -37,16 +37,10 @@ namespace View.Views
               "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
             {
-                Image.Source = new BitmapImage(new Uri(op.FileName));
+                UploadImage.Source = new BitmapImage(new Uri(op.FileName));
             }
-
+            Image.Visibility = Visibility.Collapsed;
         }
-
-        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            ((Image)sender).Source = new BitmapImage(new Uri("Resources/no-image.png", UriKind.Relative));
-        }
-
         private void PopulateWithItems()
         {
             foreach (var meal in MealList.Items)
