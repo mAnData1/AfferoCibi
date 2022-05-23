@@ -48,7 +48,11 @@ namespace Data.ViewModels
         public byte[] InputImage
         {
             get { return inputImage; }
-            set { inputImage = value; }
+            set 
+            { 
+                inputImage = value; 
+                OnPropertyChanged(nameof(InputImage));
+            }
         }
         private string inputName;
 

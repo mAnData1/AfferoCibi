@@ -29,6 +29,7 @@ namespace Data.Commands.AdminCorrectionsViewModelCommands
             adminCorrectionsViewModel.SaveChangesCommand.Enabled = true;
 
             adminCorrectionsViewModel.InputName = mealCardAdminViewModel.Name;
+            adminCorrectionsViewModel.InputImage = mealCardAdminViewModel.MealImage;
             adminCorrectionsViewModel.InputPrice = mealCardAdminViewModel.Price;
             adminCorrectionsViewModel.InputIngredients = mealCardAdminViewModel.Ingredients;
 

@@ -10,48 +10,43 @@ namespace View.Converter
 {
     public class ByteArrayToBitmapImageConverter : IValueConverter
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-            {
-                return null;
-            }
-            else
-                return  ToImage(value as byte[]);
+            return ToBitmapSource(value as byte[]);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            return ToByteArray(value as BitmapSource);
+        }
+
+        public static BitmapSource ToBitmapSource(byte[] buffer)
+        {
+            if (buffer == null)
             {
                 return null;
             }
-            else
-                return ToBinary(value as Image);
 
-        }
-
-        public static Image ToImage(Byte[] binary)
-        {
-            Image image = null;
-            if (binary == null || binary.Length < 100) 
-                return image;
-
-            using (MemoryStream ms = new MemoryStream(binary))
+            using (var stream = new MemoryStream(buffer))
             {
-                image = Image.FromStream(ms);
+                return BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
             }
-            return image;
         }
 
-        public static Byte[] ToBinary(Image image)
+        public static byte[] ToByteArray(BitmapSource bitmap)
         {
-            if (image == null) 
-                return null;
-            using (MemoryStream memoryStream = new MemoryStream())
+            if (bitmap == null)
             {
-                image.Save(memoryStream, ImageFormat.Png);
-                return memoryStream.ToArray();
+                return null;
+            }
+
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+            using (var stream = new MemoryStream())
+            {
+                encoder.Save(stream);
+                return stream.ToArray();
             }
         }
 
