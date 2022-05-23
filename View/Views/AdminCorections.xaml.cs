@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace View.Views
             {
                 UploadImage.Source = new BitmapImage(new Uri(op.FileName));
             }
-            Image.Visibility = Visibility.Collapsed;
+
         }
         private void PopulateWithItems()
         {

@@ -28,19 +28,11 @@
             <RowDefinition Height="0.2*"/>
 
         </Grid.RowDefinitions>
-        <!-- Binding InputImage, Converter ={StaticResource imageConvertor}, Mode=OneWay, TargetNullValue= -->
-        <Image
-            Source="{ Binding InputImage, Converter ={StaticResource imageConvertor}, Mode=OneWay}" 
+
+        <Image 
+            Source="{ Binding InputImage, Converter={StaticResource imageConvertor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue= {StaticResource DefaultImage}}" 
             Panel.ZIndex="1"
             x:Name="UploadImage"
-            Grid.Column="0"
-            Grid.Row="0"
-            Stretch="Uniform"
-            Margin="5"
-            />
-        <Image
-            Source="{StaticResource DefaultImage}"            
-            x:Name="Image"
             Grid.Column="0"
             Grid.Row="0"
             Stretch="Uniform"

@@ -25,6 +25,7 @@ namespace Data.Services
             return new MealDTO
             {
                 Id = new Guid(),
+                MealImage = model.MealImage,
                 Name = model.Name,
                 Ingredients = model.Ingredients,
                 Price = model.Price
@@ -35,6 +36,7 @@ namespace Data.Services
             return new MealDTO
             {
                 Id = await GetIDAsync(model),
+                MealImage = model.MealImage,
                 Name = model.Name,
                 Ingredients = model.Ingredients,
                 Price = model.Price
