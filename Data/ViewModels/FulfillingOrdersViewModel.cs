@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class FulfillingOrdersViewModel : BaseViewModelWithOrderService
+    public class FulfillingOrdersViewModel : BaseViewModelWithOrderService<FulfillingOrdersViewModel>
     {
         private OrdersStore ordersStore;
         private int selectedOrderIndex = -1;
@@ -43,8 +43,9 @@ namespace Data.ViewModels
         public BaseCommand LoadOrdersCommand { get; }
         public SendOrder SendOrderCommand { get; }
         public RejectOrder RejectOrderCommand { get; }
-        public NavigateCommand NavigateToAdminCorrectionsCommand { get; }
-        public FulfillingOrdersViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, OrdersStore ordersStore)
+        public NavigateCommand<AdminCorrectionsViewModel, FulfillingOrdersViewModel>  NavigateToAdminCorrectionsCommand { get; }
+        public FulfillingOrdersViewModel(NavigationService<HelpViewModel, FulfillingOrdersViewModel> helpNavigationService, 
+            NavigationService<AdminCorrectionsViewModel, FulfillingOrdersViewModel> adminCorrectionsNavigationService, OrdersStore ordersStore)
             : base(helpNavigationService, ordersStore)
         {
             Meals = new ObservableCollection<MealViewModel>();
@@ -54,12 +55,13 @@ namespace Data.ViewModels
 
             SendOrderCommand = new SendOrder(this, ordersStore);
             RejectOrderCommand = new RejectOrder(this, ordersStore);
-            NavigateToAdminCorrectionsCommand = new NavigateCommand(adminCorrectionsNavigationService);
+            NavigateToAdminCorrectionsCommand = new NavigateCommand<AdminCorrectionsViewModel, FulfillingOrdersViewModel>(adminCorrectionsNavigationService);
 
             LoadOrdersCommand = new LoadOrders<FulfillingOrdersViewModel>(this);
         }
 
-        public static FulfillingOrdersViewModel LoadViewModel(NavigationService helpNavigationService, NavigationService adminCorrectionsNavigationService, OrdersStore ordersStore)
+        public static FulfillingOrdersViewModel LoadViewModel(NavigationService<AdminCorrectionsViewModel, FulfillingOrdersViewModel> adminCorrectionsNavigationService,
+             NavigationService<HelpViewModel, FulfillingOrdersViewModel> helpNavigationService, OrdersStore ordersStore)
         {
             FulfillingOrdersViewModel viewModel = new FulfillingOrdersViewModel(helpNavigationService, adminCorrectionsNavigationService, ordersStore);
             viewModel.LoadOrdersCommand.Execute(null);

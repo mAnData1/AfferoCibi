@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Commands
 {
-    public class LoadOrders<TViewModel> : BaseAsyncCommand where TViewModel : BaseViewModelWithOrderService
+    public class LoadOrders<TViewModel> : BaseAsyncCommand where TViewModel : BaseViewModelWithOrderService<TViewModel>
     {
         private readonly TViewModel viewModel;
         public LoadOrders(TViewModel viewModel)

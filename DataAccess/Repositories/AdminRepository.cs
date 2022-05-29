@@ -10,8 +10,8 @@ namespace DataAccess.Repositories
 {
     public class AdminRepository : BaseRepository<AdminDTO>, IAdminRepository
     {
-        public AdminRepository(AfferoCibiDBContext context) 
-            : base(context)
+        public AdminRepository(AfferoCibiDBContextFactory contextFactory) 
+            : base(contextFactory)
         {
         }
     }

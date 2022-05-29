@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class AdminCorrectionsViewModel : BaseViewModelWithMealServices
+    public class AdminCorrectionsViewModel : BaseViewModelWithMealServices<AdminCorrectionsViewModel>
     {
         public ObservableCollection<MealCardAdminViewModel> Meals { get; set; }
 
@@ -78,23 +78,24 @@ namespace Data.ViewModels
             set { inputIngredients = value; OnPropertyChanged(nameof(InputIngredients)); }
         }
 
-        public NavigateCommand ProceedCommand { get; }
+        public NavigateCommand<FulfillingOrdersViewModel, AdminCorrectionsViewModel> ProceedCommand { get; }
         public BaseCommand UploadImageCommand { get; }
         public BaseCommand AddMealCommand { get; }
         public BaseCommand SaveChangesCommand { get; }
         public BaseCommand LoadMealsCommand { get; }
 
-        public AdminCorrectionsViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, MealsStore mealsStore)
+        public AdminCorrectionsViewModel(NavigationService<FulfillingOrdersViewModel, AdminCorrectionsViewModel> fulfillingOrdersViewNavigation, 
+            NavigationService<HelpViewModel,AdminCorrectionsViewModel> helpNavigationService, MealsStore mealsStore)
             : base(helpNavigationService, mealsStore)
         {
             Meals = new ObservableCollection<MealCardAdminViewModel>();
             LoadMealsCommand = new LoadMeals<AdminCorrectionsViewModel>(this);
-            ProceedCommand = new NavigateCommand(fulfillingOrdersViewNavigation);
+            ProceedCommand = new NavigateCommand<FulfillingOrdersViewModel, AdminCorrectionsViewModel> (fulfillingOrdersViewNavigation);
             AddMealCommand = new AddMeal(this, mealsStore);
             SaveChangesCommand = new SaveChanges(this,mealsStore);
         }
 
-        public static AdminCorrectionsViewModel LoadViewModel(NavigationService fulfillingOrdersViewNavigation, NavigationService helpNavigationService, MealsStore mealsStore)
+        public static AdminCorrectionsViewModel LoadViewModel(NavigationService<FulfillingOrdersViewModel, AdminCorrectionsViewModel> fulfillingOrdersViewNavigation, NavigationService<HelpViewModel, AdminCorrectionsViewModel> helpNavigationService, MealsStore mealsStore)
         {
             AdminCorrectionsViewModel viewModel = new AdminCorrectionsViewModel(fulfillingOrdersViewNavigation, helpNavigationService, mealsStore);
             viewModel.LoadMealsCommand.Execute(null);

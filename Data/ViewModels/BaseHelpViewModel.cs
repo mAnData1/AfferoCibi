@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public abstract class BaseHelpViewModel : BaseViewModel
+    public abstract class BaseHelpViewModel<TCurrentViewModel> : BaseViewModel
+        where TCurrentViewModel : BaseViewModel
     {
-        public NavigateCommand NavigateToHelp { get; }
+        public NavigateCommand<HelpViewModel, TCurrentViewModel> NavigateToHelp { get; }
 
-        public BaseHelpViewModel(NavigationService helpNavigationService)
+        public BaseHelpViewModel(NavigationService<HelpViewModel, TCurrentViewModel> helpNavigationService)
         {
-            NavigateToHelp = new NavigateCommand(helpNavigationService);
+            NavigateToHelp = new NavigateCommand<HelpViewModel, TCurrentViewModel>(helpNavigationService);
         }
     }
 }

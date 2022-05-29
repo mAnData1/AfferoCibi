@@ -12,9 +12,9 @@ namespace Data.Commands.AdminLogInCommands
     public class Submit : BaseCommand
     {
         private AdminLogInViewModel adminLiginViewModel;
-        private readonly NavigationService adminCorrectionsNavigation;
+        private readonly NavigationService<AdminCorrectionsViewModel,AdminLogInViewModel> adminCorrectionsNavigation;
 
-        public Submit(AdminLogInViewModel adminLiginViewModel, NavigationService adminCorrectionsNavigation)
+        public Submit(AdminLogInViewModel adminLiginViewModel, NavigationService<AdminCorrectionsViewModel, AdminLogInViewModel> adminCorrectionsNavigation)
         {
             this.adminLiginViewModel = adminLiginViewModel;
             this.adminCorrectionsNavigation = adminCorrectionsNavigation;

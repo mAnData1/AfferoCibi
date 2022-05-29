@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public abstract class  BaseViewModelWithOrderService : BaseHelpViewModel
+    public abstract class  BaseViewModelWithOrderService<TCurrentViewModel> : BaseHelpViewModel<TCurrentViewModel>
+        where TCurrentViewModel : BaseViewModel
     {
         public readonly OrdersStore ordersStore;
-        public BaseViewModelWithOrderService(NavigationService helpNavigationService, OrdersStore ordersStore)
+        public BaseViewModelWithOrderService(NavigationService<HelpViewModel, TCurrentViewModel> helpNavigationService, OrdersStore ordersStore)
             : base(helpNavigationService)
         {
             this.ordersStore = ordersStore;

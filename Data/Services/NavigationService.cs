@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace Data.Services
 {
-    public class NavigationService
+    public class NavigationService<TNextViewModel, TCurrentViewModel> 
+        where TNextViewModel : BaseViewModel
+        where TCurrentViewModel : BaseViewModel
     {
         private readonly NavigationStore navigationStore;
-        private readonly Func<BaseViewModel> nextViewModel;
-        private readonly Func<BaseViewModel> currentViewModel;
+        private readonly Func<TNextViewModel> nextViewModel;
+        private readonly Func<TCurrentViewModel> currentViewModel;
 
-        public NavigationService(NavigationStore navigationStore, Func<BaseViewModel> nextViewModel, Func<BaseViewModel> currentViewModel)
+        public NavigationService(NavigationStore navigationStore, Func<TNextViewModel> nextViewModel, Func<TCurrentViewModel> currentViewModel)
         {
             this.navigationStore = navigationStore;
             this.nextViewModel = nextViewModel;
