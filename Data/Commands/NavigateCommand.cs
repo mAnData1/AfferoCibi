@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 
 namespace Data.Commands
 {
-    public class NavigateCommand : BaseCommand
+    public class NavigateCommand<TNextViewModel, TCurrentViewModel> : BaseCommand 
+        where TNextViewModel : BaseViewModel
+        where TCurrentViewModel : BaseViewModel
     {
-        private readonly NavigationService navigateServices;
+        private readonly NavigationService<TNextViewModel, TCurrentViewModel> navigateServices;
 
-        public NavigateCommand(NavigationService navigateServices)
+        public NavigateCommand(NavigationService<TNextViewModel, TCurrentViewModel> navigateServices)
         {
             this.navigateServices = navigateServices;
         }

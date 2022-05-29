@@ -10,7 +10,6 @@ namespace Data.Stores
     public class NavigationStore
     {
         private BaseViewModel prevViewModel;
-
         public BaseViewModel PrevViewModel
         {
             get { return prevViewModel; }

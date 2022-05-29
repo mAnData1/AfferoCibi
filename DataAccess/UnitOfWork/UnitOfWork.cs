@@ -10,14 +10,16 @@ namespace DataAccess.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly AfferoCibiDBContextFactory dbFactory;
         private readonly AfferoCibiDBContext db;
         private readonly IMealRepository mealRepository;
         private readonly IOrderRepository orderRepository;
-        public UnitOfWork(AfferoCibiDBContext db)
+        public UnitOfWork(AfferoCibiDBContextFactory dbFactory)
         {
-            this.db = db;
-            mealRepository = new MealRepository(db);
-            orderRepository = new OrderRepository(db);
+            db = dbFactory.CreateDbContext();
+            this.dbFactory = dbFactory;
+            mealRepository = new MealRepository(dbFactory);
+            orderRepository = new OrderRepository(dbFactory);
         }
 
         public IMealRepository MealRepository { get { return mealRepository; } }       

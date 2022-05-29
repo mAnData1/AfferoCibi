@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModels
 {
-    public class CustomerListOfOrdersViewModel : BaseViewModelWithOrderService
+    public class CustomerListOfOrdersViewModel : BaseViewModelWithOrderService<CustomerListOfOrdersViewModel>
     {
         private ObservableCollection<OrderViewModel> orders;
         public ObservableCollection<OrderViewModel> Orders
@@ -23,16 +23,19 @@ namespace Data.ViewModels
         }
 
         public BaseCommand LoadOrdersCommand { get; }
-        public NavigateCommand NavigateToCustomerOrdering { get; }
-        public CustomerListOfOrdersViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService, OrdersStore ordersStore)
+        public NavigateCommand<CustomerOrderingViewModel, CustomerListOfOrdersViewModel>  NavigateToCustomerOrdering { get; }
+        public CustomerListOfOrdersViewModel(NavigationService<HelpViewModel, CustomerListOfOrdersViewModel> helpNavigationService,
+            NavigationService<CustomerOrderingViewModel, CustomerListOfOrdersViewModel> customerOrderingNavigationService,
+            OrdersStore ordersStore)
             : base(helpNavigationService, ordersStore)
         {
             orders = new ObservableCollection<OrderViewModel>();
-            NavigateToCustomerOrdering = new NavigateCommand(customerOrderingNavigationService);
+            NavigateToCustomerOrdering = new NavigateCommand<CustomerOrderingViewModel, CustomerListOfOrdersViewModel>(customerOrderingNavigationService);
             LoadOrdersCommand = new LoadOrders<CustomerListOfOrdersViewModel>(this); 
         }
 
-        public static CustomerListOfOrdersViewModel LoadViewModel(NavigationService helpNavigationService, NavigationService customerOrderingNavigationService,
+        public static CustomerListOfOrdersViewModel LoadViewModel(NavigationService<CustomerOrderingViewModel, CustomerListOfOrdersViewModel> customerOrderingNavigationService, 
+             NavigationService<HelpViewModel, CustomerListOfOrdersViewModel> helpNavigationService,
            OrdersStore ordersStore)
         {
             CustomerListOfOrdersViewModel viewModel = new CustomerListOfOrdersViewModel(helpNavigationService, customerOrderingNavigationService, ordersStore);

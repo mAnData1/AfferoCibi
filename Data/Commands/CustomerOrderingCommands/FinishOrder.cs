@@ -16,9 +16,11 @@ namespace Data.Commands.CustomerOrderingCommands
     public class FinishOrder : BaseAsyncCommand
     {
         private CustomerOrderingViewModel customerOrderingViewModel;
-        private readonly NavigationService customerListOfOrdersNavigate;
+        private readonly NavigationService<CustomerListOfOrdersViewModel, CustomerOrderingViewModel> customerListOfOrdersNavigate;
         private readonly OrdersStore ordersStore;
-        public FinishOrder(CustomerOrderingViewModel customerOrderingViewModel, NavigationService customerListOfOrdersNavigate, OrdersStore ordersStore)
+        public FinishOrder(CustomerOrderingViewModel customerOrderingViewModel, 
+            NavigationService<CustomerListOfOrdersViewModel, CustomerOrderingViewModel> customerListOfOrdersNavigate, 
+            OrdersStore ordersStore)
         {
             this.customerOrderingViewModel = customerOrderingViewModel;
             this.customerListOfOrdersNavigate = customerListOfOrdersNavigate;

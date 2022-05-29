@@ -10,18 +10,19 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class AdminOrCustomerLogInViewModel : BaseHelpViewModel
+    public class AdminOrCustomerLogInViewModel : BaseHelpViewModel<AdminOrCustomerLogInViewModel>
     {
-        public NavigateCommand CustomerLogIn { get; }
 
-        public NavigateCommand AdminLogIn { get; }
-        public AdminOrCustomerLogInViewModel(NavigationService customerOrderingViewNavigation, NavigationService adminLogInViewNavigation, 
-            NavigationService helpNavigationService)
+        public AdminOrCustomerLogInViewModel(NavigationService<CustomerOrderingViewModel, AdminOrCustomerLogInViewModel> customerOrderingViewNavigation, 
+            NavigationService<AdminLogInViewModel, AdminOrCustomerLogInViewModel> adminLogInViewNavigation, 
+            NavigationService<HelpViewModel, AdminOrCustomerLogInViewModel> helpNavigationService)
             : base(helpNavigationService)
         {
-            CustomerLogIn = new NavigateCommand(customerOrderingViewNavigation);
+            CustomerLogIn = new NavigateCommand<CustomerOrderingViewModel, AdminOrCustomerLogInViewModel>(customerOrderingViewNavigation);
 
-            AdminLogIn = new NavigateCommand(adminLogInViewNavigation);
+            AdminLogIn = new NavigateCommand<AdminLogInViewModel, AdminOrCustomerLogInViewModel>(adminLogInViewNavigation);
         }
+        public NavigateCommand<CustomerOrderingViewModel, AdminOrCustomerLogInViewModel>  CustomerLogIn { get; }
+        public NavigateCommand<AdminLogInViewModel, AdminOrCustomerLogInViewModel> AdminLogIn { get; }
     }
 }

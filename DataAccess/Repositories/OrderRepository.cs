@@ -12,8 +12,8 @@ namespace DataAccess.Repositories
 {
     public class OrderRepository : BaseRepository<OrderDTO>, IOrderRepository
     {
-        public OrderRepository(AfferoCibiDBContext context) : 
-            base(context)
+        public OrderRepository(AfferoCibiDBContextFactory contextFactory) : 
+            base(contextFactory)
         {
         }
         public override async Task<ICollection<OrderDTO>> GetAllAsync(Expression<Func<OrderDTO, bool>>? filter = null)

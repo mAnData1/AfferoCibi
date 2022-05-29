@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace Data.Commands
 {
-    public class LoadMeals<TViewModel> : BaseAsyncCommand where TViewModel : BaseViewModelWithMealServices
+    public class LoadMeals<TViewModel> : BaseAsyncCommand 
+        where TViewModel : BaseViewModelWithMealServices<TViewModel>
     {
         private readonly TViewModel ViewModel;
 

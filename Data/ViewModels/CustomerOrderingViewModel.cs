@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace Data.ViewModels
 {
-    public class CustomerOrderingViewModel : BaseViewModelWithMealServices
+    public class CustomerOrderingViewModel : BaseViewModelWithMealServices<CustomerOrderingViewModel>
     {
         private string? address;
         public string? Address
@@ -48,10 +48,12 @@ namespace Data.ViewModels
 
         public BaseCommand RemoveCommand { get; }
         public BaseCommand FinishOrderCommand { get; }
-        public NavigateCommand NavigateToCustomerListOfOtders { get; }
+        public NavigateCommand<CustomerListOfOrdersViewModel, CustomerOrderingViewModel> NavigateToCustomerListOfOtders { get; }
         public BaseCommand LoadMealsCommand { get; }
 
-        public CustomerOrderingViewModel(NavigationService customerListOfOrdersNavigationService, NavigationService helpNavigationService, MealsStore mealsStore, OrdersStore ordersStore)
+        public CustomerOrderingViewModel(NavigationService<CustomerListOfOrdersViewModel, CustomerOrderingViewModel> customerListOfOrdersNavigationService, 
+            NavigationService<HelpViewModel, CustomerOrderingViewModel> helpNavigationService, 
+            MealsStore mealsStore, OrdersStore ordersStore)
             : base(helpNavigationService, mealsStore)
         {
             Meals = new ObservableCollection<MealCardCustomerViewModel>();
@@ -61,7 +63,7 @@ namespace Data.ViewModels
 
             RemoveCommand = new RemoveMeal(this);
             FinishOrderCommand = new FinishOrder(this, customerListOfOrdersNavigationService, ordersStore);
-            NavigateToCustomerListOfOtders = new NavigateCommand(customerListOfOrdersNavigationService);
+            NavigateToCustomerListOfOtders = new NavigateCommand<CustomerListOfOrdersViewModel, CustomerOrderingViewModel>(customerListOfOrdersNavigationService);
 
             LoadMealsCommand = new LoadMeals<CustomerOrderingViewModel>(this);
         }
@@ -71,8 +73,8 @@ namespace Data.ViewModels
             OnPropertyChanged(nameof(OrderedMeals));
         }
 
-        public static CustomerOrderingViewModel LoadViewModel(NavigationService customerListOfOrders, 
-            NavigationService helpNavigationService, 
+        public static CustomerOrderingViewModel LoadViewModel(NavigationService<CustomerListOfOrdersViewModel, CustomerOrderingViewModel> customerListOfOrders, 
+            NavigationService<HelpViewModel, CustomerOrderingViewModel> helpNavigationService, 
             MealsStore mealsStore, 
             OrdersStore ordersStore)
         {

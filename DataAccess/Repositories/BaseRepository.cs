@@ -12,11 +12,12 @@ namespace DataAccess.Repositories
 {
     public class BaseRepository<DTO> : IBaseRepository<DTO> where DTO : BaseDTO
     {
+        protected readonly AfferoCibiDBContextFactory contextFactory;
         protected readonly AfferoCibiDBContext context;
         protected readonly DbSet<DTO> dbSet;
-        public BaseRepository(AfferoCibiDBContext context)
+        public BaseRepository(AfferoCibiDBContextFactory contextFactory)
         {
-            this.context = context;
+            this.context = contextFactory.CreateDbContext();
             dbSet = context.Set<DTO>();
         }
 

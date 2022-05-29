@@ -11,8 +11,8 @@ namespace DataAccess.Repositories
 {
     public class MealRepository : BaseRepository<MealDTO>, IMealRepository
     {
-        public MealRepository(AfferoCibiDBContext context) 
-            : base(context)
+        public MealRepository(AfferoCibiDBContextFactory contextFactory) 
+            : base(contextFactory)
         {
         }
         public async Task<Guid> GetIdThroughNameAsync(string name)
