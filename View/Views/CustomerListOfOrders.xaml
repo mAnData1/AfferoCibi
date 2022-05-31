@@ -49,8 +49,8 @@
             AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Last time modified" Binding="{Binding DateOfLastModified}"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding OrderStatus}"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding AddressOrderStatus}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

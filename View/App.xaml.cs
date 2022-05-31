@@ -23,7 +23,7 @@ namespace View
     /// </summary>
     public partial class App : Application
     {
-        private const string ConnectionString = "Server=DESKTOP-QNFMT3E;Database=AfferoCibiDb;Trusted_Connection=True;";
+        private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=AfferoCibiDB";
        
         private readonly IHost host;
         public App()
@@ -31,7 +31,7 @@ namespace View
             host = Host.CreateDefaultBuilder()
                  .ConfigureServices(services =>
                  {
-                     services.AddSingleton(new AfferoCibiDBContextFactory(ConnectionString));
+                     services.AddSingleton<AfferoCibiDBContextFactory>(new AfferoCibiDBContextFactory(ConnectionString));
                      services.AddSingleton<IUnitOfWork, UnitOfWork>();
                      services.AddSingleton<IMealService, MealService>();
                      services.AddSingleton<IOrderService, OrderService>();
