@@ -52,9 +52,9 @@
                 Margin="5"
                 AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="Name" />
-                    <DataGridTextColumn Binding= "{Binding Price, Mode=OneWay}" Header="Price" />
-                    <DataGridTextColumn Binding="{Binding Ingredients, Mode=OneWay}" Header="Ingredients" />
+                    <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="Име" />
+                    <DataGridTextColumn Binding= "{Binding Price, Mode=OneWay}" Header="Цена" />
+                    <DataGridTextColumn Binding="{Binding Ingredients, Mode=OneWay}" Header="Съставки" />
                 </DataGrid.Columns>
         </DataGrid>
         </ScrollViewer>
@@ -65,13 +65,13 @@
             <Button
                 Background="OrangeRed"
                 Click="Refresh"
-                Content="Refresh"
+                Content="Опресни"
                 FontSize="26"
                 Margin="10 5 10 5"/>
             <Button
                 Background="OrangeRed"
                 Command="{Binding RemoveCommand}"
-                Content="Remove"
+                Content="Премахни"
                 FontSize="26"
                 Margin="10 5 10 5"/>
 
@@ -97,7 +97,7 @@
                 <TextBlock
                     FontSize="26"
                     Margin="5"
-                    Text="Enter your addres:"/>
+                    Text="Въведете арес за доставка :"/>
                 <TextBox
                     Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
                     Margin="5 0 5 5"                  
@@ -107,13 +107,13 @@
                     Command="{Binding FinishOrderCommand}"
                     Margin="5 0 5 5"
                     FontSize="26"
-                    Content="Finish Order"/>
+                    Content="Приключи поръчката"/>
                 <Button
                     Background="OrangeRed"
                     Command="{Binding NavigateToCustomerListOfOtders}"
                     Margin="5 0 5 5"
                     FontSize="26"
-                    Content="Check previous orders"/>
+                    Content="Провери предишни поръчки"/>
             </StackPanel>
 
         </StackPanel>

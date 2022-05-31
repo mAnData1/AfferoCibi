@@ -8,8 +8,8 @@ namespace Data.Entities.enums
 {
     public enum OrderStatus
     {
-        Processing,
-        Sent,
-        Rejected
+        Обработване,
+        Изпратена,
+        Отказана
     }
 }

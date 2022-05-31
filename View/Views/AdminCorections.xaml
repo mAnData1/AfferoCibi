@@ -45,7 +45,7 @@
             Margin="5">
             <Button
             Background="OrangeRed"
-            Content="Upload Image"
+            Content="Качи изображение"
             FontSize="20"
             Click="Button_Click"
             />
@@ -72,7 +72,7 @@
             Grid.Column="1"
             Grid.Row="6"
             Margin="7"
-            Content="Proceed"
+            Content="Продължи към поръчки"
             FontSize="22"
             Command="{Binding ProceedCommand}"/>
         <DockPanel
@@ -83,7 +83,7 @@
             <TextBlock
                 FontSize="20"
                 Margin="5"
-                Text="Meal :"/>
+                Text="Ястие :"/>
             <TextBox
                 Text="{Binding InputName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
@@ -97,7 +97,7 @@
             <TextBlock
                 FontSize="20"
                 Margin="5"
-                Text="Price :"/>
+                Text="Цена :"/>
             <TextBox
                 Text="{Binding InputPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:f2}}"
                 FontSize="20"
@@ -111,7 +111,7 @@
             <TextBlock
                 FontSize="20"
                 Margin="5"
-                Text="Ingredients:"/>
+                Text="Съставки :"/>
             <TextBox
                 Text="{Binding InputIngredients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
@@ -133,19 +133,19 @@
                 Command="{Binding SaveChangesCommand}"
                 FontSize="22"
                 Margin="5"
-                Content="Save Changes"/>
+                Content="Запази промени"/>
                 <Button
                 Background="OrangeRed"                    
                 Command="{Binding AddMealCommand}"
                 FontSize="22"
                 Margin="5"
-                Content="Add new meal"/>
+                Content="Добави дястие"/>
                 
                 <Button
                 Background="OrangeRed"                    
                 FontSize="22"
                 Margin="5"                
-                Content="Refresh" Click="Button_Click_1"/>
+                Content="Опресни" Click="Button_Click_1"/>
             </StackPanel>
         </ScrollViewer>
         <Button

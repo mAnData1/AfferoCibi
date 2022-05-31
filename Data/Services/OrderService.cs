@@ -96,15 +96,15 @@ namespace Data.Services
         {
             if (status == "Processing")
             {
-                return OrderStatus.Processing;
+                return OrderStatus.Обработване;
             }
             else if (status == "Sent")
             {
-                return OrderStatus.Sent;
+                return OrderStatus.Изпратена;
             }
             else if (status == "Rejected")
             {
-                return OrderStatus.Rejected;
+                return OrderStatus.Отказана;
             }
             else
                 throw new Exception("Invalid status");

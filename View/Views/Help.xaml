@@ -105,7 +105,7 @@
             Command="{Binding NavigateBackCommand}"
             Grid.Row="1"
             Margin="40 10"
-            Content="Go back to previos page"
+            Content="Върни се към предишния прозорец"
             FontSize="22"/>
     </Grid>
 </UserControl>

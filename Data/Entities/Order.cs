@@ -14,7 +14,7 @@ namespace Data.Entities
 
         public DateTime DateOfLastModified  { get; set; }
 
-        public OrderStatus OrderStatus { get; set; } = OrderStatus.Processing;
+        public OrderStatus OrderStatus { get; set; } = OrderStatus.Обработване;
 
         public Order(string address, DateTime modified)
         {

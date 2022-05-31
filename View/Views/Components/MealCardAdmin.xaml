@@ -32,7 +32,7 @@
             <TextBlock
                 FontSize="20"
                 Margin="5"
-                Text="Name :"/>
+                Text="Ястие :"/>
             <TextBox
                 Text="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
@@ -46,7 +46,7 @@
             <TextBlock
                 FontSize="20"
                 Margin="5"
-                Text="Price :"/>
+                Text="Цена :"/>
             <TextBox
                 Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:f2}}"
                 FontSize="20"
@@ -60,7 +60,7 @@
             <TextBlock
                 FontSize="20"
                 Margin="5"
-                Text="Ingredients:"/>
+                Text="Съставки :"/>
             <TextBox
                 Text="{Binding Ingredients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
@@ -78,7 +78,7 @@
             Background="OrangeRed"
             Grid.Row="4"
             Margin="10 5 10 5"
-            Content="Update"
+            Content="Обнови"
             FontSize="22"/>
         <Button
             Command="{Binding DeleteCommand}"
@@ -87,7 +87,7 @@
             Grid.Row="5"
             FontSize="22"
             Margin="10 5 10 5"                
-            Content="Delete selected meal"/>
+            Content="Изтрий"/>
 
     </Grid>
 </UserControl>

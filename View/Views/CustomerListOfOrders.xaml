@@ -19,7 +19,7 @@
             Background="Orange"
             Grid.Column="1"
             Margin=" 100 15"
-            Content="Make another order"
+            Content="Направи нова поръчка"
             FontSize="22"
             Command="{Binding NavigateToCustomerOrdering}"/>
         <Button
@@ -48,9 +48,9 @@
             Margin=" 10"
             AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Last time modified" Binding="{Binding DateOfLastModified}"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding AddressOrderStatus}"/>
+                <DataGridTextColumn Header="Последно променяна" Binding="{Binding DateOfLastModified}"/>
+                <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="Състоание" Binding="{Binding AddressOrderStatus}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

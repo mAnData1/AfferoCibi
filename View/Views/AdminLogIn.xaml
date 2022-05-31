@@ -38,7 +38,7 @@
             <TextBlock
                 FontSize="26"
                 Margin="5"
-                Text="User name:"/>
+                Text="Потребителско име:"/>
             <TextBox
                 FontSize="26"                
                 Margin="5"
@@ -53,7 +53,7 @@
             <TextBlock
                 FontSize="26"                
                 Margin="5"
-                Text="Password:"/>
+                Text="Парола:"/>
             <components:BindablePasswordBox
                 Width="auto"
                 FontSize="26"                
@@ -70,7 +70,7 @@
             Grid.Row="3"
             MaxHeight="50"
             MaxWidth="350"
-            Content="Submit"
+            Content="Влез"
             />
         <Button
             Grid.Row="6"

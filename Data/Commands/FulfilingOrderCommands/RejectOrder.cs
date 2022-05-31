@@ -18,7 +18,7 @@ namespace Data.Commands.FulfilingOrderCommands
         }
         public override void Execute(object? parameter)
         {
-            selcetedOrder.OrderStatus = OrderStatus.Rejected;
+            selcetedOrder.OrderStatus = OrderStatus.Отказана;
             selcetedOrder.DateOfLastModified = DateTime.Now;
 
             ordersStore.Update(selcetedOrder.ViewModelToModel(selcetedOrder));
