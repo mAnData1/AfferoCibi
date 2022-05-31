@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Views\Resources\burger.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,10 @@
     <None Remove="Views\Resources\customer.png" />
     <None Remove="Views\Resources\no-image.png" />
     <None Remove="Views\Resources\question_mark.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Resources\burger.ico" />
   </ItemGroup>
 
   <ItemGroup>
