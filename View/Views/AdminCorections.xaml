@@ -139,7 +139,7 @@
                 Command="{Binding AddMealCommand}"
                 FontSize="22"
                 Margin="5"
-                Content="Добави дястие"/>
+                Content="Добави ястие"/>
                 
                 <Button
                 Background="OrangeRed"                    
